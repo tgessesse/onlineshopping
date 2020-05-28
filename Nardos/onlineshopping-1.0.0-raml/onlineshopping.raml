@@ -1,0 +1,87 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/12ce080e-ff51-4355-aa85-4d3df046b98f/ # 
+title: Onlineshopping
+
+
+/user:
+  post:
+    body:
+      application/json:
+        example: !include LG/userPost.json
+         
+    responses:
+      201:
+        body:
+          application/json:
+            example:
+              {"uid":100}
+/products:
+  get:
+    description: 
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include LG/productGet.json
+            
+  /{id}:
+    uriParameters:
+      id:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include LG/productIDGet.json
+                
+
+/categories:
+  get:
+    description: To retrieve the catagories
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include LG/categoriesGet.json
+             
+ 
+  /{id}:
+    uriParameters:
+      id:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include LG/categoriesIDGet.json
+                
+/order:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include LG/orderGet.json
+                           
+  /{id}:
+    uriParameters:
+      id:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include LG/orderIDGet.json
+               
+  post:
+    body:
+      application/json:
+        example: !include LG/orderPostRequest.json
+                
+    responses:
+      201:
+        body:
+          application/json:
+            example: !include LG/orderPostResponse.json
+            
+  
