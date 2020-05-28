@@ -1,0 +1,34 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/45b17c6c-ac75-4ffd-adcf-acc1c33490bf/ # 
+title: netsanet_online_shopping
+/users:
+  post:
+    body:
+      application/json:
+        example:
+          {username":"test" email":"test@test.com"}
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {"uid":101}
+
+/products:
+  /{id}:
+  get:
+    responses:
+      200:
+       body:
+         application/json:
+           example:
+             {"id":1010, "name":"OJ"}
+             
+/address:
+/categories:
+/discount:
+/order_item:
+/orders:
+/product_details:
+/tags:          
+        
