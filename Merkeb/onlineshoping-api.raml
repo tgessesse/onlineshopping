@@ -1,18 +1,22 @@
 #%RAML 1.0
 title: OnLineShoping API
 /user:
+  displayName: User
   post:
+    description: Create a user account
     body:
       application/json:
         examples:
           input: !include examples/userNoIDExample.raml
     responses:
       201:
+        description: User aacount created
         body:
           application/json:
             example:
               output: {uid: 57245}
 /products:
+  displayName: Products
   get:
     description: Retrieve all Products
     responses:
@@ -23,46 +27,62 @@ title: OnLineShoping API
             examples:
               output: !include examples/productsExample.raml
 /products/{id}:
-    get:
-      responses:
-        200:
-          body:
-            application/json:
-              example: 
-                output: !include examples/productByIDExample.raml
-/categories:
+  displayName: Products by ID
   get:
+    description: Retrieve products by ID
     responses:
       200:
+        description: ok
+        body:
+          application/json:
+            example: 
+              output: !include examples/productByIDExample.raml
+/categories:
+  displayName: Categories
+  get:
+    description: Retrieve all Caterories
+    responses:
+      200:
+        description: ok
         body:
           application/json:
             examples:
               output: !include examples/categoriesExample.raml               
 /categories/{id}:
+  displayName: Categories by ID
   get:
+    description: Retrieve categories by ID
     responses:
       200:
+        description: ok
         body:
           application/json:
             examples:
               output: !include examples/categoriesByIDExample.raml
 /orders:
+  displayName: Orders
   get:
+    description: Retrieve all orders
     responses:
       200:
+        description: ok
         body:
           application/json:
             examples:
               output: !include examples/orders/ordersExample.raml
 /orders/{id}:
+  displayName: Orders by ID
   get:
+    description: Retrieve orders by ID
     responses:
       200:
+        description: ok
         body:
           application/json:
             examples:
               output: !include examples/orders/orderIDExample.raml
   post:
+    description: Creates orders by ID
     body:
       application/json:
         example: 
@@ -72,6 +92,7 @@ title: OnLineShoping API
                   uid: 57245}
     responses:
       200:
+        description: ok
         body:
           application/json:
             examples:
