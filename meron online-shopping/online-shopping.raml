@@ -1,0 +1,179 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/bf0e17f9-7dce-4861-9d8b-7bc1edad86b5/ # 
+title: online-shopping
+/user:
+  post:
+    description: to create user
+    body:
+      application/json:
+        example:
+          {
+            "useremail":"xyz@gmail.com",
+            "username":"xyz"
+          }
+    responses:
+      201:
+        body:
+          application/json:
+            example:
+             {"uid":"001"}
+
+/products:
+  get:
+    description: to retrive users
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+                [
+            {
+              "categoryid": 102,
+              "description": "tablet",
+              "name": "apple",
+              "price": 300.00,
+              "productid": 01,
+              "video_url": "https://www.bestbuy.com"
+            }
+            ]  
+  /{id}:
+    uriParameters:
+      id:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+               {
+                  "productid": 101,
+                  "categoryid": 19,
+                  "name": "KK G-707 Gaming mouse",
+                  "description": "The G-707 Gaming mouse is a razor-sharp mouse with 3000 DPI. The mouse comes with a 1-year warranty ",
+                  "video_url": "https://www.youtube.com/watch?v=3AtDnEC4zak",
+                  "price": 7777
+               } 
+/catagories:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {
+                    "categoryid": 01,
+                    "name": "Electronics"
+              }
+  /{id}:
+    uriParameters:
+      id:
+    get:
+      description: to retrive catagories id
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+                {
+                  "categoryid": 10,
+                  "name": "labtop"
+                }
+/order:
+  get:
+    description: retrive orders
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              [
+  {
+    "addressid":101 ,
+    "amount": 200,
+    "created": {
+      "date": 05/28/2020,
+      "day": friday,
+      "hours": 11,
+      "minutes": 24,
+      "month": 5,
+      "nanos": 0,
+      "seconds": 00:00:01,
+      "time": 11:24:01,
+      "timezoneOffset": 0,
+      "year": 2020
+    },
+    "discountid": 201,
+    "modified": {
+      "date": 5/28/2020,
+      "day": friday,
+      "hours": 11,
+      "minutes": 26,
+      "month": 05,
+      "nanos": 0,
+      "seconds": 00:00:01,
+      "time": 11:26:01,
+      "timezoneOffset": 0,
+      "year": 2020
+    },
+    "orderid": 103,
+    "status": "outfordelivery",
+    "userid": 101
+  }
+]
+  /{id}:
+    uriParameters:
+      id:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+                {
+  "orderid": 128,
+  "userid": 1019,
+  "addressid": 201,
+  "discountid": 1,
+  "created": "2020-05-27T23:18:46.000+00:00",
+  "modified": null,
+  "status": "Accepted",
+  "amount": 1000
+}
+  post:
+    body:
+      application/json:
+        example:
+               {
+          "products": [
+            {
+              "productId": 202,
+              "quantity": 2
+            }
+          ],
+          "uid": 02
+        }
+    responses:
+      201:
+        body:
+          application/json:
+            example:
+              {
+  "orderid": 128,
+  "userid": 1019,
+  "addressid": 201,
+  "discountid": 1,
+  "created": "2020-05-27T23:18:46.479+00:00",
+  "modified": null,
+  "status": "Accepted",
+  "amount": 1000
+}
+
+
+
+  
+                
+ 
+              
+               
+      
+
