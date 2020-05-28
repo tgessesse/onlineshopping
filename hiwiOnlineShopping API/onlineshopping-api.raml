@@ -1,0 +1,99 @@
+#%RAML 1.0
+title: OnlineShopping API
+/user:
+  displayName: User
+  post:
+    description: Create a user account
+    body:
+      application/json:
+        examples:
+          input: !include examples/userNoIDExample.raml
+    responses:
+      201:
+        description: User aacount created
+        body:
+          application/json:
+            example:
+              output: {uid: 28000}
+/products:
+  displayName: Products
+  get:
+    description: Retrieve all Products
+    responses:
+      200:
+        description: ok
+        body:
+          application/json:
+            examples:
+              output: !include examples/productsExample.raml
+/products/{id}:
+  displayName: Products by ID
+  get:
+    description: Retrieve products by ID
+    responses:
+      200:
+        description: ok
+        body:
+          application/json:
+            example: 
+              output: !include examples/productByIDExample.raml
+/categories:
+  displayName: Categories
+  get:
+    description: Retrieve all Caterories
+    responses:
+      200:
+        description: ok
+        body:
+          application/json:
+            examples:
+              output: !include examples/categoriesExample.raml               
+/categories/{id}:
+  displayName: Categories by ID
+  get:
+    description: Retrieve categories by ID
+    responses:
+      200:
+        description: ok
+        body:
+          application/json:
+            examples:
+              output: !include examples/categoriesByIDExample.raml
+/orders:
+  displayName: Orders
+  get:
+    description: Retrieve all orders
+    responses:
+      200:
+        description: ok
+        body:
+          application/json:
+            examples:
+              output: !include examples/ordersExample.raml
+/orders/{id}:
+  displayName: Orders by ID
+  get:
+    description: Retrieve orders by ID
+    responses:
+      200:
+        description: ok
+        body:
+          application/json:
+            examples:
+              output: !include examples/orderIDExample.raml
+  post:
+    description: Creates orders by ID
+    body:
+      application/json:
+        example: 
+          input: {products:
+                    {productId: 101,
+                     quantity: 5},
+                  uid: 28000}
+    responses:
+      200:
+        description: ok
+        body:
+          application/json:
+            examples:
+              output: !include examples/orderIDExample.raml
