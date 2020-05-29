@@ -1,0 +1,75 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/2756a09e-6a78-47b7-95a7-97bd3e0452cd/ # 
+title: online-shopping
+#create api interface
+/users:
+  post:
+    body:
+      application/json:
+        example:
+          {"email:keb@gmail.com","username:keb"}
+    responses:
+      201:
+        body:
+          application/json:
+            example:
+              {"uid:101"}
+/products:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include productshopping/getproduct.json
+  /{id}:
+    uriParameters:
+      id:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include productshopping/getproductid.json
+/orders:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include productshopping/getorders.json
+  /{id}:
+    uriParameters:
+      id:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include productshopping/getorderid.json
+    post:
+      body:
+        application/json:
+          example: !include productshopping/postorders.json
+      responses:
+        201:
+          body:
+            application/json:
+              example: !include productshopping/postordersresponse.json               
+/categories:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include productshopping/getcategories.json
+  /{id}:
+    uriParameters:
+      id: 
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include productshopping/getcategoriesid.json
+    
+        
