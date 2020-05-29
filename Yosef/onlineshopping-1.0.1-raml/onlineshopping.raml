@@ -1,0 +1,85 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/cb205671-c464-4ad5-9bb9-8b23293a3173/ # 
+title: onlineshopping
+
+/users:
+  post:
+    body:
+      application/json:
+        example: !include Excercise onlineshopping/userPost.json
+         
+    responses:
+     201:
+       body:
+         application/json:
+           example:
+                {"uid":100}
+/products:
+  get:
+    description: 
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include  Excercise onlineshopping/productsGet.json
+         
+  /{id}:
+    uriParameters:
+      id:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: !includeExcercise onlineshopping/productID get.json
+                
+  
+
+/categories:
+  get:
+    description: help to retrieve the product in the categories
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include Excercise onlineshopping/categoriesGet.json
+                   
+  /{id}:
+    uriParameters:
+      id:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include Excercise onlineshopping/categoriesIDGet.json
+  
+/order:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include Excercise onlineshopping/orderGet.json
+               
+  /{id}:
+    uriParameters:
+      id:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include Excercise onlineshopping/orderIDGet.json
+        
+    post:
+      body:
+         application/json:
+          example: !include Excercise onlineshopping/orderIDPostProduct.json
+    
+      responses:
+        201:
+          body:
+            application/json:
+              example: !include Excercise onlineshopping/orderIDPost.json
+   
