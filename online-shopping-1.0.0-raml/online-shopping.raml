@@ -1,0 +1,25 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/22411a69-308a-4812-8ef7-3f41ba593646/ # 
+title: online-shopping
+version: 1
+
+/products:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            examples:
+              {
+           "categoryid": 0,
+          "description": "string",
+          "name": "string",
+          "price": 0,
+          "productid": 0,
+          "video_url": "string"
+              }
+  
+
+
+                          
+
