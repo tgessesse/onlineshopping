@@ -1,2 +1,2 @@
 # onlineshopping
-online shopping api
+online shopping API
