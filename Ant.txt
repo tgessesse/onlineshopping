@@ -1,1 +1,156 @@
-hi ....
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/9f49bfbb-d1b4-467a-89d2-5cb0ca7295f2/ # 
+title: online-shopping 
+/user:
+  post:
+    body:
+      application/json:
+        example:
+          { "email": "Anteneh", "username": "ant@gmail.com"}
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {
+                 "uid":100
+              }
+/products: 
+    get:
+     responses:
+       200:
+         body:
+           application/json:
+             example:
+              {
+                "productid": 100,
+                "categoryid": 10,
+                "name": "Amazon laptop",
+                "description": "best batter life, 15' laptop, with a 1-year warranty",
+                "video_url": "https://www.youtube.com/watch?v=3AtDnEC6zak",
+                "price": 10000
+              }
+/{product id}:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {
+                  "categoryid": 0,
+                  "description": "string",
+                  "name": "string",
+                  "price": 0,
+                  "productid": 0,
+                 "video_url": "string"
+               }
+/catagories:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+                {
+                  "categoryid": 0,
+                  "name": "string"
+                 }
+/{categories id}:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+               {
+              "categoryid": 0,
+              "name": "string"
+               }
+/orders:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+                {
+                  "addressid": 0,
+                  "amount": 0,
+                  "created": {
+                  "date": 0,
+                  "day": 0,
+                  "hours": 0,
+                  "minutes": 0,
+                  "month": 0,
+                  "nanos": 0,
+                  "seconds": 0,
+                  "time": 0,
+                  "timezoneOffset": 0,
+                  "year": 0
+                              },
+                   "discountid": 0,
+                  "modified": {
+                   "date": 0,
+                   "day": 0,
+                  "hours": 0,
+                  "minutes": 0,
+                  "month": 0,
+                  "nanos": 0,
+                  "seconds": 0,
+                  "time": 0,
+                  "timezoneOffset": 0,
+                  "year": 0
+                    },
+                     "orderid": 0,
+                     "status": "string",
+                     "userid": 0
+                   }
+/{orders id}:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+             {
+               "orderid": 100,
+               "userid": 1000,
+               "addressid": 200,
+               "discountid": 12,
+               "created": "2020-02-02T00:00:00.000+00:00",
+               "modified": null,
+               "status": "shipped",
+               "amount": 10000
+             }
+  /orders: 
+  post:
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {
+              "products": [
+                 {
+              "productId": 0,
+              "quantity": 0
+                 }
+                         ],
+               "uid": 0
+              }
+          /responses:
+      201:
+        body:
+          application/json:
+            example:
+               {
+               "orderid": 100,
+               "userid": 1000,
+               "addressid": 200,
+               "discountid": 12,
+               "created": "2020-02-02T00:00:00.000+00:00",
+               "modified": null,
+               "status": "shipped",
+               "amount": 10000
+             }
