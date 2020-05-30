@@ -1,0 +1,430 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/3d1cc0fb-e0d6-4c50-bedf-beefd237ebb2/ # 
+title: ONLINE-SHOPPING
+
+/users :
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              [
+  {
+    "date_joined": {
+      "date": 0,
+      "day": 0,
+      "hours": 0,
+      "minutes": 0,
+      "month": 0,
+      "nanos": 0,
+      "seconds": 0,
+      "time": 0,
+      "timezoneOffset": 0,
+      "year": 0
+    },
+    "deleted": true,
+    "email": "berhanemeron61@gmail.com",
+    "modified": {
+      "date": 0,
+      "day": 0,
+      "hours": 0,
+      "minutes": 0,
+      "month": 0,
+      "nanos": 0,
+      "seconds": 0,
+      "time": 0,
+      "timezoneOffset": 0,
+      "year": 0
+    },
+    "type": 0,
+    "userid": 0,
+    "username": "MERRY"
+  }
+]
+  /{id} : 
+   description: id
+   uriParameters:
+     id:
+       required: true
+   get:
+
+    responses:
+        200:
+          body:
+            application/json:
+              example:
+                {
+  "date_joined": {
+    "date": 0,
+    "day": 0,
+    "hours": 0,
+    "minutes": 0,
+    "month": 0,
+    "nanos": 0,
+    "seconds": 0,
+    "time": 0,
+    "timezoneOffset": 0,
+    "year": 0
+  },
+  "deleted": true,
+  "email": "berhanemeron61@gmail.com",
+  "modified": {
+    "date": 0,
+    "day": 0,
+    "hours": 0,
+    "minutes": 0,
+    "month": 0,
+    "nanos": 0,
+    "seconds": 0,
+    "time": 0,
+    "timezoneOffset": 0,
+    "year": 0
+  },
+  "type": 0,
+  "userid": 0,
+  "username": "MERRY"
+}
+  post:
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {
+  "email": "berhanemeron61@gmail.com",
+  "username": "MERRY"
+}
+/products:
+  get:
+    responses:
+      200:
+        description: ok
+        body:
+          application/json:
+            example:
+              [
+  {
+    "categoryid": 0,
+    "description": "LAPTOP",
+    "name": "DEL",
+    "price": 0,
+    "productid": 0,
+    "video_url": "WWW.HAPPYLIFE.COM"
+  }
+]
+      401:
+        description: anautoried  
+      403:
+        description: forbidden
+      404:
+        description: not found
+/{id} :
+  description: id
+  uriParameters:
+    id:
+      required: true 
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {
+  "categoryid": 0,
+  "description": "LAPTOP",
+  "name": "DEL",
+  "price": 0,
+  "productid": 0,
+  "video_url": "WWW.HAPPYLIFE.COM"
+}
+      401:
+        description: Anautorized
+      403:
+        description: Forbidden
+      404:
+        description: Not Found                   
+/consume:
+  get:
+    responses:
+      200:
+        description: ok
+        body:
+          application/json:
+            example:
+              "yes"
+      401:
+        description: unautorized
+      403:
+        description: Forbidden
+      404:
+        description: Not Found  
+/orders:
+  get:
+    responses:
+      200:
+        description: Ok
+        body:
+          application/json:
+            example:
+              [
+  {
+    "addressid": 0,
+    "amount": 0,
+    "created": {
+      "date": 0,
+      "day": 0,
+      "hours": 0,
+      "minutes": 0,
+      "month": 0,
+      "nanos": 0,
+      "seconds": 0,
+      "time": 0,
+      "timezoneOffset": 0,
+      "year": 0
+    },
+    "discountid": 0,
+    "modified": {
+      "date": 0,
+      "day": 0,
+      "hours": 0,
+      "minutes": 0,
+      "month": 0,
+      "nanos": 0,
+      "seconds": 0,
+      "time": 0,
+      "timezoneOffset": 0,
+      "year": 0
+    },
+    "orderid": 0,
+    "status": "SUCCESS",
+    "userid": 0
+  }
+]
+      401:
+        description: Unautorized
+      403:
+        description: Forbidden
+      404:
+        description: Not Found  
+  post:
+    body:
+      application/json:
+        example:
+          {
+  "products": [
+    {
+      "productId": 0,
+      "quantity": 0
+    }
+  ],
+  "uid": 0
+}
+    responses:
+      200:
+        description: Ok
+        body:
+          application/json:
+            example:
+              {
+  "addressid": 0,
+  "amount": 0,
+  "created": {
+    "date": 0,
+    "day": 0,
+    "hours": 0,
+    "minutes": 0,
+    "month": 0,
+    "nanos": 0,
+    "seconds": 0,
+    "time": 0,
+    "timezoneOffset": 0,
+    "year": 0
+  },
+  "discountid": 0,
+  "modified": {
+    "date": 0,
+    "day": 0,
+    "hours": 0,
+    "minutes": 0,
+    "month": 0,
+    "nanos": 0,
+    "seconds": 0,
+    "time": 0,
+    "timezoneOffset": 0,
+    "year": 0
+  },
+  "orderid": 0,
+  "status": "SUCCESS",
+  "userid": 0
+}
+      201:
+        description: Created
+      401:  
+        description: unautorized
+      403:
+        description: Forbidden
+      404:
+        description: Not Found   
+  /{uid}:
+    description: id
+    get:
+      queryParameters:
+        id:
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Ok
+          body:
+            application/json:
+              example:
+                [
+  {
+    "addressid": 0,
+    "amount": 0,
+    "created": {
+      "date": 0,
+      "day": 0,
+      "hours": 0,
+      "minutes": 0,
+      "month": 0,
+      "nanos": 0,
+      "seconds": 0,
+      "time": 0,
+      "timezoneOffset": 0,
+      "year": 0
+    },
+    "discountid": 0,
+    "modified": {
+      "date": 0,
+      "day": 0,
+      "hours": 0,
+      "minutes": 0,
+      "month": 0,
+      "nanos": 0,
+      "seconds": 0,
+      "time": 0,
+      "timezoneOffset": 0,
+      "year": 0
+    },
+    "orderid": 0,
+    "status": "SUCCESS",
+    "userid": 0
+  }
+]
+        401:  
+         description: unautorized
+        403:
+         description: Forbidden
+        404:
+         description: Not Found  
+  /{id}:
+    get:
+      queryParameters:
+        id:
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Ok
+          body:
+            application/json:
+              example:
+                {
+  "addressid": 0,
+  "amount": 0,
+  "created": {
+    "date": 0,
+    "day": 0,
+    "hours": 0,
+    "minutes": 0,
+    "month": 0,
+    "nanos": 0,
+    "seconds": 0,
+    "time": 0,
+    "timezoneOffset": 0,
+    "year": 0
+  },
+  "discountid": 0,
+  "modified": {
+    "date": 0,
+    "day": 0,
+    "hours": 0,
+    "minutes": 0,
+    "month": 0,
+    "nanos": 0,
+    "seconds": 0,
+    "time": 0,
+    "timezoneOffset": 0,
+    "year": 0
+  },
+  "orderid": 0,
+  "status": "SUCCESS",
+  "userid": 0
+}
+        401:  
+          description: unautorized
+        403:
+         description: Forbidden
+        404:
+         description: Not Found  
+/categories:
+  get:
+    responses:
+      200:
+        description: Ok
+        body:
+          application/json:
+            example:
+              [
+  {
+    "categoryid": 0,
+    "name": "BABYTOY"
+  }
+]
+      401:  
+          description: unautorized
+      403:
+         description: Forbidden
+      404:
+         description: Not Found  
+  /{id} :
+    get:
+      queryParameters:
+        id:
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Ok
+          body:
+            application/json:
+              example:
+                {
+  "categoryid": 0,
+  "name": "BABYTOY"
+}  
+        401:  
+          description: unautorized
+        403:
+         description: Forbidden
+        404:
+         description: Not Found               
+
+
+     
+    
+
+            
+
+        
+          
+                       
+
+
+     
+  
+
+  
+
