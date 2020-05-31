@@ -1,0 +1,100 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/02e32f8e-eded-49dc-94a0-5fa9872e4a4c/ # 
+title: Online-Shopping
+
+/users:
+  post:
+    body:
+      application/json:
+        example:
+          {'username': 'string', 'email': 'string'}
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {'uid' : 'integer'}
+
+
+/products:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              [
+  {
+    "categoryid": 0,
+    "description": "string",
+    "name": "string",
+    "price": 0,
+    "productid": 0,
+    "video_url": "string"
+  }
+]
+  /products_{id}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include Examples/products.json
+                
+/catagories:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              [
+               {
+                "categoryid": 10,
+                "name": "shirts"
+               }
+              ]
+  /{id}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+                {"categoryid": 20,
+                 "name": "labtop"
+                } 
+
+
+/orders:
+  get:
+    responses:
+        200:
+          body:
+            application/json:
+              example: !include Examples/getOrders.json
+                
+  post:
+      body:
+        application/json:
+          example:
+            {
+              "products": [
+                       { "productId": 25, "quantity": 3 }],
+                         "uid": 1081 }
+      responses:
+        201:
+          body:
+            application/json:
+              example: !include Examples/postOrders.json
+                
+  /{id}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include Examples/getOrderbyid.json
+                 
+ 
+  
