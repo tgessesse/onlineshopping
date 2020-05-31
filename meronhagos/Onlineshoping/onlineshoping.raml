@@ -1,0 +1,19 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/f3661354-866d-4756-927a-52e7763dc8f6/ # 
+title: Onlineshoping
+/Products:
+  /{id}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+                {
+  "productid": 101,
+  "categoryid": 19,
+  "name": "KK G-707 Gaming mouse",
+  "description": "The G-707 Gaming mouse is a razor-sharp mouse with 3000 DPI. The mouse comes with a 1-year warranty ",
+  "video_url": "https://www.youtube.com/watch?v=3AtDnEC4zak",
+  "price": 7777
+}
