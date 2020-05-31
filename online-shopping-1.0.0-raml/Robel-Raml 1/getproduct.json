@@ -1,0 +1,8 @@
+ {
+            "categoryid": 123,
+            "description":"Computer",
+            "name":"Hp",
+            "price":500.00,
+            "productid":12,
+            "video_url":"http://www.computers.com"
+          }

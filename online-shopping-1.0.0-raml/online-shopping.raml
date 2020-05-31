@@ -1,0 +1,114 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/867116d2-763d-4cd9-ad64-dc9c4cdc952a/ # 
+title: online-shopping 
+
+/user:
+  post:
+    body:
+      application/json:
+        example:
+          {"email": "test@gmail.com",
+          "username": "test"
+          }
+    responses:
+      201:
+        body:
+          application/json:
+            example:
+              {"uid":100}
+/products:
+  get:
+    description: 
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include Robel-Raml 1/getproduct.json
+             
+  /{id}:
+    uriParameters:
+      id:
+    get:
+     responses:
+      200:
+        body:
+          application/json:
+           example: !include Robel-Raml 1/getproductid.json
+              
+
+/category:
+  get:
+    body:
+      application/json:
+        example:
+          {
+    "categoryid": 13,
+    "name": "golfclubs"
+  }
+  /{id}:
+    uriParameters:
+      id:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+                {
+  "categoryid": 10,
+  "name": "taylormade"
+}
+/orders:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include Robel-Raml 1/getorder.json
+            
+/{id}:
+  uriParameters:
+    id:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include Robel-Raml 1/getorderid.json
+             
+  post:
+     body:
+       application/json:
+         example: !include Robel-Raml 1/postorder.json
+          
+     responses: 
+      201: 
+        body:
+         application/json:
+           example:
+             {
+  "orderid": 128,
+  "userid": 1019,
+  "addressid": 201,
+  "discountid": 1,
+  "created": "2020-05-27T23:18:46.479+00:00",
+  "modified": null,
+  "status": "Accepted",
+  "amount": 1000
+}
+          
+ 
+
+      
+  
+  
+
+      
+                
+
+      
+
+          
+              
+       
+          
