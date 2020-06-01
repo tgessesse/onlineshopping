@@ -104,8 +104,6 @@ title: Online-Shopping
   "status": "Accepted",
   "amount": 1000
 }
-
-
 /Create Orders:
   post:
     body:
@@ -132,3 +130,15 @@ title: Online-Shopping
   "status": "Accepted",
   "amount": 1000
 }
+ delete:
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {"response":"order successfully deleted"}      
+      404:
+        body:
+          application/json:
+            example:
+              {"order not found try again"} 
