@@ -9,16 +9,16 @@ title: online-shipping-wo-type
           application/json:
             example:
               [{
-                "email": "test@gmail.com",
-                "username": "test"
+                "email": "123@gmail.com",
+                "username": "gm"
               }]
   post:
     body:
       application/json:
         example:
           {
-            "email": "test@gmail.com",
-            "username": "test"
+            "email": "123@gmail.com",
+            "username": "gm"
           }
 /users/{id}:
     get:
@@ -28,8 +28,8 @@ title: online-shipping-wo-type
             application/json:
               example:
                 {
-                  "email": "test@gmail.com",
-                  "username": "test"
+                  "email": "123@gmail.com",
+                  "username": "gm"
                 }
 /products:
   get:
@@ -40,12 +40,10 @@ title: online-shipping-wo-type
             example:
               [
                 {
-                  "productid": 101,
-                  "categoryid": 19,
-                  "name": "KK G-707 Gaming mouse",
-                  "description": "The G-707 Gaming mouse is a razor-sharp mouse with 3000 DPI.",
-                  "video_url": "https://www.youtube.com/watch?v=3AtDnEC4zak",
-                  "price": 7777
+                  "productid": 1,
+                  "categoryid": 2,
+                  "name": "xx",
+                   "price": 10
                 }
               ]
 /products/{id}:
@@ -56,12 +54,9 @@ title: online-shipping-wo-type
           application/json:
             example:              
                 {
-                  "productid": 101,
-                  "categoryid": 19,
-                  "name": "KK G-707 Gaming mouse",
-                  "description": "The G-707 Gaming mouse is a razor-sharp mouse with 3000 DPI",
-                  "video_url": "https://www.youtube.com/watch?v=3AtDnEC4zak",
-                  "price": 7777
+                  "productid": 3,
+                  "categoryid": 4;
+                  "price": 10
                 }
               
 /orders:
@@ -74,11 +69,8 @@ title: online-shipping-wo-type
               "orderid": 128,
               "userid": 1019,
               "addressid": 201,
-              "discountid": 1,
-              "created": "2020-05-27T23:18:46.000+00:00",
               "modified": null,
-              "status": "Accepted",
-              "amount": 1000
+             "amount": 20
             }
           ]
   post:
@@ -88,11 +80,11 @@ title: online-shipping-wo-type
           {
             "products": [
               {
-                "productId": 0,
-                "quantity": 0
+                "productId": 45,
+                "quantity": 19
               }
             ],
-            "uid": 0
+            "uid": 11
           }
 /orders/{id}:
   get:
@@ -100,14 +92,14 @@ title: online-shipping-wo-type
       application/json:
         example:
           {
-            "orderid": 128,
-            "userid": 1019,
-            "addressid": 201,
-            "discountid": 1,
-            "created": "2020-05-27T23:18:46.000+00:00",
+            "orderid": 16,
+            "userid": 10,
+            "addressid": 56,
+            "discountid": 13,
+            "created": "?",
             "modified": null,
             "status": "Accepted",
-            "amount": 1000
+            "amount": 23
           }
 /categories:
   get:
@@ -118,8 +110,8 @@ title: online-shipping-wo-type
             example:
               [
                 {
-                  "categoryid": 10,
-                  "name": "laptop"
+                  "categoryid": 8,
+                  "name": "zz"
                 }
               ]
 /categories/{id}:
@@ -130,6 +122,6 @@ title: online-shipping-wo-type
           application/json:
             example:
               {
-                "categoryid": 10,
-                "name": "laptop"
+                "categoryid": 8,
+                "name": "zz"
               }
