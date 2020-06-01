@@ -1,0 +1,190 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/42622365-4113-4c71-9c59-4d4d7af2c079/ # 
+title: Mesfin
+
+/users:
+  get:
+    responses:
+      201:
+        body:
+          application/json:
+            examples:
+              {
+                "email": "mesfinzewdu@hot.com",
+                "username": "mesfin-onlineshopping"
+              }
+  post:
+    body:
+      application/json:
+        example:
+          {
+                "email": "mesfinzewdu@hot.com",
+                "username": "mesfin-onlineshopping"
+              }
+/users{id}:
+  get:
+    responses:
+      201:
+        body:
+          application/json:
+            example:
+              {"email": "mesfinzewdu@hot.com",
+                "username": "mesfin-onlineshopping"
+              }
+/products:
+  get:
+    responses:
+      201:
+        body:
+          application/json:
+            example:
+              [
+  {
+    "categoryid": 1,
+    "description": "laptop",
+    "name": "dell",
+    "price": 1200$,
+    "productid": 1a,
+    "video_url": "http//:www.laptop1a.com"
+  }
+]
+/products {id}:
+  get:
+    responses:
+      201:
+        body:
+          application/json:
+            example:
+              {"categoryid": 1,
+    "description": "laptop",
+    "name": "dell",
+    "price": 1200$,
+    "productid": 1a,
+    "video_url": "http://www.laptop1a.com"
+              }              
+/orders:
+  get:
+    body:
+      application/json:
+        example:
+          
+              [
+  {
+    "addressid": mes123,
+    "amount": 2,
+    "created": {
+      "date": 29,
+      "day": Tuesday,
+      "hours": 12,
+      "minutes": 45,
+      "month": 05,
+      "nanos": 03,
+      "seconds": 27,
+      "time": 12,
+      "timezoneOffset": GMT-4,
+      "year": 2020
+    },
+    "discountid": 0,
+    "modified": {
+      "date": 30,
+      "day": Wednsday,
+      "hours": 11,
+      "minutes": 45,
+      "month": 05,
+      "nanos": 09,
+      "seconds": 44,
+      "time": 12,
+      "timezoneOffset": GMT-4,
+      "year": 2020
+    },
+    "orderid": me12,
+    "status": "accepted",
+    "userid": mes123
+  }
+]
+  post:
+    body:
+      application/json:
+        example:
+          {
+            "products": [
+              {
+                "productId": lap1,
+                "quantity": 2
+              }
+            ],
+            "uid": mes123
+          }
+        
+/orders {id}:
+  post:
+    body:
+      application/json:
+        example:
+          [
+  {
+    "addressid": mes123,
+    "amount": 2,
+    "created": {
+      "date": 29,
+      "day": Tuesday,
+      "hours": 12,
+      "minutes": 45,
+      "month": 05,
+      "nanos": 03,
+      "seconds": 27,
+      "time": 12,
+      "timezoneOffset": GMT-4,
+      "year": 2020
+    },
+    "discountid": 0,
+    "modified": {
+      "date": 30,
+      "day": Wednsday,
+      "hours": 11,
+      "minutes": 45,
+      "month": 05,
+      "nanos": 09,
+      "seconds": 44,
+      "time": 12,
+      "timezoneOffset": GMT-4,
+      "year": 2020
+    },
+    "orderid": me12,
+    "status": "accepted",
+    "userid": mes123
+  }
+]
+/categories:
+  get:
+    responses:
+      201:
+        body:
+          application/json:
+            example:
+              [
+  {
+    "categoryid": 13,
+    "name": "electronics"
+  }
+]
+/categories{id}:
+  get:
+    responses:
+      201:
+        body:
+          application/json:
+            example:
+              [
+  {
+    "categoryid": 13,
+    "name": "electronics"
+  }
+]
+        
+
+      
+          
+                      
+
+          
