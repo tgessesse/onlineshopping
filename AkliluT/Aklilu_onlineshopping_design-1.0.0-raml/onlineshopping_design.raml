@@ -1,0 +1,169 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/f5fbaf2f-8272-4908-8743-d00d59242c14/ # 
+title: onlineshopping_design
+/user:
+  post:
+    body:
+      application/json:
+        example:
+            {
+              "email": "ak123@gmail.com",
+              "username": "aklilu"
+            }
+    responses:
+      201:
+        body:
+           application/json:
+             example:
+              {
+              "uid": 100
+              }
+
+/product:
+  get:
+    description: 
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              [
+  {
+    "categoryid": 2,
+    "description": "computer and Accessories",
+    "name": "com",
+    "price": 120.00,
+    "productid": 11,
+    "video_url": "https://www.youtube.com/watch?v=7cXEOWAStq4"
+  }
+]
+  /{id}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+                {
+  "productid": 101,
+  "categoryid": 19,
+  "name": "KK G-707 Gaming mouse",
+  "description": "The G-707 Gaming mouse is a razor-sharp mouse with 3000 DPI. The mouse comes with a 1-year warranty ",
+  "video_url": "https://www.youtube.com/watch?v=3AtDnEC4zak",
+  "price": 7777
+}
+      
+/catagory:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              [
+  {
+    "categoryid": 12,
+    "name": "Office_Computers"
+  }
+]
+  /{cat-id}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+                {
+  "categoryid": 10,
+  "name": "labtop"
+}
+/order:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              [
+  {
+    "addressid": 23,
+    "amount": 10,
+    "created": {
+      "date": 05/31/20,
+      "day": sunday,
+      "hours": 10,
+      "minutes": 36,
+      "month": May,
+      "nanos": 0.001,
+      "seconds": 23,
+      "time": 10,
+      "timezoneOffset": -21,
+      "year": 2020
+    },
+    "discountid": 23,
+    "modified": {
+      "date": 05/31/20,
+      "day": Sunday,
+      "hours": 10,
+      "minutes": 40,
+      "month": May,
+      "nanos": 0.001,
+      "seconds": 47,
+      "time": 10,
+      "timezoneOffset": -12,
+      "year": 2020
+    },
+    "orderid": 30,
+    "status": "In a good condition",
+    "userid": 100
+  }
+]
+  /{ord-id}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+                {
+  "orderid": 128,
+  "userid": 1019,
+  "addressid": 201,
+  "discountid": 1,
+  "created": "2020-05-27T23:18:46.000+00:00",
+  "modified": null,
+  "status": "Accepted",
+  "amount": 1000
+}
+    post:
+     body:
+       application/json:
+         example:
+           {
+  "products": [
+    {
+      "productId":14,
+      "quantity": 50
+    }
+  ],
+  "uid": 100
+}
+     responses:
+       201:
+         body:
+           application/json:
+             example:
+               {
+  "orderid": 128,
+  "userid": 1019,
+  "addressid": 201,
+  "discountid": 1,
+  "created": "2020-05-27T23:18:46.479+00:00",
+  "modified": null,
+  "status": "Accepted",
+  "amount": 1000
+}
+
+ 
+
+              
