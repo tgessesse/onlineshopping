@@ -1,0 +1,108 @@
+#%RAML 1.0
+title: ErmiasOnlineShopping 
+version: 1.0
+/user:
+  description: customers who are subscribed to the online shopping
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+           examples: !include UserExample.raml
+  /userid:
+   get:
+    responses:
+      200:
+        body:
+          application/json:
+           examples:
+             {
+             "id":1056
+           }
+  post:
+    responses:
+      201:
+        body:
+         application/json:
+           examples:     
+/categories: 
+ description: A group of similar products in which customers can find what they need from the API. 
+ get:
+   responses:
+     200:
+       body:
+        application/json:
+          examples:
+ /{categoryId}:
+   get:
+      responses:
+        200:
+          body:
+            application/json:
+              examples:       
+/products:
+  description: list of all products 
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            examples: !include ProExample.raml 
+  /{productid}: 
+   description: retrieving list of products by id
+   get:
+     responses:
+        200:
+          body:
+            application/json:
+              example:
+                {
+                  "productid": 011
+                }
+            
+/orders:
+  description: orders that are made by users/customers
+  get:
+      responses:
+        200:
+          body:
+           application/json: 
+             examples: !include ordersexample.raml
+              
+  post:
+   responses:
+    201:
+      body:
+        application/json:
+          examples:
+            {
+              "products":[
+                {
+                  "productid":100
+                  "quatntity":2
+                }
+              ],
+              "usi":1056
+            }
+
+
+  /{ordersid}:
+   get:
+    responses:
+      200: 
+        body:
+          application/json:
+            examples: {"timestamp": "2020-06-01T06:10:17.592+00:00",
+             "status": 404,
+             "error": "Not Found",
+             "message": "",
+            "path": "/ordersid"}
+    
+  /{ordersuid}:
+   get:
+    responses:
+      200: 
+        body:
+          application/json:
+            examples: 
+
