@@ -1,0 +1,124 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/e0eb538b-75ed-495c-b7fe-2af42a61a725/ # 
+title: Online shopping
+version: 1.0
+/Users:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+                     {
+  "email": "abc@gmail.com",
+  "username": "Jhon Green"
+            }
+                   
+  post:
+
+    body:
+      application/json:
+        examples:
+          {
+  "email": "abc@gmail.com",
+  "username": "Jhon Green"
+            }
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+                {"userid":1003}  
+  /User{id}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+                {"user id": 1003}
+              
+                   
+/Products:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            examples:
+              {
+    "categoryid": 19,
+    "description": "The G-707 Gaming mouse is a razor-sharp mouse with 3000 DPI. The mouse comes with a 1-year warranty ",
+    "name": "KK G-707 Gaming mouse",
+    "price": 7777,
+    "productid": 101,
+    "video_url": "https://www.youtube.com/watch?v=3AtDnEC4zak"
+                }
+  /product{id}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              examples:
+               {
+  "productid": 101,
+  "categoryid": 19,
+  "name": "KK G-707 Gaming mouse",
+  "description": "The G-707 Gaming mouse is a razor-sharp mouse with 3000 DPI. The mouse comes with a 1-year warranty ",
+  "video_url": "https://www.youtube.com/watch?v=3AtDnEC4zak",
+  "price": 7777
+}
+/catagories:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            examples:
+              {
+  "categoryid": 10,
+  "name": "laptop"
+}
+/orders:
+  post:
+    body:
+      application/json:
+        examples:
+             {
+      "productId": 0,
+      "quantity": 0
+            }
+  get:
+    responses:
+      201:
+        body:
+          application/json:
+            examples:
+              {
+  "orderid": 128,
+  "userid": 1019,
+  "addressid": 201,
+  "discountid": 1,
+  "created": "2020-05-27T23:18:46.479+00:00",
+  "modified": null,
+  "status": "Accepted",
+  "amount": 1000
+}
+  /order{id}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              examples:
+                   {
+            "orderid": 128,
+            "userid": 1019,
+            "addressid": 201,
+            "discountid": 1,
+            "created": "2020-05-27T23:18:46.000+00:00",
+            "modified": null,
+            "status": "Accepted",
+            "amount": 1000
+          }
