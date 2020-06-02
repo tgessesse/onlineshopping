@@ -1,0 +1,98 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/e8986359-eef0-4b2f-98db-f52d75132603/ # 
+title: online-shopping
+
+/users:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              [{
+                "emai": "craft@gmail.com",
+                "username": craft
+              }]
+  post:                          
+    body:
+      application/json:
+        example:
+          {
+            "email":"craft@gmail.com",
+            "username": "craft"
+          }
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {
+                "uid": 101
+              }  
+  
+/users/{id}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+                {
+                  "email":"string",
+                  "username": "string"
+                }
+/products:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+                [{
+                  "productid": 101,
+                  "categoryid": 19,
+                  "name": "kk G-707 Gaming mouse",
+                  
+                }]
+
+                
+                        
+            
+        
+            
+    
+      
+       
+      
+        
+    
+  
+      
+          
+     
+
+        
+
+          
+      
+      
+
+    
+    
+        
+
+      
+
+
+  
+
+
+        
+    
+        
+
+              
+            
+          
+  
+    
