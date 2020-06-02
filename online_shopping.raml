@@ -1,76 +1,118 @@
 #%RAML 1.0
-baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/4d338e35-f5c1-447c-820c-f68fd9fa4c48/ # 
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/25670b24-7d41-4d20-b1b5-3ccf5c816047/ # 
 title: online_shopping
 description: to make online shoping possible
+types:
+  users:
+    type: object
+    properties:
+      firstname: string
+      email:  string
+  products:
+    type: object
+    properties:
+      productid: integer
+      categoryid: integer
+      name: string
+      description: string
+      video_url: string
+      price: integer
+  categories:
+    type: object
+    properties:
+      categoryid: integer
+      name: string
+
+
+
 /users:
   description: get user id and pwd
   post:
-    body:
-      application/json:
-        example:
-          {
+      body:
+        application/json:
+          example:
+            {
             "email":"string", 
             "username":"string"
-          }
-            
-    responses:
-      201:
-        body:
-          application/json:
-             examples:
-              {
-                "uid": integer
-              }
-                    
-/products:
-  description: order products either by description or by id 
-  get:
-    body:
-      application/json:
-        example:  
-      
-    responses:
-      200:
-        body:
-          application/json:
-            example:
-             {
-              "categoryid": 0,
-              "description": "string",
-              "name": "string",
-              "price": 0,
-              "productid": 0,
-              "video_url": "string"
             }
-                  
-  /{id}:
+            
+      responses:
+        201:
+          body:
+            application/json:
+              example:
+                [
+                  {
+                    "uid": integer
+                  }
+                ]
+                
+                
+  /users/{id}:
     uriParameters:
-      id:
+      uid:integerinteger
     get:
       responses:
         200:
           body:
             application/json:
+              type: users
               example:
-               {
-                "productid": 101,
-                "categoryid": 19,
-                "name": "KK G-707 Gaming mouse",
-                "description": "The G-707 Gaming mouse is a razor-sharp mouse with 3000 DPI. The mouse comes with a 1-year warranty ",
-                "video_url": "https://www.youtube.com/watch?v=3AtDnEC4zak",
-                "price": 7777
-              } 
+/products:
+    description: 
+    get:
+      body:
+        application/json:
+          example:  
+           
+      responses:
+        200:
+          body:
+            application/json:
+              type: products []
+              example:
+                [{
+                "categoryid": 0,
+                "description": "string",
+                "name": "string",
+                "price": 0,
+                "productid": 0,
+                "video_url": "string"
+                }
+               ]
+                  
+    /{id}:
+      uriParameters:
+        id:
+          required: true
+      get:
+        responses:
+          200:
+            body:
+              application/json:
+                type: products
+                example:
+                 {
+                  "productid": 101,
+                 "categoryid": 19,
+                  "name": "KK G-707 Gaming mouse",
+                 "description": "The G-707 Gaming mouse is a razor-sharp mouse with 3000 DPI. The mouse comes with a 1-year warranty ",
+                  "video_url": "https://www.youtube.com/watch?v=3AtDnEC4zak",
+                 "price": 7777
+                } 
 
 /categories:
   get:
     body:
       application/json:
+        type: categories
         example:
     responses:
       200:
         body:
           application/json:
-             example:
+            type: categories[]
+            example:
               [
                 {
                   "categoryid": 0,
@@ -80,7 +122,7 @@ description: to make online shoping possible
           
   /{id}:
     uriParameters:
-        id:
+        id:integer
     get:
       body:
         application/json:
@@ -90,11 +132,13 @@ description: to make online shoping possible
         200:
           body:
             application/json:
+              type: object
               example:
                 {
                   "categoryid": 10,
                   "name": "laptop"
                 }
+                
 
 /orders:
   get:
@@ -105,6 +149,7 @@ description: to make online shoping possible
       200:
         body:
           application/json:
+            type: orders []
             example:
              [
               {
@@ -150,8 +195,9 @@ description: to make online shoping possible
       200:
         body:
           application/json:
-            example:
-             {
+           type: order
+           example:
+               {
                 "orderid": 128,
                 "userid": 1019,
                 "addressid": 201,
