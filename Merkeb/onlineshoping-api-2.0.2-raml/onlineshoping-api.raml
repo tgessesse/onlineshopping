@@ -1,0 +1,93 @@
+#%RAML 1.0
+title: OnLineShoping API
+uses:
+  shopping: datatypes/shopping.raml
+/users:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: shopping.users[]
+            examples:
+              output: !include examples/usersExample.raml
+  post:
+    body:
+      application/json:
+        type: shopping.users
+        examples:
+          input: !include examples/usersByIDExample.raml
+    responses:
+      201:
+        body:
+          application/json:
+            type: shopping.userID
+            examples:
+              output: !include examples/userIDExample.raml
+/products:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: shopping.products[]
+            examples:
+              output: !include examples/productsExample.raml
+/products/{id}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: shopping.products
+              examples: 
+                output: !include examples/productsByIDExample.raml
+/categories:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: shopping.categories[]
+            examples:
+              output: !include examples/categoriesExample.raml               
+/categories/{id}:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: shopping.categories
+            examples:
+              output: !include examples/categoriesByIDExample.raml
+/orders:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: shopping.orders[]
+            examples:
+              output: !include examples/ordersExample.raml
+/orders/{id}:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: shopping.orders
+            examples:
+              output: !include examples/ordersByIDExample.raml
+  post:
+    body:
+      application/json:
+        type: shopping.orderRequests
+        examples:
+          input: !include examples/orderRequestExample.raml 
+    responses:
+      200:
+        body:
+          application/json:
+            type: shopping.orders
+            examples:
+              output: !include examples/ordersByIDExample.raml
