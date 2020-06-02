@@ -1,0 +1,42 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/d2161d3c-d5da-437e-aa31-08ee410fc8ed/ # 
+title: online-shopping
+uses:
+  Registration: dataTypes/Registration.raml
+resourceTypes:
+  collection: !include resourceType/collection.raml
+  getCollection: !include resourceType/getCollection.raml
+/users:
+  type:
+    collection:
+      get-response-examples: !include examples/users/usersExampleWithId.raml
+      post-request-example: !include examples/users/registrationExample.raml
+      post-response-example: !include examples/users/registrationResponseExample.raml
+  /{id}:
+    type:
+      getCollection:
+        get-response-examples: !include examples/products/productExampleWithId.raml
+/products:
+  type:
+    getCollection:
+      get-response-examples: !include examples/products/productsExampleWithId.raml
+  /{id}:
+    type:
+      getCollection:
+        get-response-examples: !include examples/products/productExampleWithId.raml
+/categories:
+  type:
+    getCollection:
+      get-response-examples: !include examples/catagories/catagoriesExample.raml
+/category/{id}:
+    type:
+      getCollection:
+        get-response-examples: !include examples/catagories/catagoryExample.raml
+/order:
+  type:
+    getCollection:
+      get-response-examples: !include examples/products/productsExampleWithId.raml
+  /{id}:
+    type:
+      getCollection:
+        get-response-examples: !include examples/products/productExampleWithId.raml     
