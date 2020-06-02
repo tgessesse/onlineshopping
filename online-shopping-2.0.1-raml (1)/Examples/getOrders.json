@@ -1,0 +1,19 @@
+[
+                 { "addressid":1,
+                 "amount": 2,
+                 "created":{"date": "2020-05-29T 14:38:46.000+00:00",
+                            "day": 31,
+                            "hours": 2,
+                            "minutes":34,
+                            "month": "May",
+                            "nanos": 1,
+                            "seconds": 10,
+                            "time": "2:36",
+                            "timezoneOffset": "12",
+                            "year": 2020 },
+                 "discountid": 20,
+                 "modified": 
+                    {"date": 0,"day": 0,"hours": 0,"minutes": 0,
+                    "month": 0, "nanos": 0,"seconds": 0,"time": 0,                    "timezoneOffset": 0, "year": 0 },
+                    "orderid": 0,"status": "string","userid": 0}
+                    ]
