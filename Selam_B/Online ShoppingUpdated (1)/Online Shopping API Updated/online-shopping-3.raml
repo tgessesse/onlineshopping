@@ -1,0 +1,94 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/b9040e90-fabc-415b-8d33-7e8113dcad83/ # 
+title: Online Shopping 3
+uses:
+  OnlineShopping: DataTypes/shoppingDataType.raml
+/users:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: OnlineShopping.users[]
+            examples:
+              output: !include Examples/users.raml
+  post:
+        body:
+          application/json:
+            type: OnlineShopping.users
+            examples:
+              input: !include Examples/usersById.raml
+        responses:
+          201:
+            body:
+              application/json:
+                type: OnlineShopping.userId
+                examples: !include /Examples/userIdExample.raml
+/products: 
+  get:
+    description: retriveall products
+    responses:
+      200:
+        body:
+          application/json:
+            type: OnlineShopping.products[]
+            examples:
+              output: !include /Examples/productsExample.raml
+/product/{ID}:
+  get: 
+   responses:
+     200:
+       body:
+         application/json:
+           type: OnlineShopping.products
+           examples:
+              output: !include /Examples/productsByID.raml
+/catagories:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: OnlineShopping.catagories []
+            examples: !include Examples/catagoriesExample.raml
+
+/catagories/{ID}:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: OnlineShopping.catagories
+            examples:
+              outout: !include /Examples/catagoriesbyIDexample.raml
+/orders:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: OnlineShopping.orders []
+            examples: 
+              output: !include /Examples/ordersExample.raml
+/orders/{ID} :
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+             type: OnlineShopping.orders
+             examples:
+               output: !include Examples/ordersBYIDexample.raml
+  post:
+    body:
+      application/json:
+        examples:
+          type: OnlineShopping.orderRequest []
+          input: !include /Examples/orderRequestsExample.raml
+    responses:
+      200:
+        body:
+          application/json:
+            type: OnlineShopping.orderRequest
+            examples:
+               output: !include /Examples/orderRequestsExample.raml
