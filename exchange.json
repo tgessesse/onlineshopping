@@ -1,0 +1,10 @@
+{
+  "main": "online-shopping.raml",
+  "name": "online-shopping",
+  "classifier": "raml",
+  "tags": [],
+  "groupId": "10606c42-e71c-4c19-8c40-43498e11bacc",
+  "assetId": "online-shopping",
+  "version": "1.0.0",
+  "apiVersion": "version 1"
+}
