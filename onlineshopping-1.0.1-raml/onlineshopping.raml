@@ -1,0 +1,77 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/315667c7-74fa-48d6-a6c7-a90068cae92d/ # 
+title: Onlineshopping
+version: 1.0
+
+types:
+  product: !include datatype/product.raml
+/user:
+  post:
+    body:
+      application/json:
+        example:
+          {
+  "email": "test@gmail",
+  "username": "test"
+}
+    responses:
+      201:
+        body:
+          application/json:
+            example:
+              {"uid":2020}
+/products:
+  get:
+    description:
+    responses:
+      200:
+        body:
+          application/json:
+            examples: 
+             output: !include Examples/productExample.raml
+              
+  /products/{id}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              examples: 
+                 output: !include Examples/productExample.raml
+  /catagories/{ID}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: 
+                output: !include Examples/catagories.raml
+  /order/{ID}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+                output: !include Examples/orderExample.raml
+    post:
+      body:
+        application/json:
+          examples:
+             {
+    "productid": 103,
+    "quantity": 10,
+    "uid": 2020
+             }
+      responses:
+        200:
+          body:
+            application/json:
+              examples:
+                input: !include Examples/orderExample.raml
+                
+              
+        
+          
+            
+          
