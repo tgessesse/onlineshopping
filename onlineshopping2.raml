@@ -1,0 +1,77 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/b72dd75a-be03-4c79-ab90-f1d3933e9721/ # 
+title: onlineshopping2
+types:
+  users: !include Types/users.raml
+  product: !include Types/product.raml
+  productid: !include Types/productid.raml
+  order: !include Types/order.raml
+  orderresponse: !include Types/orderresponse.raml
+  orderget: !include Types/orderget.raml
+/users:
+  post:
+    body:
+      application/json:
+        type: users
+        example: !include example/users.raml
+    responses:
+      200:
+        body:
+          application/json:
+            type: users
+            example: !include example/usersresponse.raml
+/products:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: product
+            example: !include example/product.raml
+      404:
+        body:
+          application/json:
+            example:
+              {
+                "not found"
+              }        
+  /{productId}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: productid
+              example: !include example/productid.raml
+                
+/order:
+  post:
+    body:
+      application/json:
+        type: order
+        example: !include example/order.raml
+
+    responses:
+      200:
+        body:
+          application/json:
+            type: order
+            example: !include example/orderresponse.raml
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: orderget
+            example: !include example/orderget.raml
+      401:
+        body:
+          application/json:
+            example:
+              {
+                not found
+              }
+                                    
+          
+
+    

@@ -1,7 +1,8 @@
 #%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/028e5496-e430-422e-95e9-c55c82553fd6/ # 
 title: onlineshopping-Yibeltal
-/create users:
-  post:
+/users:
+  get:
     responses:
       200:
         body:
@@ -11,6 +12,17 @@ title: onlineshopping-Yibeltal
   "email": "string",
   "username": "string"
 }
+  post:
+    body:
+      application/json:
+        example:
+          {"uid"}
+    responses:
+      400:
+        body:
+          application/json:
+            example:
+              {"not found"}        
 /products:
   get:
     responses:
@@ -26,8 +38,7 @@ title: onlineshopping-Yibeltal
     "productid": 0,
     "video_url": "string"
   }
-/products by id:
- /id:
+/products{id}:
    get:
      responses:
        200:
@@ -55,8 +66,7 @@ title: onlineshopping-Yibeltal
     "name": "string"
   }
 
-/catagories by id:
-  /id:
+/catagorie{id}:
     get:
       responses:
         200:
@@ -107,8 +117,8 @@ title: onlineshopping-Yibeltal
     "status": "string",
     "userid": 0
   }
-/orders by id:
-  /id:
+/order{id}:
+
     get:
       responses:
         200:
@@ -125,7 +135,7 @@ title: onlineshopping-Yibeltal
   "status": "Accepted",
   "amount": 1000
 }
-/create orders:
+/order:
   post:
     responses:
       200:
