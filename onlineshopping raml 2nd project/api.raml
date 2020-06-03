@@ -1,0 +1,17 @@
+#%RAML 1.0
+title: api
+types:
+  user:
+    type: object
+    properties:
+      email: "string"
+      username: "string"
+      user:
+        type: object
+        properties:
+          email:
+            required: true
+            type: string
+          username:
+            required: true
+            type: string
