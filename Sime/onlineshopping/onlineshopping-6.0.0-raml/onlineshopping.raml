@@ -1,0 +1,112 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/340ef971-21cb-47e7-bd18-0c6905bc8b56/ # 
+title: onlineshopping
+types:
+  users: !include types/users.raml
+  user: !include types/user.raml
+  products: !include types/products.raml
+  product: !include types/product.raml
+  orders: !include types/orders.raml
+  order: !include types/order.raml
+  categories: !include types/categories.raml
+  category: !include types/category.raml
+/users:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: users
+            example: !include examples/users.raml
+  post:
+    body:
+      application/json:
+        example:
+          {
+                "email":"bella@gmail.com",
+                "username":"bella"
+
+          }
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {"uid": 1089
+              }
+                   
+/users/{id}:
+  get:
+    responses:
+      200:
+        body:
+          application/json: 
+            type: user 
+            example: !include examples/user.raml
+/products:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: products
+            example: !include examples/products.raml
+ 
+  
+/products/{id}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: product
+              example: !include examples/product.raml
+     
+/orders:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: orders
+            example: !include examples/orders.raml
+
+  post:
+    body:
+      application/json:
+        example:
+          {
+  "products": [
+    {
+      "productId": 103,
+      "quantity": 20
+    }
+  ],
+  "uid": 1089
+}
+/orders/{id}:
+  get:
+    body:
+      application/json:
+        type: order
+        example: !include examples/order.raml
+ 
+/categories:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: categories
+            example: !include examples/categories.raml
+
+/category/{id}:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: category
+            example: !include examples/category.raml
+  
+

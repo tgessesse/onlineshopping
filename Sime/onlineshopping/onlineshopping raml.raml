@@ -1,0 +1,145 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/340ef971-21cb-47e7-bd18-0c6905bc8b56/ # 
+title: onlineshopping
+/users:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              [{
+                "email":"bella@gmail.com",
+                "username":"bella"
+
+              }]
+  post:
+    body:
+      application/json:
+        example:
+          [{
+                "email":"bella@gmail.com",
+                "username":"bella"
+
+          }]
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {"uid": 1089
+              }
+                   
+/users/{id}:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+               [{
+                "email":"string",
+                "username":"string"
+               }]
+/products:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              [{
+      "productid": 103,
+      "categoryid": 16,
+      "name": "amazon essentials 15' laptop cover",
+      "description": "The best you can get around in a handy design and funky look.",
+      "video_url": "https://www.youtube.com/watch?v=3AtDnEC4zak",
+      "price": 200
+   }]
+/products/{id}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+                [{        
+      "productid": 103,
+      "categoryid": 16,
+      "name": "amazon essentials 15' laptop cover",
+      "description": "The best you can get around in a handy design and funky look.",
+      "video_url": "https://www.youtube.com/watch?v=3AtDnEC4zak",
+      "price": 200
+   }]
+/orders:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              [{
+   "orderid": 144,
+   "userid": 1089,
+   "addressid": 201,
+   "discountid": 1,
+   "created": "2020-06-02T18:09:43.666+00:00",
+   "modified": null,
+   "status": "Accepted",
+   "amount": 1000
+}]
+  post:
+    body:
+      application/json:
+        example:
+          {
+  "products": [
+    {
+      "productId": 103,
+      "quantity": 20
+    }
+  ],
+  "uid": 1089
+}
+/orders/{id}:
+  get:
+    body:
+      application/json:
+        example:
+              {
+   "orderid": 144,
+   "userid": 1089,
+   "addressid": 201,
+   "discountid": 1,
+   "created": "2020-06-02T18:09:43.666+00:00",
+   "modified": null,
+   "status": "Accepted",
+   "amount": 1000
+              }
+/categories:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {
+   "categoryid": 0,
+   "name": "string"
+}              
+/categories/{id}:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {
+   "categoryid": 16,
+   "name": "laptop covers"
+}
+          
+
+          
+
+
