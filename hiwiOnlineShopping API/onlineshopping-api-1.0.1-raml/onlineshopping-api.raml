@@ -1,0 +1,130 @@
+#%RAML 1.0
+baseUri: https://eu1.anypoint.mulesoft.com/mocking/api/v1/links/fce9e451-e778-4fc9-8f01-77db4cf1f3d5/ # 
+title: OnlineShopping API
+types:
+  categories: !include Datatypes/categories.raml
+  orders: !include Datatypes/orders.raml
+  products: !include Datatypes/products.raml
+  userID: !include Datatypes/userID.raml
+  users: !include Datatypes/users.raml
+  orderRequest: !include Datatypes/orderRequests.raml
+/users:
+  displayName: Users
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: users[]
+            examples:
+              output: !include examples/usersexample.raml
+  post:
+    description: Create a user account
+    body:
+      application/json:
+        type: users
+        examples:
+          input: !include examples/usersByIDExample.raml
+    responses:
+      201:
+        description: User aacount created
+        body:
+          application/json:
+            type: userID
+            examples:
+              output: !include examples/userIDExample.raml
+  /users/{id}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: users
+              examples:
+                output: !include examples/usersByIDExample.raml
+/products:
+  displayName: Products
+  get:
+    description: Retrieve all Products
+    responses:
+      200:
+        description: ok
+        body:
+          application/json:
+            type: products[]
+            examples:
+              output: !include examples/productsExample.raml
+/products/{id}:
+  displayName: Products by ID
+  get:
+    description: Retrieve products by ID
+    responses:
+      200:
+        description: ok
+        body:
+          application/json:
+            type: products
+            examples: 
+              output: !include examples/productsByIDExample.raml
+/categories:
+  displayName: Categories
+  get:
+    description: Retrieve all Caterories
+    responses:
+      200:
+        description: ok
+        body:
+          application/json:
+            type: categories[]
+            examples:
+              output: !include examples/categoriesExample.raml               
+/categories/{id}:
+  displayName: Categories by ID
+  get:
+    description: Retrieve categories by ID
+    responses:
+      200:
+        description: ok
+        body:
+          application/json:
+            type: categories
+            examples:
+              output: !include examples/categoriesByIDExample.raml
+/orders:
+  displayName: Orders
+  get:
+    description: Retrieve all orders
+    responses:
+      200:
+        description: ok
+        body:
+          application/json:
+            type: orders[]
+            examples:
+              output: !include examples/ordersExample.raml
+/orders/{id}:
+  displayName: Orders by ID
+  get:
+    description: Retrieve orders by ID
+    responses:
+      200:
+        description: ok
+        body:
+          application/json:
+            type: orders
+            examples:
+              output: !include examples/ordersByIDExample.raml
+  post:
+    description: Creates orders by ID
+    body:
+      application/json:
+        type: orderRequest
+        examples:
+          input: !include examples/orderRequestExample.raml
+    responses:
+      200:
+        description: ok
+        body:
+          application/json:
+            examples:
+              output: !include examples/ordersByIDExample.raml
