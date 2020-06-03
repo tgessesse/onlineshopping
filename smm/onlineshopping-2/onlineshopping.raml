@@ -1,0 +1,122 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/253ddcd2-6dcc-4d25-8442-a304a2bf99d1/ # 
+title: onlineshopping
+types: 
+ users: !include types/users.raml
+ products: !include types/products.raml
+ productid: !include types/productid.raml
+ user: !include types/user.raml
+ orders: !include types/orders.raml
+ orderid: !include types/orderid.raml
+ catagory: !include types/catagory.raml
+ catagoryid: !include types/catagoryid.raml
+ 
+/users:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: users
+            example: !include example/users.raml
+              
+  post:
+    body:
+      application/json:
+        example:
+         
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {"userid": 100}
+      201:
+        body:
+          application/json:
+            example:
+              {"message": "created"} 
+  /users/{id}:
+    uriParameters:
+      id:
+        required: true
+        type: integer
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: user
+              example: !include example/user.raml
+                
+
+  /products:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: products
+              example: !include example/products.raml
+    
+
+    /products{id}:
+      uriParameters:
+        id:
+          
+      get:
+        responses:
+          200:
+            body:
+              application/json:
+                type: productid
+                example: !include example/productid.raml
+  /orders:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: orders
+              example: !include example/orders.raml
+    /order{id}:
+      uriParameters:
+        id:
+          
+      get:
+        responses:
+          200:
+            body:
+              application/json:
+                type: orderid
+                example: !include example/orderid.raml
+  /catagory:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: catagory
+              example: !include example/catagory.raml
+    /{id}:
+      uriParameters:
+        id:
+          
+      get:
+        responses:
+          200:
+            body:
+              application/json:
+                type: catagoryid
+                example: !include example/catagoryid.raml
+                             
+               
+
+                    
+
+
+                
+              
+
+        
+      
