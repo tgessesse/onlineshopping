@@ -1,7 +1,11 @@
 #%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/812d092e-ea94-45a5-a68e-bb97c3bdbf67/ # 
 title: online-shopping
-version: 1.0
-
+version: 1.1
+types:
+  products: !include Types/products.raml
+  catagory: !include Types/catagory.raml 
+  order: !include Types/order.raml
 /users:
   post:
     body:
@@ -19,6 +23,7 @@ version: 1.0
           application/json:
             examples:
              {"created"} 
+
       401:
            body:
              application/json:
@@ -29,6 +34,13 @@ version: 1.0
              application/json:
                examples:
                 {"forbidden"} 
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              
 /catagories:
   description: find all catagories
   get:
@@ -36,7 +48,8 @@ version: 1.0
       200:
         body:
           application/json:
-            example: !include getallcatagories.json
+            type: catagory 
+            example: !include Examples/catagory.raml 
       401:
            body:
              application/json:
@@ -62,9 +75,7 @@ version: 1.0
                   {
     "categoryid": 17,
     "name": "men's clothing"
-  }      
-
-                           
+  }                              
 
 /products:
     get:
@@ -72,7 +83,8 @@ version: 1.0
         200:
           body:
             application/json:
-              examples: !include getproduct.raml
+              type: products
+              examples: !includeExamples/prodcts.raml 
         401:
            body:
              application/json:
@@ -88,10 +100,24 @@ version: 1.0
              application/json:
                examples:
                  {"not found"}
-  /product_id:
-    get:
-      
-      
+    /{productid}:
+      description: 
+      get:
+        responses:
+          200:
+            body:
+              application/json:
+                example:
+                  {
+                  "categoryid": 11,
+                  "description": "laptop",
+                  "name": "hp laptop",
+                  "price": 550,
+                  "productid": 121,
+                  "video_url": "string_video"
+                  }
+        
+
 
 
 
@@ -107,25 +133,8 @@ version: 1.0
       200:
         body:
           application/json:
-            examples:
-             orderId: provider|0123456789
-             firstName: John
-             lastName: Doe
-             postalAddress:
-             street: 44 Shirley Ave.
-             city: West Chicago
-             postalCode: '60185'
-             state: IL
-             country: USA
-             phone: +1-202-555-0180
-             email: john.doe@example.com
-             deliveryAddress:
-              street: 44 Shirley Ave.
-              city: West Chicago
-              postalCode: '60185'
-              state: IL
-              country: USA
-             type: contact
+            type: order
+            examples: !include Examples/order.raml
   /{orderid}:
     get:
       responses:
