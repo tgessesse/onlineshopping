@@ -1,0 +1,128 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/dfa15491-871c-4179-acbb-fd4a1affbba4/ # 
+title: onlineshopping_design
+     
+types:
+ users: !include types/users.raml
+ user-respo: !include types/user-respo.raml
+ userid: !include types/userid.raml
+ product: !include types/product.raml
+ catagory: !include types/catagory.raml
+ order: !include types/order.raml
+ ord-post: !include types/ord-post.raml
+
+/users:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+           type: users []
+           example: !include examples/users.raml
+              
+  post:
+    body:
+      application/json:
+        type: users
+        example: !include examples/user-post.raml
+    responses:
+      201:
+        body:
+          application/json:
+            type: user-respo 
+            example: !include examples/user-reps.raml
+
+  /{id}:
+    uriParameters:
+     id:
+      required: true
+      type: userid        
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include examples/userid.raml
+                
+/product:
+  get:
+    description: 
+    responses:
+      200:
+        body:
+          application/json:
+            type: product[]
+            example: !include examples/product.raml
+              
+  /{id}:
+    uriParameters:
+     id:      
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+             type: product
+             example: !include examples/pro-id.raml 
+     
+/catagory:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: catagory[]
+            example: !include examples/catagory.raml 
+             
+  /{id}:
+    uriParameters:
+     id:
+      type: integer
+      required: true 
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: catagory
+              example: !include examples/cat-id.raml
+        
+/order:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: order[]
+            example: !include examples/order.raml
+              
+  /{id}:
+    uriParameters:
+      id:
+        required: true
+        type: integer
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: order
+              example: !include examples/ord-id.raml
+                
+    post:
+     body:
+       application/json:
+         
+         example: !include examples/ord-post.raml
+           
+     responses:
+       201:
+         body:
+           application/json:
+             type: order
+             example: !include examples/ord-id.raml
+               
+
+ 
+
+              
