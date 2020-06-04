@@ -1,0 +1,121 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/f9aa2f56-351e-455a-9f7f-c5e8d376e1f9/ # 
+title: online-shopping api
+version: 1.0
+types:
+  users: !include Type/user.raml
+  product: !include Type/product.raml
+  category: !include  Type/category.raml
+  order: !include Type/order.raml
+  order[]: !include Type/order[].raml
+/Users:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: users
+            example: !include Examples/users.raml
+                       
+  post:
+
+    body:
+      application/json:
+        type: users
+        examples: !include Examples/users.raml
+    
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+                {"userid":1003}  
+  /User{id}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+                {"user id": 1003}
+              
+                   
+/Products:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: product
+            examples: !include Examples/product.raml
+              
+  /product{id}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: product
+              examples: !include Examples/product{id}.raml
+               
+/catagories:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: category
+            examples: !include Examples/category.raml
+      404:
+        body:
+          application/json:
+            description: "category not found"
+  /{categoryid}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: category
+              example:
+                {
+  "categoryid": 10,
+  "name": "laptop"
+}        
+      
+        
+/orders:
+  post:
+    body:
+      application/json:
+        type: order[]
+        examples: !include Examples/order[].raml
+      
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+               {
+  "orderid": 0,
+  "status": "accepted",
+  "userid": 0}
+      201:
+        description: "order created"       
+                          
+  get:
+    responses:
+      201:
+        body:
+          application/json:
+            examples: !include Examples/order.raml
+
+  /{orderid}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: order
+              examples: !include Examples/order{id}.raml
+                   
