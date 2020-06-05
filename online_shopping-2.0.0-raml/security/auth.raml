@@ -1,0 +1,17 @@
+#%RAML 1.0 SecurityScheme
+type: OAuth 2.0
+describedBy:
+  headers:
+      Authorization: 
+       type: string
+       required: true
+  queryParameters:
+    token:
+      type: string
+  responses:
+    200:
+      description: success 
+    401:
+      description: bad or expired request
+    402:
+      description: not allowed to access
