@@ -1,0 +1,109 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/21926258-d292-4624-8a5b-ddba417f8f18/ # 
+title: Onlineshopping API
+version: 1.0
+/user:
+  post:
+    body:
+      application/json:
+        example:
+          !include examples Onlineshoping API ramel/user.raml
+    responses:
+      201:
+        description: ok
+        body:
+          application/json:
+            example:
+              {"uid": "100"}
+              
+              
+/products:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: 
+               !include examples Onlineshoping API ramel/products.raml
+        
+  /{id}:
+    uriParameters:
+      id:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: 
+                 !include examples Onlineshoping API ramel/products{id}:.raml
+/categories:
+  get:
+    description: To retrieve the catagories
+    responses:
+      200:
+        body:
+          application/json:
+            example: 
+               !include examples Onlineshoping API ramel/categories.raml
+  /{id}:
+    uriParameters:
+      id:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+                !include examples Onlineshoping API ramel/categories{id}:.raml
+
+/order:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: 
+               !include examples Onlineshoping API ramel/order.raml
+
+  /{id}:
+    uriParameters:
+      id:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: 
+                 !include examples Onlineshoping API ramel/orders{id.raml
+  post:
+    body:
+      application/json:
+        example:
+            {"products": 
+               [ { "productId": 101,
+                  "quantity": 2} ],
+               "uid": 100
+             }
+    responses:
+      201:
+        body:
+          application/json:
+            example: 
+                          {
+  "orderid": 128,
+  "userid": 1019,
+  "addressid": 201,
+  "discountid": 1,
+  "created": "2020-05-27T23:18:46.479+00:00",
+  "modified": null,
+  "status": "Accepted",
+  "amount": 1000
+}
+               
+                
+   
+          
+          
+        
+          
+    
