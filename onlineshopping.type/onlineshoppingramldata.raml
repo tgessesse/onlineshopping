@@ -1,0 +1,97 @@
+#%RAML 1.0
+title: OnlineShoppingRAMLData
+documentation:
+  - !include documentation.raml
+types:
+  user: !include type/user.raml
+  userid: !include type/userid.raml
+  producet: !include type/products.raml
+  productid: !include type/productsid.raml
+  order: !include type/order.raml
+  orderid: !include type/orderid.raml
+  catagories: !include type/catagory.raml
+  catagoriesid: !include type/catagoryid.raml
+/Users:
+  post:
+    body:
+      application/json:
+        type: user
+        example: !include example/user.raml
+    responses:
+      200:
+        body:
+          application/json:
+            type: user
+            example: !include example/user.raml          
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            examples:
+              {"message": "user created"}
+  #404 page not find      
+
+/{UsersId}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: userid
+              example: !include example/userid.raml        
+/Products:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: producet
+            example: !include /example/Products.raml
+              
+  /Products/{id}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: productid
+              example: !include example/productsid.raml
+                
+/Orders:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: order
+            example: !include example/order.raml
+              
+  
+  /Orders/{id}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: orderid
+              example: !include example/odrerid.raml
+                
+/Categoris:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: catagories
+            example: !include example/Categories.raml
+              
+  /Categoris/{id}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: catagoriesid
+              example: !include example/catagoriesid.raml
+                
