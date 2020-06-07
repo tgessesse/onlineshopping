@@ -34,17 +34,19 @@ types:
               example: !include examples/UID.raml 
                 
 
-/users/{ID}: 
- get:
-   responses:
-     200:
-       body:
-         application/json:
+  /{id}: 
+    uriParameters:
+      id:
+        type: integer
+        required: true
+    get:
+      responses:
+        200:
+          body:
+            application/json:
               type: userid
               example: !include examples/userId.raml
-            
-
-                                      
+                                                
 /product:
   get:
      responses:
@@ -53,37 +55,47 @@ types:
          application/json:
             type: product[]
             example: !include examples/Product.raml
-     
-/products:
-       /{ID}:
-         get:
-          responses:
-            404:
-              body:
-                application/json:
-                 type: product
-                 example: !include examples/productid.raml 
-          
-   
-/orders:
+  /{id}: 
+    uriParameters:
+      id:
+        type: integer
+        required: true
+
     get:
-      body:
-        application/json:
-          type: orders[]
-          example: !include examples/orders.raml
+      responses:
+          200:
+            body:
+              application/json:
+                type: product
+                example: !include examples/productid.raml 
           
-    post:
-      body:
-        application/json:
-              type: postorder
-              example: !include examples/postOrders.raml
-        
-/order/(id):
+/orders:
   get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: orders[]
+            example: !include examples/orders.raml
+          
+  post:
     body:
       application/json:
-        type: orders
-        example: !include examples/orderid.raml
+        type: postorder
+        example: !include examples/postOrders.raml
+        
+  /{id}:
+    uriParameters:
+      id:
+        type: integer
+        required: true
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: orders
+              example: !include examples/orderid.raml
         
 /categories:
   get:
@@ -95,12 +107,17 @@ types:
               example: !include examples/categorys.raml
                 
                
-/categories/{id}:
-  get:
-    responses:
-       200:
-         body:
-          application/json:
+  /{id}:
+    uriParameters:
+      id:
+        type: integer
+        required: true
+
+    get:
+      responses:
+        200:
+          body:
+            application/json:
               type: categorys
               example: !include examples/categoryid.raml 
                
