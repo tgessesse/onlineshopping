@@ -1,0 +1,13 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/a9f364af-7a8c-4cb6-9199-513f6167f944/ # 
+title: online-shipping
+
+/user:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {"username":"test", "email":"test@gmail.com"}
+              
