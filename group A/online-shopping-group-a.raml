@@ -1,0 +1,71 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/825e34f9-66e0-4af4-bd19-165103feb9e8/ # 
+title: online-shopping-group-a
+
+uses:
+  lib: library/library.raml
+/users:
+  type:
+    lib.collection:
+      get-response-type: users []
+      get-response-example: !include examples/users.raml
+      get-response-trait: response404
+      post-response-type: users
+      post-response-example: !include examples/userid.raml
+      post-response-trait: responseMessage
+
+  /users{id}:
+    type:
+      lib.getcollection:
+        get-response-type: users
+        get-response-example: !include examples/userid.raml
+        get-response-trait: response404
+ 
+                
+/orders:
+  type:
+    lib.collection:
+      get-response-type: orders []
+      get-response-example: !include examples/orders.raml
+      get-response-trait: response404
+      post-response-type: orders
+      post-response-example: !include examples/orderid.raml
+      post-response-trait: responseMessage
+          
+  /order{id}:
+    type:
+      lib.getcollection:
+        get-response-type: orders
+        get-response-example: !include examples/orderid.raml
+        get-response-trait: response404
+ 
+/products:
+  type:
+      lib.getcollection:
+        get-response-type: products []
+        get-response-example: !include examples/products.raml
+        get-response-trait: response404
+ 
+  /product{id}:
+    type:
+      lib.getcollection:
+        get-response-type: products
+        get-response-example: !include examples/productid.raml
+        get-response-trait: response404
+ 
+/categories:
+  type:
+      lib.getcollection:
+        get-response-type: categories []
+        get-response-example: !include examples/categories.raml
+        get-response-trait: response404
+              
+  /category{id}:
+    type:
+      lib.getcollection:
+        get-response-type: categories
+        get-response-example: !include examples/categoryid.raml
+        get-response-trait: response404
+
+
+                
