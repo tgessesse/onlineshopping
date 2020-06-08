@@ -1,0 +1,30 @@
+#%RAML 1.0 ResourceType
+
+post:
+     securedBy: oath
+     usage: This API is used by <<resourcePathName>>
+     description: This API is used to create <<resourcePathName>>
+     body:
+        application/json:
+          type: <<requestposttype>>
+          examples:
+            input : <<postReference1>>
+     responses:
+       201 :
+         body:
+           application/json:
+             type: <<responseposttype>>  
+             examples: 
+              output : <<responseposttype>>
+                    
+is: [<<statuscodepost>>]
+get:
+   description: this API is used to retrieve all details about <<resourcePathName>>  
+   responses:
+    200:
+      body:
+        application/json:
+          type: <<responsegettype>>
+          examples: 
+            output : <<getreference1>>
+        

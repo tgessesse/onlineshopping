@@ -1,0 +1,14 @@
+#%RAML 1.0 ResourceType
+
+get:
+
+  description: this API is used to retrieve all details about <<resourcePathName>>  
+  responses:
+    200:
+      body:
+        application/json:
+          type: <<responsegettype>>
+          examples:
+              <<getreference1 >> 
+            
+is: [<<statuscodeget>>] 

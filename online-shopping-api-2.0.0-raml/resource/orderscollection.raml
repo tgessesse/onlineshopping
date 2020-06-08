@@ -1,0 +1,12 @@
+#%RAML 1.0 ResourceType
+type:
+  onlineshopping.collection :
+    requestposttype : onlineshopping.orderrequest
+    postReference1 : -- !include /examples/order-request-example.raml
+    responseposttype : onlineshopping.orderrequest
+    postreference2 : --! !include /examples/order-request-example.raml
+    statuscodepost : onlineshopping.statuscode
+    responsegettype : onlineshopping.order[]
+    getreference1 : --!include /examples/order.raml
+    statuscodeget :  onlineshopping.statuscode          
+    
