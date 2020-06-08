@@ -1,0 +1,93 @@
+#%RAML 1.0
+title: Yibeltalonlineshopping
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/2870dbf3-c095-4325-8d69-4e6e023dd71a/ # baseUri: 
+version: 1.0.0
+uses:
+  common: library.raml
+
+types:
+  users: !include Types/users.raml
+  userspost: !include Types/userspost.raml
+  userspostresponse: !include Types/userspostresponse.raml
+  usersid: !include Types/usersid.raml
+  products: !include Types/products.raml
+  productid: !include Types/productid.raml
+  catagories: !include Types/catagories.raml
+  catagoriesid: !include Types/catagoriesid.raml
+  ordersid: !include Types/ordersid.raml
+  ordersget: !include Types/ordersget.raml
+  orderspost: !include Types/orderspost.raml
+  orderpostresponse: !include Types/orderpostresponse.raml
+traits:
+  responsemessege: !include traits/201trait.raml
+securitySchemes:
+  basic: !include securityscheme/securityScheme.raml
+resourceTypes:
+  colleceion: !include resourcetype/resourceType.raml
+  collectionid: !include resourcetype/resourceTypeid.raml
+  collectionpost: !include resourcetype/resourceTypepost.raml
+mediaType: [application/json]  
+
+/users:
+  type:
+    colleceion: 
+      getresourcetype: users
+      examplereference1: !include Examples/users.raml
+
+    collectionpost:
+      getresorceetypepost: users
+      examplereference3: !include Examples/userspost.raml
+          
+  is: responsemessege           
+    
+  /{id}:
+    type:
+      collectionid:
+        getresourcetypeid: usersid
+        examplerefrence2: !include Examples/usersid.raml
+    
+/catagories:
+  type:
+    colleceion:
+      getresourcetype: catagories
+      examplereference1: !include Examples/catagories.raml
+  
+  /{id}:
+    type:
+      collectionid:
+        getresourcetypeid: catagoriesid
+        examplerefrence2: !include Examples/catagoriesid.raml
+   
+/products:
+  type:
+    colleceion:
+      getresourcetype: products
+      examplereference1: !include Examples/products.raml
+  
+  /{id}:
+    type:
+      collectionid:
+        getresourcetypeid: productid
+        examplerefrence2: !include Examples/productid.raml
+      
+/orders:
+  type:
+    colleceion:
+      getresourcetype: ordersget
+      examplereference1: !include Examples/ordersget.raml
+
+    type:
+      collectionpost:
+        getresorceetypepost: orderspost
+        examplereference3: !include Examples/orderspost.raml
+    
+  is: responsemessege
+              
+    
+  /{id}:
+    type:
+      collectionid:
+        getresourcetypeid: ordersid
+        examplerefrence2: !include Examples/ordersid.raml
+                
+      
