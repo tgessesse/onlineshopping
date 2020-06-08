@@ -1,0 +1,54 @@
+#%RAML 1.0 
+title: online shopping API
+mediaType: application/json
+
+uses:
+  library: library/onlineShoppingLibrary.raml
+       
+/users:        
+  type: library.collection3       
+  get:
+    displayName: getallusers
+    description: retrive a list of user 
+   
+  post:     
+  
+/products:
+  securedBy: library.basic    
+  is: library.secure
+  type: library.collection2
+  get:
+  displayName: getallProducts
+  description: retrive all products   
+  /{prododuct_id}:
+     type: library.collection2     
+     get:       
+     displayName: Get product by productid
+     description: Retrieves a product detail based on unique product id          
+/categories:
+  type: library.collection2                  
+  get:
+  displayName: findallcategories
+  description: retrieve all categories of products        
+  /{categories_id }:
+     type: library.collection2    
+     get:      
+     displayName: Get categories category by ID
+     description: Retrieves  category detail based on category ID         
+/orders:
+  is: library.secure
+  type: library.collection2      
+  get:
+    displayName: consume orders
+    description: get all comsumed orders
+  post:
+  displayName: create orders
+  description: Adds products into the order  
+                                 
+  /{order_id}:
+    type: library.collection2 
+    get:
+    displayName: Get orders by id
+    description: Retrieves order detail based on order id  
+       
+                 

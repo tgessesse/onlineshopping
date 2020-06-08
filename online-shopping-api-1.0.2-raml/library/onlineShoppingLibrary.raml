@@ -1,0 +1,17 @@
+#%RAML 1.0 Library
+
+types:
+  User: !include ../datatype/user.raml
+  Userid: !include ../datatype/userId.raml
+  Product: !include ../datatype/product.raml
+  Category: !include ../datatype/categories.raml
+  Order: !include ../datatype/order.raml 
+traits:
+  secure: !include ../trait/clientIdSecretId.raml
+resourceTypes:
+  collection1: !include ../resourceType/collection1.raml
+  collection2: !include ../resourceType/collection2.raml 
+  collection3: !include ../resourceType/collection3.raml  
+securitySchemes:
+  basic: !include ../securityScheme/basic.raml 
+  

@@ -1,0 +1,23 @@
+#%RAML 1.0 ResourceType
+get?:
+    displayName: getallusers
+    description: retrive a list of user 
+    responses:
+      200:
+        body:                    
+          application/json:
+            type: User[]                            
+            
+post?:     
+    displayName: Register users
+    description: Registering a user to get user id                   
+    body:
+      application/json:
+        type: User         
+       
+    responses:
+      201:
+        description: Created
+        body: 
+          application/json: 
+            type: Userid            
