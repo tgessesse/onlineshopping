@@ -1,0 +1,17 @@
+#%RAML 1.0 ResourceType
+
+#securedBy: secure
+#description: Retrieve <<resourcePathName>>
+
+#is: [errorMsg]
+get:
+  securedBy: secure
+  description: Retrieve all <<resourcePathName>>
+  responses:  
+    200:   
+      body:
+        application/json:
+          type: <<response-type>>
+          example: <<response-get-example>>
+        
+is: [errorMsg]

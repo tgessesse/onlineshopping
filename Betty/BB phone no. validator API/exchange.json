@@ -1,0 +1,6 @@
+{
+  "main": "phone-validator-api.raml",
+  "name": "phone validator API",
+  "classifier": "raml",
+  "tags": []
+}

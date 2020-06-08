@@ -1,0 +1,23 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/13437637-ded1-474d-b01c-7d27d0d0ef64/ # 
+title: phone number validator API
+version: v1
+
+uses:
+  lab: /library/phoneValidateLibrary.raml
+
+  
+/validate:
+  type:
+    lab.collection:
+      response-type: lab.phoneData
+      response-get-example: !include /examples/PhoneNoExample.raml
+      error-Msg: lab.erorMsg
+    
+  
+             
+
+      
+      
+      
+  

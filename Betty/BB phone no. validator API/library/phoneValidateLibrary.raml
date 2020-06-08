@@ -1,0 +1,13 @@
+#%RAML 1.0 Library
+usage: apply this type for the resources of phone no. validate
+types:
+ phoneData: !include /dataTypes/phoneData.raml
+
+resourceTypes:
+  collection: !include /resourceType/collection.raml  
+
+securitySchemes:
+  secure: !include /securityScheme/securityScheme.raml
+
+traits:
+  errorMsg: !include /traits/errorMsg.raml
