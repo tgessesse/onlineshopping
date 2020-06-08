@@ -1,0 +1,19 @@
+#%RAML 1.0 Library
+usage: 
+types:
+  users: !include ../types/users.raml
+  orders: !include ../types/orders.raml
+  products: !include ../types/products.raml
+  categories: !include ../types/categories.raml
+traits:
+  responseMessage: !include ../traits/201trait.raml
+  response404: !include ../traits/404trait.raml
+securitySchemes:
+  postsecurity: !include ../securityschema/securityScheme.raml
+resourceTypes:
+  collection: !include ../resourcestypes/collection.raml
+  getcollection: !include ../resourcestypes/getcollection.raml
+
+
+
+  
