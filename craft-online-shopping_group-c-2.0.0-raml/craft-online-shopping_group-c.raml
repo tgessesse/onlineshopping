@@ -1,0 +1,81 @@
+#%RAML 1.0
+title: craft-Online-shopping_Group-C
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/990ab5cc-2c07-43f3-a8f8-e728ad67f358/ # baseUri:
+version: 2.0.0
+documentation:  
+  - !include documentation.raml 
+uses:
+ Online-Shopping: Library/onlineshoppingLibrary.raml  
+/users:
+  type:
+    Online-Shopping.collection: 
+      getResponsetype: users []
+      examplereference1: !include Examples/users.raml
+  post:
+    description: This method creates list of users
+    securedBy: [Online-Shopping.basic]         
+    is: [Online-Shopping.trait401, Online-Shopping.trait403, Online-Shopping.trait404]
+    body:
+      application/json:
+        type: Online-Shopping.userPostReq    
+        example: !include Examples/userPostReq.raml
+    responses:
+      200:
+        body:
+          application/json:
+            type: Online-Shopping.userPostResp
+            example: !include Examples/userPostResp.raml 
+  /{id}:
+    type:
+      Online-Shopping.collectionid:
+        getResponsetypeid: userid 
+        examplereference2: !include Examples/userid.raml                   
+/categories:
+  type:
+    Online-Shopping.collection:
+      getResponsetype: categories[]  
+      examplereference1: !include Examples/categories.raml 
+  /{id}:
+    type:
+      Online-Shopping.collectionid:
+        getResponsetypeid: categoryid
+        examplereference2: !include Examples/categoryid.raml                        
+/Products:
+  type:
+    Online-Shopping.collection:
+      getResponsetype: products[]
+      examplereference1: !include Examples/products.raml   
+  /{id}:
+    type:
+      Online-Shopping.collectionid:
+        getResponsetypeid: productid
+        examplereference2: !include Examples/productid.raml 
+/orders:
+  type:
+    Online-Shopping.collection:
+      getResponsetype: orders []
+      examplereference1: !include Examples/orders.raml                                   
+  post:
+    securedBy: [Online-Shopping.basic]
+    is: [Online-Shopping.trait201, Online-Shopping.trait401, Online-Shopping.trait403]
+    description: this method creats list of order
+    body:
+      application/json:
+        example: !include Examples/orderPostReq.raml       
+    responses:
+      200:
+        body:
+          application/json:
+            type: Online-Shopping.orderPostResp
+            example: !include Examples/orderPostResp.raml     
+  /{id}:
+    type:
+      Online-Shopping.collectionid:
+        getResponsetypeid: orderid
+        examplereference2: !include Examples/orderid.raml 
+           
+
+   
+      
+
+  

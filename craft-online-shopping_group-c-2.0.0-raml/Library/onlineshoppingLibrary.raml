@@ -1,0 +1,25 @@
+#%RAML 1.0 Library
+usage:
+types:
+  users: !include ../types/users.raml
+  userid: !include ../types/userid.raml
+  userPostReq: !include ../types/userPostReq.raml
+  userPostResp: !include ../types/userPostResp.raml
+  categories: !include ../types/categories.raml
+  categoryid: !include ../types/categoryid.raml
+  products: !include ../types/products.raml
+  productid: !include ../types/productid.raml
+  orders: !include ../types/orders.raml
+  orderid: !include ../types/orderid.raml
+  orderPostReq: !include ../types/orderPostReq.raml
+  orderPostResp: !include ../types/orderPostResp.raml
+resourceTypes:
+  collection: !include ../ResourceType/collection.raml
+  collectionid: !include ../ResourceType/collectionid.raml 
+traits:
+  trait201: !include ../Traits/trait201.raml
+  trait401: !include ../Traits/trait401.raml
+  trait403: !include ../Traits/trait403.raml
+  trait404: !include ../Traits/trait404.raml
+securitySchemes:
+ basic: !include ../Security/securityScheme.raml
