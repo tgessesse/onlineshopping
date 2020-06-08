@@ -1,0 +1,27 @@
+#%RAML 1.0 Extension
+extends: ../onlineshopping.raml
+usage: for admin only
+/admin:
+  delete:
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {
+                "message":"successfully deleted"
+              }
+/admins:
+  post:
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {
+                "message":"user info updated"
+              }
+              
+              
+
+   
