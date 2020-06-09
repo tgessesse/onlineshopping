@@ -1,5 +1,5 @@
 #%RAML 1.0
-baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/21680cb8-eb45-4b77-afbe-31e75ac82be3/ # 
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/312eec78-aa13-4b79-8479-f541ea8e0e28/ # baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/      1cccacbc-dc9c-4b40-b7f8-1fc74a6acd70/ #
 title: online shopping 
 version: 1.0.0
 types:
@@ -10,26 +10,35 @@ types:
   orders: !include types/orders.raml
   postorder: !include types/postorders.raml
   categorys: !include types/categories.raml
-  
+documentation:
+  - !include documentation/documentation1.raml
+traits: 
+  responsemessage: !include trait/200.raml
+  responsemessage1: !include trait/201.raml 
+securitySchemes:
+  oath: !include security/Oath.raml
+  basic: !include security/basic.raml
+annotationTypes:
+ annotation: !include Annotation/annotation.raml
+
 /users:
   get:
     responses:
-      200:
-        body:
-          application/json:
+  is:
+   responsemessage:  
             type: user[]
             example: !include examples/users.raml
 
              
   post:
+    securedBy: [basic]
     body:
          application/json:
            example: !include examples/postuser.raml
          
     responses:
-      201:
-        body:
-          application/json:
+    is:
+      responsemessage1:
               type: userresponce
               example: !include examples/UID.raml 
                 
@@ -41,18 +50,16 @@ types:
         required: true
     get:
       responses:
-        200:
-          body:
-            application/json:
+    is:
+     responsemessage: 
               type: userid
               example: !include examples/userId.raml
                                                 
 /product:
   get:
      responses:
-       200:
-        body:
-         application/json:
+  is:
+    responsemessage:     
             type: product[]
             example: !include examples/Product.raml
   /{id}: 
@@ -63,22 +70,22 @@ types:
 
     get:
       responses:
-          200:
-            body:
-              application/json:
+    is:
+     responsemessage: 
                 type: product
                 example: !include examples/productid.raml 
           
 /orders:
   get:
     responses:
-      200:
-        body:
-          application/json:
+  is:
+    responsemessage: 
             type: orders[]
             example: !include examples/orders.raml
           
   post:
+    securedBy: [basic]
+      
     body:
       application/json:
         type: postorder
@@ -91,18 +98,16 @@ types:
         required: true
     get:
       responses:
-        200:
-          body:
-            application/json:
+    is:
+     responsemessage: 
               type: orders
               example: !include examples/orderid.raml
         
 /categories:
   get:
     responses:
-       200:
-          body:
-            application/json:
+    is:
+     responsemessage: 
               type: categorys[]
               example: !include examples/categorys.raml
                 
@@ -115,9 +120,8 @@ types:
 
     get:
       responses:
-        200:
-          body:
-            application/json:
+    is:
+     responsemessage: 
               type: categorys
               example: !include examples/categoryid.raml 
                
