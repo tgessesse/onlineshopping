@@ -1,0 +1,23 @@
+#%RAML 1.0 SecurityScheme
+type: OAuth 2.0
+description: this REST API support Oath security
+displayName: 
+describedBy:
+  headers:
+    Authorization: 
+     description: users must have display names to access the resource
+     type: string
+  queryParameters:
+    access token:
+      description: users must use the correct token
+
+  responses:
+    404:
+      description: not found
+    403: 
+      description: forbidden
+    200:
+      description: ok
+    401:
+      description: unauthorized 
+  

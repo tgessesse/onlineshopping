@@ -1,0 +1,21 @@
+#%RAML 1.0 Extension
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/82a5653a-04fb-4b87-9f31-99613f5f790f/ # 
+extends: ../onlineshopping.raml
+usage: for admin user only
+/admin:
+  delete:
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {"message":"successufully deleted"}
+  put:
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {"message":"successfully updated"}
+
+    

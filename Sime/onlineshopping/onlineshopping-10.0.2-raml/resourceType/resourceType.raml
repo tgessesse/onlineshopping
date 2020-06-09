@@ -1,0 +1,9 @@
+#%RAML 1.0 ResourceType
+get:
+  description: this api returns  forbidden for prohibited message from <<resourcePathName>>
+  responses:
+    403:
+      body:
+        application/json:
+          example:
+            {"meaasege": <<resourcePathNam>>"forbidden"}

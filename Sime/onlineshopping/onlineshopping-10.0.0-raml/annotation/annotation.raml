@@ -1,0 +1,27 @@
+#%RAML 1.0 AnnotationTypeDeclaration
+allowedTargets: [method]
+properties:
+  usage:
+    description: detain annotation for online shoppind API.
+    default: get
+  accessibility:
+    description: the developer has to be informed where metadata is found
+    properties:
+      url:
+        description: dev.net is the url used in onlineshopping rest API
+        default: HREF
+      protocol:
+        description: the protocol used in by onlineshoppine RESTapi is http
+        default: http
+      visibility:
+        description: user or developer needs to know the url to use http methods of                         this API.
+        type: boolean
+        default: true
+      restriction: 
+        description: can the user use all http methods in this REST API?
+        type:  boolean
+        default: false
+
+      
+
+  

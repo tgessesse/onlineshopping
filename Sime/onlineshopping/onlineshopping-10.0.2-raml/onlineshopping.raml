@@ -1,0 +1,135 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/6c45ec19-9ea7-4d2d-a00c-4d4ddf694a07/ # 
+title: onlineshopping
+version: 1.o
+mediaType: [Application/json]
+annotationTypes:
+  annotation: !include annotation/annotation.raml
+securitySchemes:
+  security: !include security/basic.raml
+
+types:
+  users: !include types/users.raml
+  user: !include types/user.raml
+  products: !include types/products.raml
+  product: !include types/product.raml
+  orders: !include types/orders.raml
+  order: !include types/order.raml
+  categories: !include types/categories.raml
+  category: !include types/category.raml
+traits:
+  responsemessage: !include traits/201.raml
+  responsemessage1: !include traits/200.raml
+  responsemessage2: !include traits//401.raml
+  responsemessage3: !include traits/403.raml
+  responsemessage4: !include traits/404.raml
+
+  basic: !included security/basic.ramil
+  
+documentation:
+  - !include documentation/documentation.raml
+resourceTypes:
+  collection: !include resourceType/resourceType.raml
+/users:
+  type:
+    collection:
+      resourcePathName: product
+      resourcePathNam: product 
+  post:
+    body:
+      application/json:
+        example:
+          {
+                "email":"bella@gmail.com",
+                "username":"bella"
+
+          }
+    securedBy: security
+     
+  
+    responses:
+        200:
+          body:
+            application/json:
+              example:
+                {"uid": 1089
+                }
+      
+/users/{id}:
+  get:
+    responses:
+  is:
+    responsemessage1:
+        
+/products:
+  type:
+    collection:
+      resourcePathName: product
+      resourcePathNam: product 
+  
+/products/{id}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: product
+              example: !include examples/product.raml
+    
+     
+/orders:
+  type:
+    collection:
+      resourcePathName: product
+      resourcePathNam: product 
+  post:
+    body:
+      application/json:
+        example:
+          {
+  "products": [
+    {
+      "productId": 103,
+      "quantity": 20
+    }
+  ],
+  "uid": 1089
+
+}
+    securedBy: security
+    
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {"uid": 1089
+              }
+      #201:
+      # body:
+      #   example:
+      #       {"message":"created"}
+  is:
+    responsemessage:     
+      
+/orders/{id}:
+  get:
+    body:
+      application/json:
+        type: order
+        example: !include examples/order.raml
+ 
+/categories:
+  type:
+    collection:
+      resourcePathName: product
+      resourcePathNam: product 
+/category/{id}:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: category
+            example: !include examples/category.raml
+
