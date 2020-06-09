@@ -1,0 +1,67 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/ad7df0f2-c6e7-4869-9641-ac98af2f0cd7/ # 
+title: online-shopping
+uses:
+  Lib: Library/library.raml
+mediaType: [application/json]
+types:
+  user: !include datatype/user.raml
+  products: !include datatype/products.raml
+  catagories: !include datatype/catagories.raml
+  orders: !include datatype/orders.raml
+resourceTypes:
+  postCollection: !include resourceType/getPostResourceType.raml
+  getCollection: !include resourceType/getResourceType.raml
+traits:
+  404Response: !include Traits/404Message.raml
+  201Response: !include Traits/201Message.raml
+
+/user:
+  type:
+    postCollection:
+      exampleReferance1: !include examples/user.raml
+      exampleReference2: !include examples/user.raml
+      exampleReference3: !include examples/userResponse.raml
+/products:
+  type:
+    getCollection:
+      exampleReferance1: !include examples/products.raml  
+  /products: 
+   /{ID}:
+     type:
+       getCollection:
+         exampleReferance1: !include examples/products.raml                
+/catagories:
+  type:
+    getCollection:
+      exampleReferance1: !include examples/catagories.raml        
+  /catagories:
+    /{id}:
+      type:
+        getCollection:
+          exampleReferance1: !include examples/catagories.raml                  
+/orders:
+  type:
+    postCollection:
+      exampleReferance1: !include  examples/orders.raml
+      exampleReference2: !include  examples/orders.raml
+      exampleReference3: !include examples/postOrder.raml              
+  /orders:
+    /{id}:
+      type:
+        getCollection:
+          exampleReferance1: !include examples/orders.raml
+          
+  
+            
+               
+
+
+  
+    
+          
+                         
+
+      
+        
+          

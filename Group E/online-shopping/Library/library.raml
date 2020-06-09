@@ -1,0 +1,19 @@
+#%RAML 1.0 Library
+usage: To define libraries used in API
+types:
+  catagories: !include ../datatype/catagories.raml
+  orders: !include ../datatype/orders.raml
+  products: !include ../datatype/products.raml
+  user: !include ../datatype/user.raml
+
+resourceTypes:
+  getPost: !include ../resourceType/getPostResourceType.raml
+  getResorce: !include ../resourceType/getResourceType.raml
+
+traits:
+  201: !include ../Traits/201Message.raml
+  404: !include ../Traits/404Message.raml
+
+
+  
+  

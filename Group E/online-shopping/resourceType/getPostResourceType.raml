@@ -1,0 +1,29 @@
+#%RAML 1.0 ResourceType
+get:
+      description: This API is used to retrieve all details about <<resourcePathName>>
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+               <<exampleReferance1>>
+      is: [404Response]
+        
+post:
+      description: This API is used to create
+      body:
+        application/jason:
+          example: |
+            <<exampleReference2>>
+      responses: 
+        201:
+          body: 
+            application/json:
+              example: |
+                <<exampleReference3>>
+      is: [201Response]
+        
+      
+
+        
+  
