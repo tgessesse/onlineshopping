@@ -1,0 +1,37 @@
+#%RAML 1.0 Library
+usage: apply this api for the resources of online shopping
+
+
+
+types:
+  user: !include ../datatype/user/user.raml
+  userid : !include ../datatype/user/userid.raml
+  userpostresponse : !include ../datatype/userpostresponse.raml
+  userpostrequest : !include ../datatype/userpostrequest.raml
+  product: !include ../datatype/product.raml
+  productid : !include ../datatype/productid.raml
+  catagories: !include ../datatype/catagoryget.raml
+  catagoriesid: !include ../datatype/catagoryid.raml
+  orders: !include ../datatype/getorders.raml
+  ordersid: !include ../datatype/getordersid.raml
+  orderspostrequest: !include ../datatype/postorderrequest.raml
+  orederpostresponse: !include ../datatype/orderpostresponse.raml
+
+resourceTypes:
+  collectionget: !include ../resource/collectionget.raml
+  collectiongetandpost: !include ../resource/collectiongetandpost.raml
+  collection-users: !include ../resource/collection-users.raml
+  collection-userid: !include ../resource/collection-userid.raml
+  collection-products: !include ../resource/collection-products.raml
+  collection-productid: !include ../resource/collection-productid.raml
+  collection-catagories: !include ../resource/collection-catagories.raml
+  collection-catagoriesid: !include ../resource/collection-catagoriesid.raml
+  collection-orders: !include ../resource/collection-orders.raml
+  collection-ordersid: !include ../resource/collection-ordersid.raml
+securitySchemes:
+  basic: !include ../security/security.raml
+traits:
+  id: !include ../traits/trait.raml
+  errortrait: !include ../traits/error.raml
+annotationTypes:
+   annotation: !include ../annotation.raml

@@ -1,0 +1,108 @@
+#%RAML 1.0 DocumentationItem
+title:
+content:# post:
+  #   securedBy: [basic]
+  #   body:
+  #     application/json:
+  #         type : online-shopping.userpostrequest[]
+  #         example: !include examples/user/postuserrequest.raml
+       
+  #   responses:
+  #     200:
+  #       body:
+  #         application/json:
+          
+  #           type: online-shopping.userpostresponse
+  #           example: !include examples/user/postuserresponse.raml
+  #     201:
+  #        body:
+  #         application/json:
+  #           example:
+  #             {"message":"created"}
+  #   is: [errortrait]
+  
+             
+  # get:
+  #   responses:
+  #     200:
+  #       body:
+  #         application/json:
+  #           type: online-shopping.user[]
+            
+  #           example: !include examples/user/getuser.raml
+  #   is: [errortrait]
+
+
+    get: 
+    #   is: [id]
+    #   responses:
+    #     200:
+    #       body:
+    #         application/json:
+    #            type: online-shopping.userid
+    #            example: !include examples/user/getuserid.raml
+    #   get:
+#     responses:
+#       200:
+#         body:
+#           application/json:
+#             type: online-shopping.catagories[]
+#             example: !include examples/categories/getcategory.raml
+#     is: [errortrait]
+    
+#
+get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: online-shopping.catagories[]
+            example: !include examples/categories/getcategory.raml
+    is: [errortrait]
+       /{id}:
+    
+#     get:
+#       is: [id]
+#       responses:
+#         200:
+#           body:
+#             application/json:
+#               type: online-shopping.catagoriesid
+#               example: !include examples/categories/getcategoryid.raml
+get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: online-shopping.orders[]
+            example: !include examples/orders/getorders.raml
+              
+   #   post:
+#       securedBy: [basic]
+#       body:
+#         application/json:
+#           type: online-shopping.orderspostrequest
+#           example: !include examples/orders/postorders.raml
+     
+#       responses:
+#         200:
+#           body:
+#             application/json:
+#               type: online-shopping.orederpostresponse
+#               example: !include examples/orders/postresponseorders.raml
+#         201:
+#           body:
+#             application/json:
+#               example:
+#                   {"message":"created"}
+#       is: [errortrait]        
+            #     get:
+#       is: [id]
+#       responses:
+#         200:
+#           body:
+#             application/json:
+#               type: online-shopping.ordersid
+#               example: !include examples/orders/getordersid.raml
+               
+                   

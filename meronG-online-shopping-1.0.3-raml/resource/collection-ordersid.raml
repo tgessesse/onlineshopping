@@ -1,0 +1,7 @@
+#%RAML 1.0 ResourceType
+type:
+  online-shopping.collectionget:
+    request-get-type: online-shopping.ordersid
+    request-get-example: !include ../examples/orders/getordersid.raml
+    error-trait-get: online-shopping.errortrait
+    

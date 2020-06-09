@@ -1,0 +1,31 @@
+#%RAML 1.0 ResourceType
+usage:  this resource type is used for resources that have get and post methods
+
+post:
+  securedBy: basic
+  description: create <<resourcePathName>>
+  body:
+    application/json:
+      type: <<request-post-type>>
+      example: <<request-post-example>>
+  
+  responses:
+    201:
+      body:
+        application/json:
+          type: <<request-post-type>>
+          example: <<request-post-example>>
+  is: [<<error-trait-post>> ]    
+
+get:
+  
+  description: retrieve all <<resourcePathName>>
+  responses:
+      200:
+        body:
+          application/json:
+            type: <<response-get-type>>
+            example: <<response-get-example>>
+  is: [<<error-trait-get>> ]  
+
+            

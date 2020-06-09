@@ -1,0 +1,19 @@
+#%RAML 1.0 AnnotationTypeDeclaration
+allowedTargets: [method]
+properties:
+  usage:
+    description: use this annotation to understand the online shopping rest api
+    default: get post
+  controller:
+    description: the c;ient have to be informed where the meta data is found
+    properties:
+      url:
+        description: dev.net is the url which is used to the online shopping rest api
+        default: href
+      protocol:
+        description: the protocol used by this api is http
+        default: http  
+      visibility:
+        description: should the user need to know (devloper) ned to know the url to use the http method to use the rest api
+        type: boolean
+        default: true

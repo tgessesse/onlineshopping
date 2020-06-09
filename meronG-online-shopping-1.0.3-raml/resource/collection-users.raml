@@ -1,0 +1,15 @@
+#%RAML 1.0 ResourceType
+type:
+  online-shopping.collectiongetandpost:
+    request-post-type: online-shopping.userpostrequest[]
+    request-post-example: !include ../examples/user/postuserrequest.raml
+    response-post-type: online-shopping.userpostresponse
+    response-post-example: !include ../examples/user/postuserresponse.raml
+    error-trait-post: online-shopping.errortrait
+    response-get-type: online-shopping.user[]
+    response-get-example: !include ../examples/user/getuser.raml
+    error-trait-get: online-shopping.errortrait
+
+
+            
+            
