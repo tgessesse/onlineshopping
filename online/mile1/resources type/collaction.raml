@@ -1,0 +1,22 @@
+#%RAML 1.0 ResourceType
+get:
+  responses:
+    200:
+      body:
+        application/json:
+          type: <<recponse-type>>
+          example: <<recponse-example>>
+     
+              
+post:
+  securedBy:
+      [basic]
+      
+  body:
+    application/json:
+      type: <<request-type>>
+      example:  <<request-example>>
+
+  is: [response201 , response404]
+        
+        

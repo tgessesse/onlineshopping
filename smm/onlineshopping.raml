@@ -1,0 +1,83 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/253ddcd2-6dcc-4d25-8442-a304a2bf99d1/ # 
+title: onlineshopping
+uses:
+  lib: library/library.raml
+types: 
+ users: !include types/userid.raml
+ products: !include types/products.raml
+ user: !include types/user.raml
+ orders: !include types/orders.raml
+ orderid: !include types/orderid.raml
+ catagory: !include types/catagory.raml
+ catagoryid: !include types/catagoryid.raml
+traits:
+  response201: !include traits/201trait.raml
+  response404: !include traits/404trait.raml
+securitySchemes:
+  basic: !include securityschema/securityScheme.raml
+resourceTypes:
+  getcollaction: !include resources type/getcollaction.raml
+  collaction: !include resources type/collaction.raml 
+
+  
+ 
+/users:
+  type:
+    collaction:
+      recponse-type: user[]
+      recponse-example: !include example/users.raml
+      request-type: user   
+      request-example: !include example/user.raml
+
+/users/{id}:
+  type:
+    getcollaction:
+      get-response-type: !include types/userid.raml
+      get-response-example: !include example/userid.raml
+      get-response-trait: response404
+
+                    
+/products:
+  type:
+    getcollaction:
+      get-response-type: products[]
+      get-response-example: !include example/products.raml 
+      get-response-trait: response404        
+
+        
+    /products{id}:
+      type:
+        getcollaction:
+          get-response-type: products
+          get-response-example: !include example/productid.raml 
+          get-response-trait: response404    
+  /orders:
+    type:
+      collaction:
+        recponse-type: orders[]
+        recponse-example: !include example/orders.raml
+        request-type: orders
+        request-example: !include example/orderid.raml
+        
+    
+    /order{id}:
+      type:
+        getcollaction:
+          get-response-type:
+          get-response-example:
+          get-response-trait: response404
+          
+  /catagory:
+    type:
+      getcollaction:
+        get-response-type:
+        get-response-example:
+        get-response-trait: response404  
+    /{id}:
+      type:
+        getcollaction:
+          get-response-type:
+          get-response-example:
+          get-response-trait: response404    
+              

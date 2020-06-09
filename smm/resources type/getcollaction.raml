@@ -1,0 +1,12 @@
+#%RAML 1.0 ResourceType
+
+
+get:
+  responses:
+    200:
+      body:
+        application/json:
+          type: <<get-response-type>> 
+          example: <<get-response-example>>
+  is: [<<get-response-trait>>]  
+            
