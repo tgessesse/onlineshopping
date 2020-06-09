@@ -1,0 +1,12 @@
+#%RAML 1.0 ResourceType
+  usage: this resourceTypes can be used for any collection.
+  description: the collection of <<resourcePathName>>
+  get:
+    description: get a list of <<resourcePathName>> from the data base
+    responses: 
+      200:
+        body: 
+          application/json:
+            type: <<getResponsetype>>
+            example: | 
+              <<examplereference1>>

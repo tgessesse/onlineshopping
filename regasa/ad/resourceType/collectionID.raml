@@ -1,0 +1,17 @@
+#%RAML 1.0 ResourceType
+  usage: this resource types can be used to retrieve data by id
+  description: get a list of <<resourcePathName>> by id
+  uriParameters:
+    id:
+      type: integer 
+      required: true            
+  get:
+    description: this method retrieves the specific user
+    responses:
+      200:
+        body:
+          application/json:
+            type: <<getResponsetypeid>>
+            example: 
+              <<examplereference2>>  
+   

@@ -1,0 +1,78 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/d560fe96-4f38-4564-b53a-bdae8c068ccd/ # 
+title: onlineApiDevelopment
+documentation:
+  - !include documentation.raml
+uses:
+  regasalibrary: /library.raml
+/users:
+  type:
+    regasalibrary.collections:
+      getResponsetype: users[]
+      examplereference1: !include examples/users.raml
+  
+  post:
+    description: this is to post new users
+    displayName: please enter your email and user name
+    securedBy: regasalibrary.basic
+    body:
+      application/json:
+        type: regasalibrary.userpostreq
+        example: !include examples/userpostreq.raml
+    is: [regasalibrary.trait403, regasalibrary.trait404]
+    responses:
+      200:
+        body:
+          application/json:
+            type: regasalibrary.userpostresp
+            example: !include examples/userpostresp.raml
+  /{id}:
+    type:
+      regasalibrary.collectionID:
+        getResponsetypeid: userid
+        examplereference2:  !include examples/userid.raml   
+/catagories:
+  type:
+    regasalibrary.collections:
+      getResponsetype : catagories[]
+      examplereference1: !include examples/catagories.raml
+  /{id}:
+    type:
+      regasalibrary.collectionID:
+        getResponsetypeid: catagoryid
+        examplereference2: !include examples/catagoryid.raml         
+/products:
+  type:
+    regasalibrary.collections:
+      getResponsetype: products[]
+      examplereference1: !include examples/products.raml
+  /{id}:
+    type:
+      regasalibrary.collectionID:
+        getResponsetypeid: productid
+        examplereference2: !include examples/productid.raml
+/orders:
+  post:
+    securedBy: regasalibrary.basic
+    body:
+      application/json:
+        type: regasalibrary.orderpostreq 
+        example: !include examples/orderpostreq.raml
+    is: [regasalibrary.trait201, regasalibrary.trait403]
+    responses:
+      200:
+        body:
+          application/json:
+            type: regasalibrary.orderpostresp
+            example: !include examples/orderpostresp.raml   
+  type:
+    regasalibrary.collections:
+      getResponsetype: orders[]
+      examplereference1: !include examples/orders.raml
+  /{id}:
+    type:
+      regasalibrary.collectionID:
+        getResponsetypeid: orderid
+        examplereference2: !include examples/orderid.raml
+
+

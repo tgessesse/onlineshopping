@@ -1,0 +1,24 @@
+#%RAML 1.0 Library
+usage:
+traits:
+  trait201: !include /traits/trait201.raml
+  trait403: !include /traits/trait403.raml
+  trait404: !include /traits/trait404.raml
+resourceTypes:
+  collections: !include /resourceType/collection.raml
+  collectionID: !include /resourceType/collectionID.raml
+types:
+  users: !include /types/users.raml
+  userpostreq: !include /types/userpostreq.raml
+  userpostresp: !include /types/userpostrespo.raml
+  userid: !include /types/userid.raml
+  catagories: !include /types/catagories.raml
+  catagoryid: !include /types/catagoryid.raml
+  products: !include /types/products.raml
+  productid: !include /types/productid.raml
+  orders: !include /types/orders.raml
+  orderpostreq: !include /types/orderpostreq.raml
+  orderpostresp: !include /types/orderpostrespo.raml
+  orderid: !include /types/orderid.raml
+securitySchemes:
+  basic: !include /securityScheme.raml 
