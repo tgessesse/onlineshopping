@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="53451ccf-3eb8-474c-8a0b-ea75d3e3b0e8" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="shoppFlow" doc:id="2ae4cc2b-c32a-445f-a1e7-57210b36533a" >
+		<http:listener doc:name="Listener" doc:id="c8593b8d-92d2-44eb-8cff-9c752fa27f80" config-ref="HTTP_Listener_config" path="/message"/>
+		<set-payload value="hi hello world" doc:name="Set Payload" doc:id="fcece885-c116-4016-9b89-c2d42205490f" />
+		<logger level="INFO" doc:name="Logger" doc:id="128b14c3-8bca-43d3-9f54-c4eafba22b15" message="#[payload]"/>
+		<ee:transform doc:name="Transform Message" doc:id="33490b07-9eb5-43f2-8554-73357b80e2ec" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+[
+{
+  "email": "mike@gmail.com",
+  "user name": "mike"
+  },
+    {
+    "email": "Jackson@gmail.com",
+    "user name": "Jackson"
+  }
+]]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
