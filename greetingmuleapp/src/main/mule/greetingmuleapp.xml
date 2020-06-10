@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="c592a1e8-76a2-4a03-ac73-72a119ffa728" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="greetingmuleappFlow" doc:id="14e9c5bc-9c9f-4cc6-a933-beff6cebedf0" >
+		<http:listener doc:name="Listener" doc:id="5d9f9044-abe2-4780-a96f-84d2837bf74d" config-ref="HTTP_Listener_config" path="/hello"/>
+		<set-payload value="Greetings to all" doc:name="Set Payload" doc:id="7be1c079-e28a-427c-9b57-4cf848df59b6" />
+		<logger level="INFO" doc:name="Logger" doc:id="7a87c985-3115-48af-a48b-15036a2f5d22" message='"" my greeting message is processed ""'/>
+	</flow>
+</mule>
