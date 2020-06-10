@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="6bc8421a-cd73-4cd8-9b8b-84496996de5e" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<http:listener-config name="HTTP_Listener_config1" doc:name="HTTP Listener config" doc:id="6b805301-f7cb-4b00-b529-4a605f2a042b" >
+		<http:listener-connection host="0.0.0.0" port="8082" />
+	</http:listener-config>
+	<flow name="users_flow" doc:id="055f3d6d-c905-465e-9527-36a264a83d10" >
+		<http:listener doc:name="Listener" doc:id="1da53cce-6c08-4d8f-8a6f-eeb77e0f2351" config-ref="HTTP_Listener_config" path="/users"/>
+		<ee:transform doc:name="Transform Message" doc:id="8d0fb60b-f747-44c9-bfbf-f99894f938f1" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+[
+   {
+     "email": "mike@gmail.com",
+     "username": "mike"
+     },
+   {
+      "email": "Jackson@gmail.com",
+      "username": "Jackson"
+      }
+                ]]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="ef1fd25e-ccc6-432e-a45a-fa959ea181da" message="#[payload]"/>
+	</flow>
+	<flow name="userid_Flow" doc:id="ce570e75-161e-402d-a88c-08d8ed1d3c24" >
+		<http:listener doc:name="Listener" doc:id="59cec7ef-b671-43d6-b652-3a3c55c69cf2" config-ref="HTTP_Listener_config1" path="/user/{id}"/>
+		<set-variable value="#[attributes.uriParams.id]" doc:name="Set Variable" doc:id="f4f2eed0-53a1-4b1d-bac2-83bc0fa5b9ab" variableName="id"/>
+		<logger level="INFO" doc:name="Logger" doc:id="df2d64c6-048c-4c74-81f9-cf27d57bc514" message="#[vars.id]"/>
+		<ee:transform doc:name="Transform Message" doc:id="6c2a3a2e-fd32-4c0c-b001-ef3fad6e0260" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+
+                 {
+                    "email": "Jackson@gmail.com",
+                    "username": "Jackson"
+                  }]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="612b418d-8d60-4208-a24d-ea7cc7a5ef7f" message='"" The flow is completed ""'/>
+	</flow>
+</mule>
