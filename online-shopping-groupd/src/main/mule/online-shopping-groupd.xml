@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="2f52dc20-a0e9-43ca-b474-859810a9230a" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	
+	<flow name="getAllUsers" doc:id="91116854-d60e-481e-9f7a-99b3615c7da0" >
+		<http:listener doc:name="GET /users" doc:id="7b3b4872-2959-4901-adf4-b2ec36d8567c" config-ref="HTTP_Listener_config" path="/users" allowedMethods="GET"/>
+		<ee:transform doc:name="Transform Message" doc:id="ba93ebd2-943d-474a-8514-c9823bfe6c0f" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+[
+  {
+    "date_joined": "05/13/79",
+    "deleted": "true",
+    "email": "anteneh@gmail.com",
+    "modified": "05/05/2017" ,
+    "type": 1,
+    "userid": 132,
+    "username": "ante123"
+  },
+  {
+    "date_joined": "05/13/79",
+    "deleted": "true",
+    "email": "hiwi@gmail.com",
+    "modified": "05/05/2017",
+    "type": 2,
+    "userid": 342,
+    "username": "fayz32"
+  }
+]]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="9a9f95dc-9bd1-4dda-a81d-f2478e02291a" message="#[payload]"/>
+	</flow>
+
+    <flow name="postUser" doc:id="c27ffbca-a256-442c-84c3-9864a900fc65">
+		<http:listener doc:name="POST /users" doc:id="f742ae49-5f21-4905-9023-bfbcee1921b3" config-ref="HTTP_Listener_config" path="/users" allowedMethods="POST" />
+		<set-variable value="#[payload]" doc:name="postUser" doc:id="e9b713c9-2cc0-43d1-ae8d-7fc4d90de43a" variableName="postUser"/>
+		<logger level="INFO" doc:name="Logger" doc:id="0b5644b2-fe41-496d-8b89-cb04b0952443" message="#[vars.postUser]"/>
+		<ee:transform doc:name="Transform Message" doc:id="e5e8e767-b8c1-4116-9ae3-3e4dbc5952ad">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"uid": 342
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="c22a18f7-cb7e-457a-a9f2-e1b01ba6b771" message="#[payload]" />
+	</flow>
+	<flow name="getUserByID" doc:id="8c5d9cc9-6b08-4ff1-b869-8f8035178ff0" >
+		<http:listener doc:name="GET /users/{id}" doc:id="df40c026-262e-4262-8a9a-a013d535e05b" config-ref="HTTP_Listener_config" path="/users/{id}" allowedMethods="GET"/>
+		<ee:transform doc:name="Transform Message" doc:id="153d1c73-7960-4d83-93c7-1a53c7d1ad12" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+  {
+    "date_joined": "05/13/79",
+    "deleted": "true",
+    "email": "ade135@gmail.com",
+    "modified": "05/05/2017" ,
+    "type": 1,
+    "userid": 132,
+    "username": "ade123"
+  }]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="5485ba99-3fcb-4998-970d-5784f99f943d" message="#[attributes.uriParams.id]"/>
+    </flow>
+	<flow name="getAllOrders" doc:id="21cca595-4cd9-46b8-81a0-0a3658951362" >
+		<http:listener doc:name="GET /orders" doc:id="33749d7a-5252-47a3-b794-bc954e8183b6" config-ref="HTTP_Listener_config" path="/orders" allowedMethods="GET"/>
+		<ee:transform doc:name="Transform Message" doc:id="63b1a75e-33cd-4487-8f67-2f2728f79f74" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+[
+  {
+    "addressid": 132,
+    "amount": 340,
+    "created": "05/23/20",
+    "discountid": 5,
+    "modified": "04/12/19",
+    "orderid": 44,
+    "status": "accepted",
+    "userid": 1219
+  },
+  {
+    "addressid": 132,
+    "amount": 340,
+    "created": "05/23/20",
+    "discountid": 5,
+    "modified": "04/12/19",
+    "orderid": 44,
+    "status": "accepted",
+    "userid": 1219
+  }
+]]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="3bff1cb9-c763-4245-ad95-6375bfd5a3f2" message="#[payload]"/>
+	</flow>
+	<flow name="postOrder" doc:id="0990ad96-33aa-4242-84cc-c1c16c08e5d0">
+		<http:listener doc:name="POST /orders" doc:id="77dcac08-1f2b-41f6-a6c0-d9c78287c61f" config-ref="HTTP_Listener_config" path="/orders" allowedMethods="POST" />
+		<set-variable value="#[payload]" doc:name="postOrder" doc:id="708b6243-5968-46bb-80b0-58b99cb95ef4" variableName="postOrder"/>
+		<logger level="INFO" doc:name="Logger" doc:id="a0d14e90-cab2-469f-a584-3f3274a3dcd8" message="#[vars.postOrder]"/>
+		<ee:transform doc:name="Transform Message" doc:id="f9c92b05-6eb9-4f30-b9d7-5f2b0102e04f">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+    "addressid": 132,
+    "amount": 340,
+    "created": "05/23/20",
+    "discountid": 5,
+    "modified": "04/12/19",
+    "orderid": 44,
+    "status": "accepted",
+    "userid": 1219
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="1d05f5c6-1069-475d-bb8a-b4b0bf858ffa" message="#[payload]" />
+	</flow>
+	<flow name="getOrdersByID" doc:id="fbc7ad6d-3db9-4375-b571-f40823828930" >
+		<http:listener doc:name="GET /orders/{id}" doc:id="ff0ccd3f-f1dc-4889-af1c-dc0d2fd0ae55" config-ref="HTTP_Listener_config" path="/orders/{id}" allowedMethods="GET"/>
+		<ee:transform doc:name="Transform Message" doc:id="fc8464f5-51cd-4195-9e9e-5be085990acd" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+ {
+    "addressid": 132,
+    "amount": 340,
+    "created": "05/23/20",
+    "discountid": 5,
+    "modified": "04/12/19",
+    "orderid": 44,
+    "status": "accepted",
+    "userid": 1219
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="4a664fc4-42bd-4360-be47-7b323e41df1f" message="#[payload]" />
+	</flow>
+	<flow name="getAllCategories" doc:id="5e266ef2-ece7-4152-b6b5-686999966f56" >
+		<http:listener doc:name="GET /categories" doc:id="ed1ff035-2003-493f-9f2f-3bcca53c5ee5" config-ref="HTTP_Listener_config" allowedMethods="GET" path="/categories"/>
+		<ee:transform doc:name="Transform Message" doc:id="e7d2528a-369b-47b5-b9a3-df7aa9ffc35e" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+[
+  {
+    "categoryid": 23,
+    "name": "Accessories"
+  },
+ {
+    "categoryid": 44,
+    "name": "Clothing"
+  }
+]]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="9d73e6fc-d78f-4a67-b98c-d155aef82653" message="#[payload]"/>
+	</flow>
+	<flow name="getCategoryByID" doc:id="26b32890-aaea-4ffc-bdd3-ef172617d637" >
+		<http:listener doc:name="GET /categories/{id}" doc:id="18d486b9-2ffe-4307-b7b7-b1e69c2c5d1a" config-ref="HTTP_Listener_config" path="/categories/{id}" allowedMethods="GET" />
+		<ee:transform doc:name="Transform Message" doc:id="bed60845-9c4a-4a20-95bd-76e12677d455" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+ {
+    "categoryid": 23,
+    "name": "Accessories"
+ }]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="a29e2efd-f0be-4609-8b67-f316b324db38" message="#[payload]" />
+	</flow>
+
+</mule>
