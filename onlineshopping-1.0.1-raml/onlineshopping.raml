@@ -1,0 +1,100 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/9bcddec7-b7ab-45ee-9ad1-c6f422ed9d50/ # 
+title: Onlineshopping
+/user:
+  post:
+    body:
+      application/json:
+        example:
+          {
+  "email": "hanagaga2121@gmail.com",
+  "username": "hanana"
+}
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {"uid":2200}
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {
+      "email": "hanagaga2121@gmail.com",
+      "username": "hanana"}
+/{id}:
+  get:
+    responses:
+     200:
+      body:
+         application/json:
+           example:   
+              {
+  "date_joined": {
+    "date": 10,
+    "day": 5,
+    "hours": 7,
+    "minutes": 6,
+    "month": 9,
+    "nanos": 55,
+    "seconds": 35,
+    "time": 22,
+    "timezoneOffset": 5,
+    "year": 2019
+  },
+  "deleted": true,
+  "email": "hanagaga2121@gmail.com",
+  "modified": {
+    "date": 10,
+    "day": 5,
+    "hours": 7,
+    "minutes": 6,
+    "month": 9,
+    "nanos": 55,
+    "seconds": 35,
+    "time": 22,
+    "timezoneOffset": 5,
+    "year": 2019
+  },
+  "type": int 32,
+  "userid": 2200,
+  "username": "hanana"
+}
+/product:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {
+    "categoryid": 12,
+    "description": "labtop",
+    "name": "Hp",
+    "price": 600,
+    "productid": 2212,
+  "video_url": "https://www.youtube.com/embed/r0iLfAV0pIg",
+    "Price": 9821"}
+/{Id}:
+   get:
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+                {
+  "categoryid": 12,
+  "description": "labtop",
+  "name": "Hp",
+  "price": 600,
+  "productid": 1111,
+  "video_url": "http://dev.icraftsoft.net:8095/products/1111"
+}
+  
+/order:
+/category:
+
+
