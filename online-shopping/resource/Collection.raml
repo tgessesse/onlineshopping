@@ -1,0 +1,32 @@
+#%RAML 1.0 ResourceType
+post:
+  securedBy:
+    - basic
+  description: create <<resourcePathName>>
+  body:
+    application/json:
+      type: <<request-post-typ>>
+      examples:
+        input: <<<request-post-example>>
+  responses:
+    201:
+      body:
+        application/json:
+          type: <<response-post-type>>
+          examples:
+            output: <<response-post-example>>
+  is:
+    - <<error-trait-post>>
+get:
+  description: Retieves all <<resourcePathName>>
+  responses:
+    200:
+      body:
+        application/json:
+          type: <<response-get-type>>
+          examples:
+            output: <<response-get-example>>
+  is:
+    - <<error-trait-get>> 
+      
+            

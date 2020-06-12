@@ -1,0 +1,35 @@
+#%RAML 1.0 Trait
+responses:
+  400:
+    body:
+      application/json:
+        example:
+           {"message": "Resource not found" }
+  401:
+    body:
+      application/json:
+        example:
+          {"message" : "Unauthorized"}
+  403:
+    body:
+      application/json:
+        example: 
+         {"message" : "Forbidden" }
+  404:
+    body:
+      application/json:
+        example: 
+          {"message" :  "Not Found" }
+          
+  500:
+    body:
+      application/json:
+        example:
+          {"message" : "server error" }
+          
+
+
+
+ 
+   
+  

@@ -1,0 +1,25 @@
+#%RAML 1.0 Library
+usage: to define some basic librarys which are used on this rest API 
+
+annotationTypes:
+ annotation:  !include ../annotation/annotation.raml 
+resourceTypes:
+  collections: !include ../resource/Collection.raml
+  getcollections: !include ../resource/getCollection.raml
+  resourceType: !include ../resource/resourceType.raml
+  
+
+traits:
+  errortraits: !include ../trait/errortraits.raml
+  
+types:
+  user: !include ../Type/user.raml
+  uid: !include ../Type/uid.raml
+  orders: !include ../Type/orders.raml
+  orderR: !include ../Type/orderR.raml
+  products: !include ../Type/products.raml
+  catagory: !include ../Type/catagory.raml
+  product: !include ../Type/product.raml
+  productS: !include ../Type/productS.raml
+securitySchemes:
+  basic: !include ../security/basic.raml

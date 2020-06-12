@@ -1,0 +1,13 @@
+#%RAML 1.0 Extension
+title: extension example for shopping
+extends: ../online-shopping.raml
+/admin:
+  delete:
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {
+                message: "user info removed"
+              }

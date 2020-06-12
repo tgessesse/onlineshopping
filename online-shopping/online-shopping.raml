@@ -1,0 +1,66 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/1c410419-06fb-428c-b550-f129da2bff66/ # 
+title: online-shopping
+version: 1.0
+uses:
+  shopping: library/shoppinglibrary.raml
+/users:
+  type:
+    shopping.resourceType:
+      request-post-type: shopping.user
+      request-post-example: !include Examples/user.raml
+      response-post-type: shopping.uid
+      response-post-example: !include Examples/userId.raml
+      trait-post-error: shopping.errortraits
+      response-get-type: shopping.user[]
+      response-get-example: !include Examples/users.raml
+      trait-get-error: shopping.errortraits
+  /user/{Id}:
+    type:
+      shopping.getcollections:
+        get-response-type: shopping.user
+        get-response-example: !include Examples/user.raml
+        trait-get-error: shopping.errortraits
+/products:
+  type:
+    shopping.getcollections:
+        get-response-type: shopping.productS[]
+        get-response-example: !include Examples/products.raml
+        trait-get-error: shopping.errortraits
+  /product/{Id}:
+   type:
+    shopping.getcollections:
+        get-response-type: shopping.product
+        get-response-example: !include Examples/producT.raml
+        trait-get-error: shopping.errortraits
+/orders:
+  type:
+    shopping.getcollections:
+      get-response-type: shopping.orders[]
+      get-response-example: !include Examples/orders.raml
+      trait-get-error: shopping.errortraits
+  /order/{Id}:
+    type:
+      shopping.resourceType:
+       request-post-type: shopping.orderR
+       request-post-example: !include Examples/orderR.raml
+       response-post-type: shopping.orders
+       response-post-example: !include Examples/order.raml
+       trait-post-error: shopping.errortraits
+       response-get-type: shopping.orders[]
+       response-get-example: !include Examples/orders.raml
+       trait-get-error: shopping.errortraits
+/catagories:
+  type:
+    shopping.getcollections:
+      get-response-type: shopping.catagory[]
+      get-response-example: !include Examples/catagories.raml
+      trait-get-error: shopping.errortraits
+  /catagories{Id}:
+    type:
+      shopping.getcollections:
+       get-response-type: shopping.catagory
+       get-response-example: !include Examples/catagory.raml
+       trait-get-error: shopping.errortraits
+     
+  
