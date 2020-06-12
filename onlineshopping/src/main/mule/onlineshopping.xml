@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="a947bc1c-ee53-4b9c-966c-692c38375ec0" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="categoryid" doc:id="8d66cd8c-7bb0-46b9-abf7-10e398a50f1b" >
+		<http:listener doc:name="Listener" doc:id="ea211a1c-510d-4c54-824f-e2b38e84a4da" config-ref="HTTP_Listener_config" path="/categoryid"/>
+		<set-variable value="#[vars.id]" doc:name="Set Variable" doc:id="eea73392-a53a-48e8-8a5f-fff1d97da9c1" variableName="id"/>
+		<logger level="INFO" doc:name="Logger" doc:id="d1ac996e-9496-49d8-89cb-f80a1574a627" message="#[attributes.uriParams.id]"/>
+		<ee:transform doc:name="Transform Message" doc:id="8b731469-9fbc-400e-b295-b558c698658e" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+  "categoryid": 0,
+  "name": "string"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="a554cc79-bfc0-49f4-90ac-335e8cfcaaf7" message="#[payload]"/>
+	</flow>
+	<flow name="categories" doc:id="76f2c1ef-6903-4928-81a7-60cecf1fe6f9" >
+		<http:listener doc:name="Listener" doc:id="4c6f0079-bbb9-403d-955a-591653b6965f" config-ref="HTTP_Listener_config" path="/categories"/>
+		<ee:transform doc:name="Transform Message" doc:id="270da39a-8230-41ab-91a6-28996d359dcf" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+[
+  {
+    "categoryid": 0,
+    "name": "string"
+  }
+]]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="da2d6ac2-1191-49e2-865d-29c1f3760966" message="#[payload]"/>
+	</flow>
+	<flow name="orderid" doc:id="a2f76352-8fb5-4e4a-abbb-29dce22863d8" >
+		<http:listener doc:name="Listener" doc:id="b72306ae-d009-4b0d-840e-7a65e120abf5" config-ref="HTTP_Listener_config" path="/orderid"/>
+		<set-variable value="#[vars.id]" doc:name="Set Variable" doc:id="abc83115-3caf-4e73-a3ea-809677cfd9c4" variableName="id"/>
+		<logger level="INFO" doc:name="Logger" doc:id="50caec67-3e92-49c9-994e-1fa01ae8d05f" message="#[attributes.uriParams.id]"/>
+		<ee:transform doc:name="Transform Message" doc:id="4ae50070-09c3-403a-a9e3-337f04399e66" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+  "addressid": 0,
+  "amount": 0,
+  "created": {
+    "date": 0,
+    "day": 0,
+    "hours": 0,
+    "minutes": 0,
+    "month": 0,
+    "nanos": 0,
+    "seconds": 0,
+    "time": 0,
+    "timezoneOffset": 0,
+    "year": 0
+  },
+  "discountid": 0,
+  "modified": {
+    "date": 0,
+    "day": 0,
+    "hours": 0,
+    "minutes": 0,
+    "month": 0,
+    "nanos": 0,
+    "seconds": 0,
+    "time": 0,
+    "timezoneOffset": 0,
+    "year": 0
+  },
+  "orderid": 0,
+  "status": "string",
+  "userid": 0
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="f45d4b65-0680-45af-bc69-4a02bac8b67e" message="#[payload]"/>
+	</flow>
+	<flow doc:id="23cbdf97-5247-4eb7-b2b0-00757a9de402" name="orders">
+		<http:listener doc:name="Listener" doc:id="6aaeba9a-9965-4c58-b810-8fb15722ee57" config-ref="HTTP_Listener_config" path="/orders"/>
+		<ee:transform doc:name="Transform Message" doc:id="d5acaf98-0577-43f2-b864-a41d518577db" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+[
+  {
+    "addressid": 0,
+    "amount": 0,
+    "created": {
+      "date": 0,
+      "day": 0,
+      "hours": 0,
+      "minutes": 0,
+      "month": 0,
+      "nanos": 0,
+      "seconds": 0,
+      "time": 0,
+      "timezoneOffset": 0,
+      "year": 0
+    },
+    "discountid": 0,
+    "modified": {
+      "date": 0,
+      "day": 0,
+      "hours": 0,
+      "minutes": 0,
+      "month": 0,
+      "nanos": 0,
+      "seconds": 0,
+      "time": 0,
+      "timezoneOffset": 0,
+      "year": 0
+    },
+    "orderid": 0,
+    "status": "string",
+    "userid": 0
+  }
+]]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="8c5f3ab1-53f1-4444-8dc1-767ca04a0469" message="#[payload]"/>
+	</flow>
+	<flow name="userid" doc:id="e1f28c43-0af7-40f3-98bf-79e71e7091bc" >
+		<http:listener doc:name="Listener" doc:id="0b9a49a3-b769-4514-b4e5-77242b1fb38f" config-ref="HTTP_Listener_config" path="/userid"/>
+		<set-variable value="#[vars.id]" doc:name="Set Variable" doc:id="5fd54c21-b272-477f-85ea-624a33b51817" variableName="id"/>
+		<logger level="INFO" doc:name="Logger" doc:id="14091d18-71d0-4967-9c6d-ebe048cc4751" message="#[attributes.uriParams.id]"/>
+		<ee:transform doc:name="Transform Message" doc:id="fbbbc5b5-3c46-437e-81ef-efd8ccd24b6e" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+  "date_joined": {
+    "date": 0,
+    "day": 0,
+    "hours": 0,
+    "minutes": 0,
+    "month": 0,
+    "nanos": 0,
+    "seconds": 0,
+    "time": 0,
+    "timezoneOffset": 0,
+    "year": 0
+  },
+  "deleted": true,
+  "email": "string",
+  "modified": {
+    "date": 0,
+    "day": 0,
+    "hours": 0,
+    "minutes": 0,
+    "month": 0,
+    "nanos": 0,
+    "seconds": 0,
+    "time": 0,
+    "timezoneOffset": 0,
+    "year": 0
+  },
+  "type": 0,
+  "userid": 0,
+  "username": "string"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="eecd3de7-e205-4e50-8a6a-082c8677efcd" message="#[payload]"/>
+	</flow>
+	<flow name="users" doc:id="61838b31-e4f4-42c3-a250-4540aa69aa7b" >
+		<http:listener doc:name="Listener" doc:id="91420e7a-6250-4964-81ee-051bdd84e994" path="/users" config-ref="HTTP_Listener_config"/>
+		<ee:transform doc:name="Transform Message" doc:id="bba9854d-c534-48d2-88b0-3cde9ddb13dd" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+[
+  {
+    "date_joined": {
+      "date": 0,
+      "day": 0,
+      "hours": 0,
+      "minutes": 0,
+      "month": 0,
+      "nanos": 0,
+      "seconds": 0,
+      "time": 0,
+      "timezoneOffset": 0,
+      "year": 0
+    },
+    "deleted": true,
+    "email": "string",
+    "modified": {
+      "date": 0,
+      "day": 0,
+      "hours": 0,
+      "minutes": 0,
+      "month": 0,
+      "nanos": 0,
+      "seconds": 0,
+      "time": 0,
+      "timezoneOffset": 0,
+      "year": 0
+    },
+    "type": 0,
+    "userid": 0,
+    "username": "string"
+  }
+]]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="9a7eee7b-55d0-4c4c-ba39-b3326458eb7f" message="#[payload]"/>
+	</flow>
+</mule>
