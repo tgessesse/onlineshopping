@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="c4900577-e3ca-40e0-8342-8eb28c1d8110" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<http:listener-config name="HTTP_Listener_config1" doc:name="HTTP Listener config" doc:id="db8d06d1-c296-4dbe-ba78-499210c9b54a" >
+		<http:listener-connection host="0.0.0.0" port="8082" />
+	</http:listener-config>
+	<http:listener-config name="HTTP_Listener_config2" doc:name="HTTP Listener config" doc:id="4a4a7887-7642-49ae-baa1-b984c3c9ce2f" >
+		<http:listener-connection host="0.0.0.0" port="8083" />
+	</http:listener-config>
+	<http:listener-config name="HTTP_Listener_config3" doc:name="HTTP Listener config" doc:id="e654b64a-37dd-4acd-81fc-b06fe4ef0d60" >
+		<http:listener-connection host="0.0.0.0" port="8084" />
+	</http:listener-config>
+	<http:listener-config name="HTTP_Listener_config4" doc:name="HTTP Listener config" doc:id="409fe643-5806-4ba3-a7cd-b68df0c14c11" >
+		<http:listener-connection host="0.0.0.0" port="8085" />
+	</http:listener-config>
+	<http:listener-config name="HTTP_Listener_config5" doc:name="HTTP Listener config" doc:id="0eccc8d5-f739-49a3-8eb4-bd303e335990" >
+		<http:listener-connection host="0.0.0.0" port="8086" />
+	</http:listener-config>
+	<http:listener-config name="HTTP_Listener_config6" doc:name="HTTP Listener config" doc:id="1e845e46-7beb-47a2-8f43-3850e7d8a7bc" >
+		<http:listener-connection host="0.0.0.0" port="8087" />
+	</http:listener-config>
+	<http:listener-config name="HTTP_Listener_config7" doc:name="HTTP Listener config" doc:id="9ca49480-ec4b-4850-9cf2-7bbd137fd00b" >
+		<http:listener-connection host="0.0.0.0" port="8088" />
+	</http:listener-config>
+	<flow name="products" doc:id="7c0d7914-129e-42f2-8f12-61d419f02d95" >
+		<http:listener doc:name="Listener" doc:id="966a2434-a121-432b-ad3f-9eb75dde5adb" config-ref="HTTP_Listener_config" path="/products"/>
+		<ee:transform doc:name="Transform Message" doc:id="b0775107-2bcc-4e4f-91cd-ec8c26d8f654" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+[
+  {
+    "categoryid": 0,
+    "description": "string",
+    "name": "string",
+    "price": 0,
+    "productid": 0,
+    "video_url": "string"
+  }
+]]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="productid" doc:id="4a817469-dd19-4d8e-b069-4ae80928ad92" >
+		<http:listener doc:name="Listener" doc:id="9946f0f2-47fe-4838-8b7f-891441d16d92" config-ref="HTTP_Listener_config1" path="/product/{id}"/>
+		<set-variable value="#[attributes.uriParams.id]" doc:name="Set Variable" doc:id="8e353f86-ec6f-497c-99fb-4a4356892677" variableName="productid"/>
+		<logger level="INFO" doc:name="Logger" doc:id="eefa4a26-041e-4b6a-a103-d8d679f57d5b" message="#[vars.productid]"/>
+		<ee:transform doc:name="Transform Message" doc:id="a5eeab5d-03ea-4204-ac5a-c519414b62f4" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+  "categoryid": 0,
+  "description": "string",
+  "name": "string",
+  "price": 0,
+  "productid": 0,
+  "video_url": "string"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="users" doc:id="79f7f200-947e-4d0f-9696-0bfc8c193efa" >
+		<http:listener doc:name="Listener" doc:id="0c390e5f-b46f-486f-8cdc-3a1c65d111d8" path="/users" config-ref="HTTP_Listener_config2"/>
+		<ee:transform doc:name="Transform Message" doc:id="a4a5a69e-ec48-43d9-aab3-7e7b51317730" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+[
+  {
+    "date_joined": {
+      "date": 0,
+      "day": 0,
+      "hours": 0,
+      "minutes": 0,
+      "month": 0,
+      "nanos": 0,
+      "seconds": 0,
+      "time": 0,
+      "timezoneOffset": 0,
+      "year": 0
+    },
+    "deleted": true,
+    "email": "string",
+    "modified": {
+      "date": 0,
+      "day": 0,
+      "hours": 0,
+      "minutes": 0,
+      "month": 0,
+      "nanos": 0,
+      "seconds": 0,
+      "time": 0,
+      "timezoneOffset": 0,
+      "year": 0
+    },
+    "type": 0,
+    "userid": 0,
+    "username": "string"
+  }
+]]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="userid" doc:id="04d73155-a354-40c8-bdd6-4ca4401ac495" >
+		<http:listener doc:name="Listener" doc:id="1f357b61-bb7d-4958-bf5c-98ef6a827386" config-ref="HTTP_Listener_config3" path="/user/{id}"/>
+		<set-variable value="#[attributes.uriParams.id]" doc:name="" doc:id="92745d66-5899-4c10-bbff-eefc0d6a1d89" variableName="id"/>
+		<logger level="INFO" doc:name="Logger" doc:id="f185b38e-a3bc-4316-a226-5327595b0119" message="#[vars.id]"/>
+		<ee:transform doc:name="Transform Message" doc:id="8f8eb212-76fd-4d3b-b71d-56d22d71026e" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+
+{
+  "type": 0,
+  "userid": 0,
+  "username": "string"
+}
+    
+     ]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="categories" doc:id="a23d746f-1550-483f-b3b7-f876f559a941" >
+		<http:listener doc:name="Listener" doc:id="937c62e7-8055-4a9b-88a4-045a7b12230b" config-ref="HTTP_Listener_config4" path="/categorise"/>
+		<ee:transform doc:name="Transform Message" doc:id="ed51bcc7-9b9b-4b34-ab45-f074db01cc68" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+[
+  {
+    "categoryid": 1,
+    "name": "women"
+  },
+   {
+    "categoryid": 2,
+    "name": "men"
+  }
+]
+
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="categoryid" doc:id="fe512351-e876-480c-bdc6-06df7976e5d9" >
+		<http:listener doc:name="Listener" doc:id="3ddb1037-70b2-4979-b411-db7925cfd616" config-ref="HTTP_Listener_config5" path="/category/{id}"/>
+		<set-variable value="#[attributes.uriParams.id]" doc:name="Set Variable" doc:id="984cfd44-9b90-46fb-b220-53027136b820" variableName="categoryid"/>
+		<ee:transform doc:name="Transform Message" doc:id="a2e2f88f-ac09-46bb-9a55-ecb30ff064fb" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+    "categoryid": 1,
+    "name": "women"
+  }
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="orders" doc:id="6e64cc6d-5068-41fd-96fb-3334f48cce30" >
+		<http:listener doc:name="Listener" doc:id="ce114595-8f56-43fa-8c99-824056675e27" config-ref="HTTP_Listener_config6" path="/orders"/>
+		<ee:transform doc:name="Transform Message" doc:id="76de6ff7-5429-46d4-b9a0-2f462750782b" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+[
+  {
+    "addressid": 0,
+    "amount": 0,
+    "created": {
+      "date": 0,
+      "day": 0,
+      "hours": 0,
+      "minutes": 0,
+      "month": 0,
+      "nanos": 0,
+      "seconds": 0,
+      "time": 0,
+      "timezoneOffset": 0,
+      "year": 0
+    },
+    "discountid": 0,
+    "modified": {
+      "date": 0,
+      "day": 0,
+      "hours": 0,
+      "minutes": 0,
+      "month": 0,
+      "nanos": 0,
+      "seconds": 0,
+      "time": 0,
+      "timezoneOffset": 0,
+      "year": 0
+    },
+    "orderid": 0,
+    "status": "string",
+    "userid": 0
+  }
+]
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="ordersid" doc:id="90fb6613-de3d-416a-a7f6-1e294b4f89e9" >
+		<http:listener doc:name="Listener" doc:id="003266e4-5d56-4038-bfe6-4977ed623d0d" path="/orders/{id}" config-ref="HTTP_Listener_config7"/>
+		<set-variable value="#[attributes.uriParams.id]" doc:name="Set Variable" doc:id="f539ed43-8914-42e3-8349-e6e5715598c7" variableName="id"/>
+		<ee:transform doc:name="Transform Message" doc:id="74a17f12-4cc0-4441-ac63-52bb48da2d7a" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+ {
+    "addressid": 0,
+    "amount": 0,
+    "created": 0,
+      "date": 0,
+      "day": 0,
+      "hours": 0,
+      "minutes": 0,
+      "month": 0,
+      "nanos": 0,
+      "seconds": 0,
+      "time": 0,
+      "timezoneOffset": 0,
+      "year": 0
+    }
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
