@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="d7f3be3e-50c8-4699-b328-f41b9431d0bc" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="users" doc:id="ac53063b-33ad-4fa7-a0f4-960c6cacca2f" >
+		<http:listener doc:name="Listener" doc:id="35b495eb-2e66-4c2f-a19a-864a282449d7" config-ref="HTTP_Listener_config" path="/users"/>
+		<ee:transform doc:name="Transform Message" doc:id="5f393520-c98b-4b83-a537-cee7b1a85008" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+
+          [ { 
+    "email": "berhanemeron61@gmail.com",
+       "username" : "MERRY" } ,
+
+    {"email": "sabalove87@gmail.com" ,
+         "username": "SELITY "}
+         ]]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="5bc38cd6-78dc-4dfc-be3e-4c5fe6d6c14d" message="#[payload]"/>
+	</flow>
+	<flow name="usersid" doc:id="0da08f55-1849-4d9f-8019-db74e3da1a84" >
+		<http:listener doc:name="Listener" doc:id="13ce4373-ba4b-475b-ad74-8489402612c2" config-ref="HTTP_Listener_config" path="/users/{id}"/>
+		<set-variable value="#[attributes.uriParams.id]" doc:name="Set Variable" doc:id="169dae8e-4cec-4f78-8a1e-a9da5d8f1576" variableName="user"/>
+		<logger level="INFO" doc:name="Logger" doc:id="4b77ee09-7050-4ebe-b9fd-ea98b5428d96" message="#[vars.user]"/>
+		<ee:transform doc:name="Transform Message" doc:id="1d20be94-e30b-45b2-83b4-f741b176cb7a" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+
+         { 
+    "email": "berhanemeron61@gmail.com",
+       "username" : "MERRY" } 
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="c0c04de9-e60a-4f92-b6e3-1be573a928e7" message="#[payload]"/>
+	</flow>
+		
+	<flow name="products" doc:id="59e4cec3-a539-4dab-9b1a-e4b93d145854" >
+		<http:listener doc:name="Listener" doc:id="d5997d89-4522-42a0-8632-5ca3e88773a1" config-ref="HTTP_Listener_config" path="/products"/>
+		<ee:transform doc:name="Transform Message" doc:id="0f5c08b3-f8fc-4c54-bdfa-9100afa1a487" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+
+      [
+  {
+    "categoryid": 19,
+    "description": "The G-707 Gaming mouse is a razor-sharp mouse with 3000 DPI",
+    "name": "KK G-707 Gaming mouse",
+    "price": 100,
+    "productid": 101,
+    "video_url": "https://www.youtube.com/watch?v=3AtDnEC4zak"
+  } ,
+    {
+    "categoryid": 19,
+    "description": "The G-707 Gaming mouse is a razor-sharp mouse with 3000 DPI",
+    "name": "KK G-707 Gaming mouse",
+    "price": 300,
+    "productid": 101,
+    "video_url": "https://www.youtube.com/watch?v=3AtDnEC4zak"
+  }
+]
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="e6f166ca-e902-4c2a-ab1d-1883e2be4a2f" message="#[payload]"/>
+	</flow>
+	<flow name="productsid" doc:id="a0bd42fd-5741-45d4-88f9-d4c51332ca40" >
+		<http:listener doc:name="Listener" doc:id="c8226c40-006e-4731-8d7e-1fdf01a2bbaf" config-ref="HTTP_Listener_config" path="/products/{id}"/>
+		<set-variable value="#[attributes.uriParams.id]" doc:name="Set Variable" doc:id="270811f8-4806-46be-b09b-6027c9e5c298" variableName="user"/>
+		<logger level="INFO" doc:name="Logger" doc:id="c5e93d67-6709-4e3b-8d75-af5a503ef17c" message="#[vars.user]"/>
+		<ee:transform doc:name="Transform Message" doc:id="5f559695-3c81-484f-88c4-e8bf593cf97d" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+
+      {
+    "categoryid": 19,
+    "description": "The G-707 Gaming mouse is a razor-sharp mouse with 3000 DPI",
+    "name": "KK G-707 Gaming mouse",
+    "price": 7777,
+    "productid": 101,
+    "video_url": "https://www.youtube.com/watch?v=3AtDnEC4zak"
+  }
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="9d2b5372-da0d-4fbf-a3e2-874cb013c6c2" message="#[payload]"/>
+	</flow>
+		
+	<flow name="orders" doc:id="be7d6a26-2cb3-4e62-b729-1b1b3b33d2be" >
+		<http:listener doc:name="Listener" doc:id="dd1939e8-021f-4c2c-9515-3a2576d1238d" config-ref="HTTP_Listener_config" path="/orders"/>
+		<ee:transform doc:name="Transform Message" doc:id="388308f8-cc99-43fa-a2c8-9c983b5fb412" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+
+        [
+
+            {
+
+              "orderid": 128,
+
+              "userid": 1019,
+
+              "addressid": 201,
+
+              "discountid": 1,
+
+              "created": "2020-05-27T23:18:46.000+00:00",
+
+              "modified": yes,
+
+              "status": "Accepted",
+
+              "amount": 1000
+
+            }
+
+     ]
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="6da5dacc-26fe-4af4-bbbd-fbd27ad5ae4e" message="#[payload]"/>
+	</flow>
+	<flow name="ordersid" doc:id="ac272dfb-10c4-44ca-a173-e487f2948c5b" >
+		<http:listener doc:name="Listener" doc:id="92c9cb8f-9cbe-4b6f-a162-b63652992870" config-ref="HTTP_Listener_config" path="/orders/{id}"/>
+		<set-variable value="#[attributes.uriParams.id]" doc:name="Set Variable" doc:id="6ae540d7-630d-493c-a370-ae60e1357bc8" variableName="user"/>
+		<logger level="INFO" doc:name="Logger" doc:id="d4bf1d99-b350-450a-9bd1-65a8b2153d73" message="#[vars.user]"/>
+		<ee:transform doc:name="Transform Message" doc:id="e2c48f80-3ae7-40a1-b4c8-5eb962d69f6b" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+
+     {
+
+              "orderid": 128,
+
+              "userid": 1019,
+
+              "addressid": 201,
+
+              "discountid": 1,
+
+              "created": "2020-05-27T23:18:46.000+00:00",
+
+              "modified": yes,
+
+              "status": "Accepted",
+
+              "amount": 1000
+
+            }
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="3726bdc6-81c1-48cd-b3ed-1f79286025b6" message="#[payload]"/>
+	</flow>
+	<flow name="category" doc:id="847aa1db-a63b-4b2b-8b1c-307c9782a7f1" >
+		<http:listener doc:name="Listener" doc:id="d343e4b8-7d51-4ff4-9d01-9a03d8379a97" config-ref="HTTP_Listener_config" path="/category"/>
+		<ee:transform doc:name="Transform Message" doc:id="e1fae122-0d02-4435-b61c-0b689374dd96" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+
+       
+   [ {
+   
+
+                "categoryid": 10,
+
+                "name": "laptop" } ,
+                 {"categoryid": 12,
+
+                "name": "car"
+
+              } ]
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="1cd6b3fc-eaea-489e-a72b-9b3b0ff51b16" message="#[payload]"/>
+	</flow>
+	<flow name="categoryid" doc:id="7762adcd-4288-407e-b366-4ddad56760ff" >
+		<http:listener doc:name="Listener" doc:id="1ddac40f-594e-403f-b588-8d1395984b30" config-ref="HTTP_Listener_config" path="/category/{id}"/>
+		<set-variable value="#[attributes.uriParams.id]" doc:name="Set Variable" doc:id="fdbd7634-e740-40d5-9a2a-65af945b15f6" variableName="user"/>
+		<logger level="INFO" doc:name="Logger" doc:id="71848735-0bcd-42aa-b848-542aa7216daf" message="#[vars.user]"/>
+		<ee:transform doc:name="Transform Message" doc:id="1487d16b-8493-44e6-ae34-5df9ff246ff4" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+
+         {
+   
+
+                "categoryid": 10,
+
+                "name": "laptop"
+
+              } 
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="f397a7cc-8fd8-458f-96ad-06d1313b608a" message="#[payload]"/>
+	</flow>
+		
+		
+</mule>
