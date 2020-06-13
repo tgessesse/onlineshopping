@@ -1,0 +1,146 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/cbcc9d07-06c9-4640-93f1-4c54544c8c74/ # baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/      1cccacbc-dc9c-4b40-b7f8-1fc74a6acd70/ #
+title: online shopping 
+version: 1.0.0
+types:
+  user: !include types/users.raml
+  userresponce: !include types/userResponce.raml
+  userid: !include types/userId.raml
+  product: !include types/product.raml
+  orders: !include types/orders.raml
+  postorder: !include types/postorders.raml
+  categorys: !include types/categories.raml
+documentation:
+  - !include documentation/documentation1.raml
+traits:
+  response1: !include trait/403.raml
+  response2: !include trait/201.raml
+securitySchemes:
+  
+  basic: !include security/basic.raml
+annotationTypes:
+ annotation: !include Annotation/annotation.raml
+resourceTypes:
+  collection: !include resourcetype/resourceType.raml
+
+/users:
+  type:
+    collection:
+      exampleReference1: !include examples/users.raml
+      resourcePathName: users
+  is:
+    - response1
+    - response2
+          
+  post:
+    securedBy: [basic]
+    body:
+         application/json:
+           example: !include examples/postuser.raml
+
+  /{id}: 
+    uriParameters:
+      id:
+        type: integer
+        required: true
+    get:
+      responses:
+    is:
+     response1:
+              type: userid
+              
+    type:
+      collection:
+          exampleReference1: !include examples/userId.raml
+          resourcePathName: usersid
+      
+                                                
+/product:
+  type:
+    collection:
+      exampleReference1: !include examples/Product.raml
+      resourcePathName: product
+      
+  
+  is:
+    response1     
+           
+    
+  /{id}: 
+    uriParameters:
+      id:
+        type: integer
+        required: true
+
+    type:
+      collection:
+        exampleReference1: !include examples/productid.raml
+        resourcePathName: productid
+    is: response1
+     
+
+          
+/orders:
+  type:
+    collection:
+      exampleReference1: !include examples/orders.raml
+      resourcePathName: orders
+  is:
+     response1
+
+  post:
+    securedBy: [basic]
+      
+    body:
+      application/json:
+        type: postorder
+        example: !include examples/postOrders.raml
+        
+  /{id}:
+    uriParameters:
+      id:
+        type: integer
+        required: true
+    type:
+      collection:
+        exampleReference1: !include examples/orderid.raml
+        resourcePathName: orderid
+    is:
+     response1
+              
+        
+/categories:
+  type:
+    collection:
+      exampleReference1: !include examples/categories.raml
+      resourcePathName: categories
+
+      
+    is:
+     response1
+                
+               
+  /{id}:
+    uriParameters:
+      id:
+        type: integer
+        required: true
+
+    type:
+      collection:
+        exampleReference1: !include examples/categoryid.raml
+        resourcePathName: category
+    is:
+     response1
+                
+               
+
+
+              
+  
+
+      
+  
+ 
+   
+

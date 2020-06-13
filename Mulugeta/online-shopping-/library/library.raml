@@ -1,0 +1,20 @@
+#%RAML 1.0 Library
+usage: to compile some included documents and describe them briefly.
+types:
+  user: !include ../types/users.raml
+  userresponce: !include ../types/userResponce.raml
+  userid: !include ../types/userId.raml
+  product: !include ../types/product.raml
+  orders: !include ../types/orders.raml
+  postorder: !include ../types/postorders.raml
+  categorys: !include ../types/categories.raml
+traits:
+  response1: !include ../trait/403.raml
+  response2: !include ../trait/201.raml
+securitySchemes:
+  
+  basic: !include ../security/basic.raml
+annotationTypes:
+ annotation: !include ../Annotation/annotation.raml
+resourceTypes:
+  collection: !include ../resourcetype/resourceType.raml
