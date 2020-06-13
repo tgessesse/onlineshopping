@@ -1,0 +1,25 @@
+#%RAML 1.0 SecurityScheme
+type: OAuth 1.0
+description: this API is developed by oauth securiy 
+describedBy: 
+  headers:
+    authorization: 
+      description: Users must have display name this resuonce 
+      type: string 
+  queryParameters:
+    access token:
+      description: users must have the right token 
+  responses:
+    200:
+      description: ok
+    404:
+      description: not found 
+    401:
+      description: unauthorized 
+    403:
+      description: forbidden
+
+      
+      
+
+  

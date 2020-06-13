@@ -1,0 +1,142 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/312eec78-aa13-4b79-8479-f541ea8e0e28/ # baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/      1cccacbc-dc9c-4b40-b7f8-1fc74a6acd70/ #
+title: online shopping 
+version: 1.0.0
+types:
+  user: !include types/users.raml
+  userresponce: !include types/userResponce.raml
+  userid: !include types/userId.raml
+  product: !include types/product.raml
+  orders: !include types/orders.raml
+  postorder: !include types/postorders.raml
+  categorys: !include types/categories.raml
+documentation:
+  - !include documentation/documentation1.raml
+traits: 
+  responsemessage: !include trait/200.raml
+  responsemessage1: !include trait/201.raml 
+securitySchemes:
+  oath: !include security/Oath.raml
+  basic: !include security/basic.raml
+annotationTypes:
+ annotation: !include Annotation/annotation.raml
+
+/users:
+  get:
+    responses:
+  is:
+   responsemessage:  
+            type: user[]
+            example: !include examples/users.raml
+
+             
+  post:
+    securedBy: [basic]
+    body:
+         application/json:
+           example: !include examples/postuser.raml
+         
+    responses:
+    is:
+      responsemessage1:
+              type: userresponce
+              example: !include examples/UID.raml 
+                
+
+  /{id}: 
+    uriParameters:
+      id:
+        type: integer
+        required: true
+    get:
+      responses:
+    is:
+     responsemessage: 
+              type: userid
+              example: !include examples/userId.raml
+                                                
+/product:
+  get:
+     responses:
+  is:
+    responsemessage:     
+            type: product[]
+            example: !include examples/Product.raml
+  /{id}: 
+    uriParameters:
+      id:
+        type: integer
+        required: true
+
+    get:
+      responses:
+    is:
+     responsemessage: 
+                type: product
+                example: !include examples/productid.raml 
+          
+/orders:
+  get:
+    responses:
+  is:
+    responsemessage: 
+            type: orders[]
+            example: !include examples/orders.raml
+          
+  post:
+    securedBy: [basic]
+      
+    body:
+      application/json:
+        type: postorder
+        example: !include examples/postOrders.raml
+        
+  /{id}:
+    uriParameters:
+      id:
+        type: integer
+        required: true
+    get:
+      responses:
+    is:
+     responsemessage: 
+              type: orders
+              example: !include examples/orderid.raml
+        
+/categories:
+  get:
+    responses:
+    is:
+     responsemessage: 
+              type: categorys[]
+              example: !include examples/categorys.raml
+                
+               
+  /{id}:
+    uriParameters:
+      id:
+        type: integer
+        required: true
+
+    get:
+      responses:
+    is:
+     responsemessage: 
+              type: categorys
+              example: !include examples/categoryid.raml 
+               
+              
+                
+          
+                
+               
+
+
+              
+  
+
+      
+  
+ 
+   
+
