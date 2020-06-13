@@ -1,0 +1,139 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/cc7cd463-3837-4f76-9765-7ca77b7485a1/ # 
+title: Online-Shopping
+uses:
+  lib: Library/library.raml
+mediaType: [application/json]
+
+types:
+  users: !include types/users.raml
+  users_get: !include types/users_get.raml
+  users_post_response: !include types/users_post_response.raml
+  users_id: !include types/users_id.raml
+  products: !include types/products.raml
+  products_id: !include types/products_id.raml
+  categories: !include types/categories.raml
+  categories_id: !include types/categories_id.raml
+  Orders_id: !include types/Orders_id.raml
+  Orders: !include types/Orders.raml
+traits:
+  responseTrait: !include traits/201traits.raml
+securitySchemes:
+  oauth: !include security/oauth.raml
+documentation:
+  - !include Documentation/doc.raml
+resourceTypes:
+  resourceTyp: !include  resourceType/resourceType.raml
+
+/users:
+  post:
+    body:
+      application/json:
+        type: users
+        example: !include examples/users.raml          
+  is: responseTrait          
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: users_get 
+            example: !include examples/users(get).raml   
+  type:
+    resourceTyp:
+      resourcePathName: users
+      resourcePathNam: users
+
+/users/{id}:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: users_id 
+            example: !include examples/users{id}.raml
+  type:
+    resourceTyp:
+      resourcePathName: users
+      resourcePathNam: users
+             
+/products:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: products          
+              example: !include examples/products.raml  
+    type:
+      resourceTyp:
+        resourcePathName: products
+        resourcePathNam: products 
+    
+/products/{id}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: products_id
+              example: !include examples//products{id}.raml    
+    type:
+      resourceTyp:
+        resourcePathName: products
+        resourcePathNam: products
+
+/Orders:
+  get:
+    responses:
+      200:
+        body:
+          application/json:          
+            examples: !include examples/Orders_get.raml  
+  post:
+    body:
+      application/json:
+        example: !include examples/Orders_post.raml
+    is: responseTrait
+       
+/Orders/{id}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: Orders_id
+              examples: !include examples/Orders{id}.raml
+    type:
+      resourceTyp:
+        resourcePathName: orders
+        resourcePathNam: orders
+
+/Categories:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: categories 
+              examples: !include examples/Categories.raml
+    type:
+      resourceTyp:
+        resourcePathName: categories
+        resourcePathNam: categories
+/Categories/{id}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: categories_id
+              examples: !include examples/Categories{id}.raml
+    type:
+      resourceTyp:
+        resourcePathName: categories
+        resourcePathNam: categories
+
+
+
+      

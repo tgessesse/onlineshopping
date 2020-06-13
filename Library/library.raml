@@ -1,0 +1,22 @@
+#%RAML 1.0 Library
+usage: to define some basic
+securitySchemes:
+  security: !include ../security/oauth.raml
+
+traits:
+  responseTrait: !include ../traits/201traits.raml
+
+types:
+  users: !include ../types/users.raml
+  users_get: !include ../types/users_get.raml
+  users_post_response: !include ../types/users_post_response.raml
+  users_id: !include ../types/users_id.raml
+  products: !include ../types/products.raml
+  products_id: !include ../types/products_id.raml
+  categories: !include ../types/categories.raml
+  categories_id: !include ../types/categories_id.raml
+  Orders_id: !include ../types/Orders_id.raml
+resourceTypes:
+  resourceTyp: !include  ../resourceType/resourceType.raml
+
+
