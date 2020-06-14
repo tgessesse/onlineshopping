@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="0251080b-70d0-4371-91cc-50dc1b640392" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="dwFlow" doc:id="29ea6fb5-bdce-4154-b259-3003c9bcba56" >
+		<http:listener doc:name="Listener" doc:id="e8062ef0-dcb4-45e8-bb95-1b2e045e0ba0" config-ref="HTTP_Listener_config" path="/dw1"/>
+		<set-variable value="Abebe" doc:name="Set Variable" doc:id="97d3d462-2952-49b0-9bc2-4b0a1595c552" variableName="name"/>
+		<ee:transform doc:name="Transform Message" doc:id="5333518e-eec9-4dbf-9dad-a8c1ded7f3bd" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+
+	vars.name
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
