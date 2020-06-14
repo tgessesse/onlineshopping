@@ -72,6 +72,9 @@ output application/json
 [
 {
   "email": "imyonet@gmail.com",
+  "username": "yoyo12",
+  
+  "email": "imyonet@gmail.com",
   "username": "yoyo12"
 }
 
