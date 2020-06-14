@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="d00cf05e-0bef-4dec-80f5-b73c002614bb" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="products" doc:id="be778e30-3fff-4421-b538-9d9ae1b884d9" >
+		<http:listener doc:name="Listener" doc:id="1ab9e7b1-5658-4492-84bd-cdbde8c45dee" config-ref="HTTP_Listener_config" path="/products"/>
+		<ee:transform doc:name="Transform Message" doc:id="7f51061c-a6cf-46a6-90d2-92a4e16190d5" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+[
+  {
+    "categoryid": 0,
+    "description": "laptop",
+    "name": "HP laptop",
+    "price": 0,
+    "productid": 0,
+    "video_url": "http://hp.com/latops"
+  },
+    {
+    "categoryid": 1,
+    "description": "laptop",
+    "name": "DELL laptop",
+    "price": 0,
+    "productid": 101,
+    "video_url": "http://dell.com/latops"
+  }
+]]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="c6fb6e83-3658-413b-a696-0768f312c555" message="#[payload]"/>
+	</flow>
+
+		<flow name="productid" doc:id="02604f47-b728-4951-bafc-a6144165c053" >
+		<http:listener doc:name="Listener" doc:id="05bbef06-4e87-4817-a048-f397125944fd" config-ref="HTTP_Listener_config" path="/products/{id}"/>
+		<set-variable value="#[attributes.uriParams.id]" doc:name="Set Variable" doc:id="d563d3ca-d7c1-4c91-bb26-24799c63872e" variableName="id"/>
+		<logger level="INFO" doc:name="Logger" doc:id="d9d5c1dc-1027-4e68-924f-7797fc7898e8" message="#[vars.id]"/>
+		<ee:transform doc:name="Transform Message" doc:id="8a7ba332-b3e8-49d7-853a-740ed0332d23" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+ {
+    "categoryid": 0,
+"description": "laptop",
+"name": "HP laptop",
+"price": 0,
+"productid": 0,
+"video_url": "http://hp.com/latops"
+  }
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="80949a52-36c0-4785-b0b1-b72076b92db7" message="#[payload]"/>
+	</flow>
+	<flow name="users" doc:id="493232c6-7c82-413a-b23f-6430d23c05a4" >
+		<http:listener doc:name="Listener" doc:id="e142617a-0d74-44c5-bb04-1ddb992736d4" config-ref="HTTP_Listener_config" path="/users" />
+		<ee:transform doc:name="Transform Message" doc:id="b6c6db7a-a44c-4256-a82f-debfcc3146d6" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+[
+   {
+                  "email": "mike@gmail.com",
+                  "username": "mike"
+                  },
+                    {
+                    "email": "Jackson@gmail.com",
+                    "username": "Jackson"
+                  }
+]]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="9a579af5-e094-46c5-aea5-7e95f84de009" message="#[payload]" />
+	</flow>
+	<flow name="userid" doc:id="dc9e37dd-a65b-4483-b61a-ca40bc5fd4a6" >
+		<http:listener doc:name="Listener" doc:id="06e8f1bc-177d-48e9-b2a4-c2274c6d7a26" config-ref="HTTP_Listener_config" path="/user/{id}" />
+		<set-variable value="#[attributes.uriParams.id]" doc:name="Set Variable" doc:id="df23870e-d5a0-4119-94c5-ee987bd3cff7" variableName="id" />
+		<logger level="INFO" doc:name="Logger" doc:id="b41c6507-f025-4d22-a1dd-143b0160bc59" message="#[vars.id]" />
+		<ee:transform doc:name="Transform Message" doc:id="add54a02-54b7-48b9-9a86-f28f263ae9e5" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+  {
+                    "email": "arsenal@gmail.com",
+                    "username": "laca"
+                  }
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="1f8ea06a-ff5d-4227-ab0b-4a4ba76eb5e1" message="#[payload]" />
+	</flow>
+	<flow name="catagories" doc:id="ba022c36-7b8d-4082-a3b2-88deb234a316" >
+		<http:listener doc:name="Listener" doc:id="f7009712-8b47-437b-94db-35afb74a0edc" config-ref="HTTP_Listener_config" path="/catagories" />
+		<ee:transform doc:name="Transform Message" doc:id="d865c495-c99f-45ba-b01f-0f75d6cd48c9" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+[
+                {
+                    "categoryid": 11,
+                    "name": "laptops"
+                  },
+                  {
+                    "categoryid": 12,
+                    "name": "home electronics"
+                  },
+                  {
+                    "categoryid": 13,
+                    "name": "mouse"
+                  },
+                  {
+                    "categoryid": 14,
+                    "name": "mobile accesories"
+                  },
+                  {
+                    "categoryid": 15,
+                    "name": "laptop skins"
+                  },
+                  {
+                    "categoryid": 16,
+                    "name": "laptop covers"
+                  },
+                  {
+                    "categoryid": 17,
+                    "name": "men's clothing"
+                  },
+                  {
+                    "categoryid": 18,
+                    "name": "women's wardrobe"
+                  },
+                  {
+                    "categoryid": 19 ,
+                    "name": "gaming geeks"
+                  },
+                  {
+                    "categoryid": 20,
+                    "name": "study buddy"
+                  }
+                  ] ]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="f3ea151c-c67f-4a9a-98b1-09f57b4b93a2" message="#[payload]" />
+	</flow>
+	<flow name="bycatagoryid" doc:id="c753b106-431e-4c37-9c3c-c942ebc69c05" >
+		<http:listener doc:name="Listener" doc:id="c3604c50-8884-4981-b833-084045a523cc" config-ref="HTTP_Listener_config" path="/bycatagory/{id}" />
+		<set-variable value="#[attributes.uriParams.id]" doc:name="Set Variable" doc:id="bc2fe2ee-9b3d-40b1-9a4f-3a6371ce421d" variableName="id" />
+		<logger level="INFO" doc:name="Logger" doc:id="6151373a-6d7b-4b51-93e3-886740c181af" message="#[vars.id]" />
+		<ee:transform doc:name="Transform Message" doc:id="9e75959b-1de3-45ff-9401-b43658b3e808" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+  {
+                    "categoryid": 11,
+                    "name": "laptops"
+                  }  
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="30681fb0-3bb7-417a-a539-19049d03e242" message="#[payload]" />
+	</flow>
+	<flow name="orders" doc:id="e980c966-3a8e-4eb6-b3ce-f5494317c774" >
+		<http:listener doc:name="Listener" doc:id="7058d78e-99dc-4381-a944-db8a16384361" config-ref="HTTP_Listener_config" path="/orders" />
+		<ee:transform doc:name="Transform Message" doc:id="95e32185-1c6b-4664-911d-61836f314da7" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+  [
+                {
+                    "orderid": 51,
+                    "userid": 1,
+                    "addressid": 201,
+                    "discountid": 6,
+                    "created": '2020-11-25T22:00:00.0+00:00',
+                    "modified": '2020-11-25T22:00:00.0+00:00',
+                    "status": "shipped",
+                    "amount": 550
+                  },
+                  {
+                    "orderid": 52,
+                    "userid": 1,
+                    "addressid": 201,
+                    "discountid": 6,
+                    "created": '2020-11-25T22:00:00.0+00:00',
+                    "modified": '2020-11-25T22:00:00.0+00:00',
+                    "status": "shipped",
+                    "amount": 550
+                  }
+                  ]]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="575e70c2-bbbd-4404-9384-629dbd8076ad" message="#[payload]" />
+	</flow>
+	<flow name="byordersid" doc:id="2295caef-eb2c-4bf5-bb7a-3b761f0609d9" >
+		<http:listener doc:name="Listener" doc:id="5b352aa7-fde0-481f-bfdd-e0995fce2cd5" config-ref="HTTP_Listener_config" path="/byorders/{id}" />
+		<set-variable value="#[attributes.uriParams.id]" doc:name="Set Variable" doc:id="e4ca256e-a547-41a7-8e3e-92a76a726846" variableName="id" />
+		<logger level="INFO" doc:name="Logger" doc:id="f7b72007-6e0a-4aab-b476-5875d66fd034" message="#[vars.id]" />
+		<ee:transform doc:name="Transform Message" doc:id="529940ca-45f1-4b4b-b79c-94f1e9cf1d2c" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+  {
+                    "orderid": 52,
+                    "userid": 1,
+                    "addressid": 201,
+                    "discountid": 6,
+                    "created": '2020-11-25T22:00:00.0+00:00',
+                    "modified": '2020-11-25T22:00:00.0+00:00',
+                    "status": "shipped",
+                    "amount": 550
+                  } ]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="d7af1f6f-1232-40db-86c7-8caa07d42ce8" message="#[payload]" />
+	</flow>
+
+</mule> 
