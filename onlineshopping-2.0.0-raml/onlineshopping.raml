@@ -1,0 +1,68 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/9bcddec7-b7ab-45ee-9ad1-c6f422ed9d50/ # 
+title: Onlineshopping
+/users:
+  post:
+    body:
+      application/json:
+        example:
+          {
+  "email": "hanagaga2121@gmail.com",
+  "username": "hana21"
+}
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {"uid":2200}
+      403:
+        body:
+          application/json:
+            example:
+              {"message": "forbidden"}
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include Examples/users/user.raml
+  /{userid}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include Examples/users/userid.raml
+types:
+  products: !include types/products.raml
+/product:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: products
+            example: !include Examples/products.raml
+            
+      404:
+        body:
+          application/json:
+            example: {"message": "Not found"}
+              
+  /{productid}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: 
+
+                
+     
+
+
+              
+
+
+ 
