@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="0201aa3c-8366-46a2-968d-64468c088668" >
+		<http:listener-connection host="0.0.0.0" port="8086" />
+	</http:listener-config>
+	<flow name="products" doc:id="77533cd6-7411-469e-a635-9d17d7326a3e" >
+		<http:listener doc:name="Listener" doc:id="786612cd-6993-4813-851b-a760ecdd60b2" config-ref="HTTP_Listener_config" path="/products"/>
+		<ee:transform doc:name="Transform Message" doc:id="50ea182f-199d-440c-86d7-150c545a93ac" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+[
+  {
+    "categoryid": 0,
+    "description": "laptop",
+    "name": "HP laptop",
+    "price": 0,
+    "productid": 0,
+    "video_url": "http://hp.com/latops"
+  },
+    {
+    "categoryid": 1,
+    "description": "laptop",
+    "name": "DELL laptop",
+    "price": 0,
+    "productid": 101,
+    "video_url": "http://dell.com/latops"
+  }
+]]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="f94aa2c0-226f-4314-819b-92e72cdb94f5" message="#[payload]"/>
+	</flow>
+	
+		<flow name="productid" doc:id="e97e09cc-f2c6-46a3-8d8c-5178cacabc2c" >
+		<http:listener doc:name="Listener" doc:id="df95d1eb-439e-4a7e-af01-edea1bb43acf" config-ref="HTTP_Listener_config" path="/products/{id}"/>
+		<set-variable value="#[attributes.uriParams.id]" doc:name="Set Variable" doc:id="5c159f02-c6f1-4701-b68d-df9228e174ae" variableName="id"/>
+		<logger level="INFO" doc:name="Logger" doc:id="e8a3d2e9-03b0-4fcc-9807-b73dd7baa307" message="#[vars.id]"/>
+		<ee:transform doc:name="Transform Message" doc:id="e446f943-453b-4a7d-8f34-f4752aaf7aa9" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+ {
+    "categoryid": 0,
+"description": "laptop",
+"name": "HP laptop",
+"price": 0,
+"productid": 0,
+"video_url": "http://hp.com/latops"
+  }
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="6be1f5f0-ed24-4dca-bee1-60b2693e5e29" message="#[payload]"/>
+	</flow>
+	<flow name="users" doc:id="4b6f0e77-246c-4a26-985a-067e01f8dfa8" >
+		<http:listener doc:name="Listener" doc:id="7be50d6a-79f7-4ab9-b561-1978a66f9c8a" config-ref="HTTP_Listener_config" path="/users"/>
+		<ee:transform doc:name="Transform Message" doc:id="f68aafc0-b25d-4a4f-8213-ed25313aa2db" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+[	
+{
+  "email": "s@gmail.com",
+  "username": "s"
+},
+
+	
+{
+  "email": "a@gmail.com",
+  "username": "a"
+},
+]	
+	
+	
+	
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="313517b0-d284-4340-bd1e-714857dabd4e" message="#[payload]"/>
+	</flow>
+	<flow name="userid" doc:id="0d44d3ed-8d19-4a94-9fa1-6abc9a2e2dc7" >
+		<http:listener doc:name="Listener" doc:id="3d02d41b-04e0-4045-923f-212893c32370" config-ref="HTTP_Listener_config" path="/users/{id}"/>
+		<set-variable value="#[attributes.uriParams.id]" doc:name="Set Variable" doc:id="6cc50278-1ed9-4bf1-9b03-3a530f6cb15c" variableName="id"/>
+		<set-payload value="#[vars.id]" doc:name="Set Payload" doc:id="31c093e0-df92-4ed4-ae4d-a57cc5322a70" />
+		<ee:transform doc:name="Transform Message" doc:id="00eafe43-f675-4ced-a43f-05c71cc384d2" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	
+
+  "email": "s@gmail.com",
+  "username": "s"
+	
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="2b97876d-507b-43df-9a06-da63c945f52f" message="#[payload]"/>
+	</flow>
+	<flow name="orders" doc:id="1f8df522-85d0-46a8-bf00-a482df14217c" >
+		<http:listener doc:name="Listener" doc:id="25c6406f-d486-42ee-99f9-b40ed96ea5c2" config-ref="HTTP_Listener_config" path="/orders"/>
+		<ee:transform doc:name="Transform Message" doc:id="bbe2438a-c6ea-40d7-bc6c-70144ffd6f62" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+[
+	
+
+  {
+    "categoryid": 0,
+    "description": "string",
+    "name": "string",
+    "price": 0,
+    "productid": 0,
+    "video_url": "string"
+  },
+  
+  
+  {
+    "categoryid": 0,
+    "description": "string",
+    "name": "string",
+    "price": 0,
+    "productid": 0,
+    "video_url": "string"
+  }
+
+  
+  
+]	
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="eb09d9ed-4789-4087-8341-d77afd2bd339" message="#[payload]"/>
+	</flow>
+	<flow name="ordersid" doc:id="70b7c9ed-9543-4c10-8b06-76577c1c93df" >
+		<http:listener doc:name="Listener" doc:id="d09a633c-d30e-4019-ab28-81697cb64856" config-ref="HTTP_Listener_config" path="/orders/{id}"/>
+		<set-variable value="#[attributes.uriParams.id]" doc:name="Set Variable" doc:id="cabc1beb-a424-45c1-9402-bfaa657e6799" variableName="id"/>
+		<set-payload value="#[vars.id]" doc:name="Set Payload" doc:id="cb88b098-f284-4569-96a0-ae71b635cc24" />
+		<ee:transform doc:name="Transform Message" doc:id="4bbff96c-a2d9-4abb-850e-466888852f51">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+
+	
+	{
+  "productid": 101,
+  "categoryid": 19,
+  "name": "KK G-707 Gaming mouse",
+  "description": "The G-707 Gaming mouse is a razor-sharp mouse with 3000 DPI. The mouse comes with a 1-year warranty ",
+  "video_url": "https://www.youtube.com/watch?v=3AtDnEC4zak",
+  "price": 7777
+}
+
+
+	
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="a52e7ec1-bcdb-4ccf-acdd-956d5c6bd67d" message="#[payload]"/>
+	</flow>
+	<flow name="categories" doc:id="280ea9e0-7977-4792-8331-fe258b165e91" >
+		<http:listener doc:name="Listener" doc:id="d055ec95-e839-4772-a3dd-2bc3872b514d" config-ref="HTTP_Listener_config" path="/categories"/>
+		<ee:transform doc:name="Transform Message" doc:id="4627095c-fd15-4d74-bb01-ebee5cde63d3" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+
+	
+	[
+  {
+    "categoryid": 0,
+    "name": "string"
+  }
+,
+{
+  "categoryid": 10,
+  "name": "labtop"
+}
+	
+	
+]]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="63437c38-0a0b-4613-af7f-2818975ac002" message="#[payload]"/>
+	</flow>
+	<flow name="categoriesid" doc:id="1c479a10-b70a-42f0-a881-70808520d653" >
+		<http:listener doc:name="Listener" doc:id="ec9dc951-0074-4c45-ba10-45b13c5a786f" config-ref="HTTP_Listener_config" path="/categories/{id}"/>
+		<set-variable value="#[attributes.uriParams.id]" doc:name="Set Variable" doc:id="fe511091-036f-4f5d-882b-fc5daf7bac22" variableName="id"/>
+		<set-payload value="#[vars.id]" doc:name="Set Payload" doc:id="49ab87d2-b51d-40a4-a83c-edb5895baaa4" />
+		<ee:transform doc:name="Transform Message" doc:id="2170a917-df46-43b0-ae08-e4e9ed825786">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+	
+	{
+    "categoryid": 0,
+    "name": "string"
+  }
+	
+	
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="22c55802-6c5d-4203-bcd7-20fa399f388b" message="#[payload]"/>
+	</flow>
+
+</mule>
+
+
