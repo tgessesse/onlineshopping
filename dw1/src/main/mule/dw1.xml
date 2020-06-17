@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="1d444deb-5542-4ffb-922b-41209518b96f" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="dw1Flow" doc:id="7a58c065-0f94-4df1-97d3-047de4379218" >
+		<http:listener doc:name="Listener" doc:id="78d20786-97a3-4508-9e93-699c8deb96e4" config-ref="HTTP_Listener_config" path="/dw1"/>
+		<ee:transform doc:name="Transform Message" doc:id="e3227854-27eb-47da-873f-33c017e6b460" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+var name = "beza"
+var msg = "stinky"
+---
+msg ++ " "++ name]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
