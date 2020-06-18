@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="671862c7-bb2a-4d27-89e8-95b9521af038" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="dw2Flow" doc:id="93490812-b2a6-4acf-8b64-e4862a3c3f22" >
+		<http:listener doc:name="Listener" doc:id="8efe6da2-7db7-4245-87fd-a56bbbd887a8" config-ref="HTTP_Listener_config" path="/dw2"/>
+		<set-variable value="#[attributes.queryParams.currency]" doc:name="Set Variable" doc:id="de337fb1-6b58-455f-b856-502c3bf1cdae" variableName="currency"/>
+		<ee:transform doc:name="Transform Message" doc:id="244ec319-121b-4025-bdca-4dc4c12c1ae8" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+var num1 = 100
+var num2 = 300
+
+var fname = "beza"
+var lname = "stinky"
+var fullname = fname ++ " "++ lname
+var message = "stinky"
+var myvar = {country:"ethiopia"}
+var info = {
+	name:"Robel",
+	lname:"yohannes",
+	age:32
+	
+}
+var num = [1,2,3,4,]
+var result = num1 + num2
+fun cal() = num1-num2
+fun userinfo()=info
+fun country()=
+if (myvar.country == "ethiopia") {
+	message: "correct"
+	
+}
+else{
+	message: "not correct"
+}
+
+
+var currency = vars.currency 
+
+---
+
+if (currency == "Birr"){
+	message : "ethiopia"
+}
+else if (currency == "Dollar"){	
+	message : "USA"
+}
+else if (currency == "Pound"){
+	message : "UK"
+	
+}
+else{
+	message: "country name not found"
+}
+
+
+
+
+
+
+
+
+
+
+ ]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
