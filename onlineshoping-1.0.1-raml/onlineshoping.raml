@@ -1,0 +1,27 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/aec6bdd7-adb7-49cd-a370-ca6cc66ffa69/ # 
+title: ONLINESHOPING
+documentation: 
+   - !include /documentation.raml
+  
+
+
+uses:
+  shopping: /library.raml
+
+/users:
+  type: shopping.userCollection    
+/users/{id}:
+  type: shopping.iduserCollection
+/products:
+  type: shopping.productsgetcollection
+/products/{id}:
+  type: shopping.produtsidcollection
+/orders:
+  type: shopping.orderCollection
+/orders/{id}:
+  type: shopping.orderidcollection
+/categories:
+  type: shopping.categoriescollection
+/categories/{id}:
+  type: shopping.categoriesidcollection
