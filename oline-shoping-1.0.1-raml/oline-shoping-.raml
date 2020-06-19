@@ -1,0 +1,101 @@
+#%RAML 1.0
+title: Oline Shoping 
+baseUri: 
+
+/users:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include Examples/users-Example.json
+      401:
+        body:
+          application/json:
+            example: {"message":"Unauterazed user" }      
+      403:
+        body:
+          application/json:
+            example: {"message":"Access Forbiddeb"}    
+      404:
+        body:
+          application/json:
+            example: {"message":"Resource not found"}                   
+  post:
+    body:
+      application/json:
+        example:
+          {
+            "email": "d@gmail.com",
+            "username": "d"
+          }
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+             {
+                "uid": 0
+              }   
+/users/{id}:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include Examples/user-Example.json
+/product:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include Examples/productsExample.json          
+/product/{id}:
+   get:
+     responses:
+       200:
+         body:
+          application/json:
+            example: !include Examples/productExample.json               
+/orders:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include Examples/ordersExample.json               
+  post:
+    body:
+      application/json:
+        example: !include Examples/Crate-OrderExample.json
+    responses:
+      201:
+        body:
+          application/json:
+            example: {"message": order created}
+            
+/orders/{id}:
+  get:
+    body:
+     application/json:
+       example: !include Examples/Get-Order-Example.json        
+/catagories:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include Examples/catagoriesExample.json 
+/catagories/{id}:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include Examples/catagoryExample.json
+              
+     
+
+    
+  
