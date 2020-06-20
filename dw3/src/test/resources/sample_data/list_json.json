@@ -1,0 +1,25 @@
+<users>
+<user>
+	<id>1</id>
+	<firstname>Mike</firstname>
+	<lastname>John</lastname>
+	<middlename>Piter</middlename>
+	<city>xx</city>
+	<state>yy</state>
+	<address>t65</address>
+	<email>mikejohn@gmail.com</email>
+</user>
+<user>
+	<id>2</id>
+	<firstname>Robel</firstname>
+	<lastname>yohannes</lastname>
+	<middlename>taddesa</middlename>
+	<city>xxz</city>
+	<state>uu</state>
+	<address>op99</address>
+	<email>robel21@gmail.com</email>
+</user>
+</users>
+
+
+

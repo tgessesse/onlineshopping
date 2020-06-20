@@ -10,7 +10,7 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 	</http:listener-config>
 	<flow name="dw2Flow" doc:id="93490812-b2a6-4acf-8b64-e4862a3c3f22" >
 		<http:listener doc:name="Listener" doc:id="8efe6da2-7db7-4245-87fd-a56bbbd887a8" config-ref="HTTP_Listener_config" path="/dw2"/>
-		<set-variable value="#[attributes.queryParams.currency]" doc:name="Set Variable" doc:id="de337fb1-6b58-455f-b856-502c3bf1cdae" variableName="currency"/>
+		<set-payload value="#[payload]" doc:name="Set Payload" doc:id="2d1a7871-845a-4af1-96a7-ac162bd220a8" />
 		<ee:transform doc:name="Transform Message" doc:id="244ec319-121b-4025-bdca-4dc4c12c1ae8" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
@@ -43,7 +43,7 @@ else{
 }
 
 
-var currency = vars.currency 
+var currency = payload
 
 ---
 
