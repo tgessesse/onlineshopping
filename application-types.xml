@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="Q2input" format="json">
+      <types:shape format="weave" example="examples/newInput2,3,4"><![CDATA[%dw 2.0
+
+type Q2input = Array<{|  id: String,   itemname: String,   itemcode: String,   price: String|}> {"example": "[{\\\"id\\\":\\\"693cacff-147d-4b84-add8-dad773730508\\\",\\\"itemname\\\":\\\"ss\\\",\\\"itemcode\\\":\\\"0001\\\",\\\"price\\\":\\\"50\\\"},{\\\"id\\\":\\\"693cacff-147d-4b84-add8-dad773730508\\\",\\\"itemname\\\":\\\"bcc\\\",\\\"itemcode\\\":\\\"0002\\\",\\\"price\\\":\\\"100\\\"},{\\\"id\\\":\\\"693cacff-147d-4b84-add8-dad773730508\\\",\\\"itemname\\\":\\\"hj\\\",\\\"itemcode\\\":\\\"0003\\\",\\\"price\\\":\\\"200\\\"},{\\\"id\\\":\\\"693cacff-147d-4b84-add8-dad773730508\\\",\\\"itemname\\\":\\\"uiu\\\",\\\"itemcode\\\":\\\"0004\\\",\\\"price\\\":\\\"20\\\"}]"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="Q3output" format="java">
+      <types:shape format="raml"><![CDATA[#%RAML 1.0 DataType
+type: string]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#982a2d67-bf57-4976-8bf3-84d8a8e450f3">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="Q2input"/>
+        </types:message>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="9f381ae2-2091-4642-a129-f19ca5a074f5" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="dwe2Flow" doc:id="76823818-1a96-4b68-905c-d2964794c02b" >
+		<http:listener doc:name="Listener" doc:id="65172086-3291-44aa-99b3-6266f5c55b66" config-ref="HTTP_Listener_config" path="/dwE2"/>
+		<ee:transform doc:name="Transform Message" doc:id="982a2d67-bf57-4976-8bf3-84d8a8e450f3" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+var code = "Q123 ->"
+var name = "ABC ->"
+
+
+
+---
+
+  payload map (value, index) -> {
+ 	id: value.id,
+ 	name:value.itemname,
+ 	code:value.itemcode,
+ 	price:value.price *2
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+  	
+ }]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="dwe2Flow2" doc:id="0bb5d6ae-bb67-4ab1-a471-84e0395605f2" >
+		<ee:transform doc:name="Transform Message" doc:id="d00128c6-4fee-4f9a-9ac7-dd695ef8b0f0" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+ //xml
+  
+//           (payload map (value, index) -> 
+//           	    item:
+// 	
+//           value.id ++ ", " ++ value.itemname ++ ", " ++
+//           value.itemcode ++ ", " ++ value.price
+// 		
+// })
+ 
+//  "693cacff-147d-4b84-add8-dad773730508 , ss , 0001 , 50",
+// "693cacff-147d-4b84-add8-dad773730508 , bcc , 0002 , 100",
+// "693cacff-147d-4b84-add8-dad773730508 , hj , 0003 , 200",
+// "693cacff-147d-4b84-add8-dad773730508 , uiu , 0004 , 20"
+//]
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="dwe2Flow1" doc:id="a1b61ca2-8049-44b7-aa12-eed7506f73d9" >
+		<ee:transform doc:name="Transform Message" doc:id="778c5534-d5e6-4dd0-a687-e9616b12af6c" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+---
+
+List_of_Item: {
+	(payload map (value, index) -> {
+		item @((value)):
+		value.index 
+	})
+	} 
+
+
+
+
+
+//Names:{ 
+//	(payload.Names.*NameDetail map(value, index )->
+//		 {
+//		NameDetail @((value.item)):{
+//			item:value.item
+//			
+		]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

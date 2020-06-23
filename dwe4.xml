@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config1" doc:name="HTTP Listener config" doc:id="a3035fe4-135d-4be1-9dc1-04deb7f67f24" >
+		<http:listener-connection host="0.0.0.0" port="8083" />
+	</http:listener-config>
+	<flow name="dwe4Flow" doc:id="5ec217be-7c56-4752-b98f-3501bcd6cf06" >
+		<http:listener doc:name="Listener" doc:id="a4e7ec81-ded5-4fcd-bd14-cafd38345402" path="/D" config-ref="HTTP_Listener_config1"/>
+		<ee:transform doc:name="Transform Message" doc:id="5b29b0cd-dfc6-428f-a0c8-565d54fc58d4" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+
+var ma = payload.id 
+
+
+---
+//payload
+// payload map (value, index) -> {
+//  (value.id ++ ", " ++ value.itemname ++ ", " ++
+//  value.itemcode ++ ",  " ++ value.price
+//  })
+//  
+//
+//}
+
+//[
+// "693cacff-147d-4b84-add8-dad773730508 , ss , 0001 , 50",
+// "693cacff-147d-4b84-add8-dad773730508 , bcc , 0002 , 100",
+// "693cacff-147d-4b84-add8-dad773730508 , hj , 0003 , 200",
+// "693cacff-147d-4b84-add8-dad773730508 , uiu , 0004 , 20"
+//]
+// payload map (value, index) -> {
+ //	id: value.id
+ // ma
+   ma]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="dwe4Flow2" doc:id="d714ee54-ad91-4e61-9f9a-fabb21d4a245" >
+		<http:listener doc:name="Listener" doc:id="0df5166f-c48d-4b84-af2e-15ebf79d3f5a" config-ref="HTTP_Listener_config1" path="/example"/>
+		<ee:transform doc:name="Transform Message" doc:id="38f0e21e-661c-4132-a283-ecb3873d1fe9" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload.employeers.employee.empAge]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="dwe4Flow1" doc:id="eb9e420c-6a1d-4db3-b4f8-62d6d14a0291" >
+		<http:listener doc:name="Listener" doc:id="e56d6f0d-c409-46b1-9893-cefbe0ced52a" path="/examp1" config-ref="HTTP_Listener_config1"/>
+		<ee:transform doc:name="Transform Message" doc:id="9a0ee5ff-af31-428e-9052-492e66ec0201" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+var firstname = upper("firstname") 
+var middle = upper("middlename") 
+ var city  = upper("city") 
+ var state = upper("state") 
+ var address = upper("address") 
+ var email = upper("email")  
+
+---
+
+    
+//   users: payload.user map ((value, index) ->
+//   	value map (value,key) -> {
+//   		(key: value
+//   	}
+//   )
+   
+   users:payload.user map (user:$) 
+  
+
+//    payload map (value, index) -> {
+// 	firstname: value.firstname,
+// 	middle: value.middlename,
+// 	city: value.city,
+// 	state: value.state,
+// 	"address": value.address,
+// 	"email": value.email,
+	
+// 	} 
+  
+
+
+//5, OUTPUT
+//{
+// "users": [
+// {
+// "user": {
+// "ID": "693cacff-147d-4b84-add8-dad773730508",
+// "FIRSTNAME": "piter",
+// "MIDDLENAME": "gg",
+// "LASTNAME": "gg",
+// "CITY": "jj",
+// "STATE": "New York",
+// "ADDRESS": "gg",
+// "EMAIL": "ggh@hh.nn"
+// }
+// },
+// {
+// "user": {
+// "ID": "53634496-86ee-420b-9d36-64969e417833",
+// "FIRSTNAME": "tomas",
+// "MIDDLENAME": "dsfsd",
+// "LASTNAME": "dsfsdf",
+// "CITY": "AA",
+// "STATE": "California",
+// "ADDRESS": "sdsd",
+// "EMAIL": "dsdsf@gmail.com"
+// }
+// }
+// ]
+//}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
