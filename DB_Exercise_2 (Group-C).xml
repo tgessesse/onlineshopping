@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="d29cf709-88f3-4f89-82fd-e66105ab8f29" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="c2924b55-a0d1-449d-8ce0-b14a32e168c8" >
+		<db:my-sql-connection host="dev.icraftsoft.net" port="3306" user="trainee" password="shoppingCl@55" database="craftshopping" />
+	</db:config>
+	<db:config name="Local_Database" doc:name="Database Config" doc:id="04d8ad18-2496-4248-a77b-5fd7f44fc248" >
+		<db:my-sql-connection host="localhost" port="3306" user="root" password="root1" database="craft_onlineshopping"/>
+	</db:config>
+	<http:listener-config name="HTTP_Listener_config1" doc:name="HTTP Listener config" doc:id="b84f83f0-eb21-4644-bce7-8a5889a09ae4" >
+		<http:listener-connection host="0.0.0.0" port="8082" />
+	</http:listener-config>
+	<flow name="Exercise_1" doc:id="5b2c1906-cf66-49d2-b970-6accd1bb31bf" >
+		<http:listener doc:name="Listener" doc:id="84ad6021-fa05-4857-a3df-69dcf81a3e56" config-ref="HTTP_Listener_config" path="/GetandInsert"/>
+		<db:select doc:name="Select products from craftshopping" doc:id="53945c49-b8ab-442e-889d-7e0b34dc9013" config-ref="Database_Config">
+			<db:sql ><![CDATA[SELECT * from products]]></db:sql>
+		</db:select>
+		<ee:transform doc:name="Transform Message" doc:id="8af89152-49ea-4477-903c-3bff9811188e" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload filter $.price > 5000 map ( payload01 , indexOfPayload01 ) -> {
+	productid: payload01.productid,
+	categoryid: payload01.categoryid,
+	name: payload01.name,
+	description: payload01.description,
+	video_url: payload01.video_url,
+	price: payload01.price
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<db:bulk-insert doc:name="Bulk insert into local (price&gt;5000)" doc:id="cb5044c4-e69c-4d17-9bb2-b8d2b79a1671" config-ref="Local_Database">
+			<db:sql ><![CDATA[Insert into products(productid, categoryid, name, description, video_url, price) values (:productid, :categoryid, :name, :description, :video_url, :price)]]></db:sql>
+		</db:bulk-insert>
+	</flow>
+	<flow name="Exercise_2" doc:id="559e4935-f73c-4a20-afc8-a03f75b7e715" >
+		<http:listener doc:name="Listener" doc:id="3c450202-a6dc-4610-b8e7-7fb11c287b92" config-ref="HTTP_Listener_config" path="/Retrieve"/>
+		<choice doc:name="Choice" doc:id="d94d4246-df25-4c2b-90ff-fd8630b5a626" >
+			<when expression='#[attributes.queryParams.resource == "product"]'>
+				<db:select doc:name="Select (products)" doc:id="5933778b-f30f-4741-83f7-0ab3f178b32c" config-ref="Database_Config">
+			<db:sql><![CDATA[SELECT * from products
+]]></db:sql>
+		</db:select>
+			</when>
+			<when expression='#[attributes.queryParams.resource == "user"]'>
+				<db:select doc:name="Select (users)" doc:id="2038e1e8-3446-4e3d-904d-19301dc1b00b" config-ref="Database_Config">
+					<db:sql><![CDATA[SELECT * from users]]></db:sql>
+				</db:select>
+			</when>
+			<otherwise>
+				<set-payload value="Bad request" doc:name="Set Payload" doc:id="da63eaea-131c-477e-a11f-5ba6e1f3ffa5" />
+			</otherwise>
+		</choice>
+		<ee:transform doc:name="Transform Message" doc:id="fbb28c4a-556c-41a7-a1e8-50db98e6a303" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="Exercise_3" doc:id="1a270b1a-84e9-4eb9-a78a-9ca062c5e33f" >
+		<http:listener doc:name="Listener" doc:id="b69331dd-f1cf-426c-baec-c292747d1262" config-ref="HTTP_Listener_config1" path="/Retrieve"/>
+		<db:select doc:name="Select (from orders)" doc:id="6dec8c6c-b89b-4512-bd25-424c592b6bbb" config-ref="Database_Config">
+			<db:sql ><![CDATA[SELECT * from orders]]></db:sql>
+		</db:select>
+		<ee:transform doc:name="Transform Message" doc:id="c193609c-505b-4528-ab7a-9545df6a7609" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+var group1 = payload filter ($.amount > 5000) map ((item, index) -> {
+      amount: item.amount,
+      orderid: item.orderid,
+      created: item.created,
+      discountid: item.discountid,
+      userid: item.userid,
+      addressid: item.addressid,
+      status: item.status
+  }) groupBy $.status
+var group2 = payload filter ($.amount < 5000) map ((item, index) -> {
+      amount: item.amount,
+      orderid: item.orderid,
+      created: item.created,
+      discountid: item.discountid,
+      userid: item.userid,
+      addressid: item.addressid,
+      status: item.status
+  }) groupBy $.status 
+---
+group1 ++ group2]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="3fb61eb3-1549-4869-8dfa-a8902dba99d6" message="#[payload]"/>
+		<file:write doc:name="Write (into local file)" doc:id="62a45daa-8aa4-4bca-bdb9-aa008ce1794d" path="C:\Users\defed\OneDrive\Documents\DW_Exercise_2\Online_orders" mode="APPEND"/>
+	</flow>
+	<flow name="Exercise_4" doc:id="21a38abe-b999-4286-8f96-9e01a554f103" >
+		<http:listener doc:name="Listener" doc:id="59ac035e-b978-4363-b554-6397b4f820bf" config-ref="HTTP_Listener_config" path="/numcheck"/>
+		<choice doc:name="Choice" doc:id="73301d63-ddd3-4796-9425-14357332100f" >
+			<when expression="#[attributes.queryParams.num &lt; 10]">
+				<choice doc:name="Choice" doc:id="a39660b2-9270-471f-a90e-d757d65d95aa" >
+					<when expression='#[attributes.queryParams.num == "1"]'>
+						<set-payload value="num is equal to 1" doc:name="Set Payload" doc:id="7796e16c-20e0-40b4-97b3-9ce9b4e54d98" />
+					</when>
+					<otherwise >
+						<set-payload value="num is less than 10" doc:name="Set Payload" doc:id="def75249-3eca-472c-8fa7-cb19aa5f543b" />
+					</otherwise>
+				</choice>
+			</when>
+			<when expression='#[attributes.queryParams.num == "10"]'>
+				<set-payload value="num is equal to 10" doc:name="Set Payload" doc:id="0b6a346c-7d20-4149-9ff6-1840ccd34598" />
+			</when>
+			<otherwise >
+				<set-payload value="num is greater than 10" doc:name="Set Payload" doc:id="40d3dca8-e6dc-418f-ae4c-898ec7af7c23" />
+			</otherwise>
+		</choice>
+	</flow>
+</mule>
