@@ -77,50 +77,68 @@ payload]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 	</flow>
-	<flow name="q3" doc:id="ff9b3889-957f-4699-ab64-1ac8de8a6d94" >
-		<http:listener doc:name="Listener" doc:id="b0344d31-5f03-46e0-8cfa-5c194bdae71c" config-ref="HTTP_Listener_config" path="/grouped"/>
-		<choice doc:name="Choice" doc:id="442fd177-6699-404a-ba4e-a41c3b5d4e5e" >
-			<when expression="#[attributes.queryParams.amount &gt;=5000]">
-				<db:select doc:name="Select" doc:id="3d425254-cdab-44e6-ae78-ce5834a26db1" config-ref="Database_Config">
-					<db:sql ><![CDATA[select * from orders WHERE amount >= 5000;]]></db:sql>
-				</db:select>
-				<ee:transform doc:name="Transform Message" doc:id="6f832a68-658d-4770-8544-cbc90554ff6e" >
-					<ee:message >
-						<ee:set-payload ><![CDATA[%dw 2.0
+<flow name="Q3" doc:id="60fce894-4c68-416d-b8ec-5c0a80541149" >
+<http:listener doc:name="Listener" doc:id="6d5dd383-4a44-45ef-9deb-57636a5dd9b4" config-ref="HTTP_Listener_config" path="/q3"/>
+<db:select doc:name="Select" doc:id="a38fb394-c42a-4739-9956-d152d5d10dd3" config-ref="Database_Config">
+<db:sql ><![CDATA[select * from orders;]]></db:sql>
+</db:select>
+		<ee:transform doc:name="Transform Message" doc:id="25a69679-1bed-46a2-97f8-a102db2e91ba" >
+<ee:message >
+<ee:set-payload ><![CDATA[%dw 2.0
 output application/json
 ---
-payload groupBy $.status
-
-]]></ee:set-payload>
-					</ee:message>
-				</ee:transform>
-				<file:write doc:name="Write" doc:id="2229079c-49b2-4970-ae7a-29e5047ec9c4" path="C:\Users\Bini\Desktop\quiz\grater than 5000.txt" mode="APPEND"/>
-			</when>
-			<otherwise >
-				<db:select doc:name="Select" doc:id="38ead84f-7e87-4029-b9ba-6f2a207b4a5a" config-ref="Database_Config">
-					<db:sql ><![CDATA[select * from orders WHERE amount <5000;]]></db:sql>
-				</db:select>
-				<ee:transform doc:name="Transform Message" doc:id="fe6b6274-0035-41cf-958c-993e5fef1eb6" >
-					<ee:message >
-						<ee:set-payload ><![CDATA[%dw 2.0
+payload map {
+  amount: $.amount,
+orderid: $.orderid,
+userid: $.userid,
+addressid: $.addressid,
+discountid: $.discountid,
+created: $.created,
+modified: $.modified,
+status: $.status
+} 
+  groupBy $.status ]]></ee:set-payload>
+</ee:message>
+<ee:variables >
+<ee:set-variable variableName="lessthan" ><![CDATA[%dw 2.0
 output application/json
 ---
-payload groupBy $.status
-]]></ee:set-payload>
-					</ee:message>
-				</ee:transform>
-				<file:write doc:name="Write" doc:id="ee965bf2-3856-42e4-a5ff-919fa6770a23" path="C:\Users\Bini\Desktop\quiz\less than 5000.txt" mode="APPEND"/>
-			</otherwise>
-		</choice>
-		<ee:transform doc:name="Transform Message" doc:id="4917ff7e-87e1-4172-9579-17e9cb5e507f" >
-			<ee:message >
-				<ee:set-payload ><![CDATA[%dw 2.0
+payload map {
+  amount: $.amount,
+orderid: $.orderid,
+userid: $.userid,
+addressid: $.addressid,
+discountid: $.discountid,
+created: $.created,
+modified: $.modified,
+status: $.status
+} 
+  filter $.amount < 5000
+  groupBy $.status ]]></ee:set-variable>
+<ee:set-variable variableName="greaterthan" ><![CDATA[%dw 2.0
 output application/json
 ---
-message: "data saved"]]></ee:set-payload>
-			</ee:message>
-		</ee:transform>
-	</flow>
+payload map {
+  amount: $.amount,
+orderid: $.orderid,
+userid: $.userid,
+addressid: $.addressid,
+discountid: $.discountid,
+created: $.created,
+modified: $.modified,
+status: $.status
+} 
+  filter $.amount >5000
+  groupBy $.status ]]></ee:set-variable>
+</ee:variables>
+</ee:transform>
+<file:write doc:name="Write" doc:id="4bd4e64f-cf29-48bc-95f0-4c2047d22a44" path="C:\Users\Bini\Desktop\quiz\orders\less.txt" mode="APPEND">
+<file:content ><![CDATA[#[vars.lessthan]]]></file:content>
+</file:write>
+<file:write doc:name="Write" doc:id="09060f4f-ee40-4697-b2b0-1501f53cdf37" path="C:\Users\Bini\Desktop\quiz\orders\great.txt" mode="APPEND">
+<file:content ><![CDATA[#[vars.greaterthan]]]></file:content>
+</file:write>
+</flow>
 	<flow name="q4" doc:id="d6a25eb7-2c9a-4424-8d45-2dab52430664" >
 		<http:listener doc:name="Listener" doc:id="3579c3e1-394c-4d35-8e6d-d709e35b8073" config-ref="HTTP_Listener_config" path="/ifelse"/>
 		<choice doc:name="Choice" doc:id="963a48ff-44dc-4180-b2e5-a3c6c4673314" >
