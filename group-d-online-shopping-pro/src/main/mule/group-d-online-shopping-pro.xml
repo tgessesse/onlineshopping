@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:os="http://www.mulesoft.org/schema/mule/os" xmlns:file="http://www.mulesoft.org/schema/mule/file"
+	xmlns:validation="http://www.mulesoft.org/schema/mule/validation"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mule/validation/current/mule-validation.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.mulesoft.org/schema/mule/os http://www.mulesoft.org/schema/mule/os/current/mule-os.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="84dd162b-2437-4379-af58-4aa4b0e45ad2" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="0d8c6963-f5b5-4a5d-94f8-057a2a910c18" >
+		<db:my-sql-connection host="dev.icraftsoft.net" port="3306" user="trainee" password="shoppingCl@55" database="craftshopping" />
+	</db:config>
+	<db:config name="Local_Database_Config" doc:name="Database Config" doc:id="dff65b44-8e42-4588-b44c-2d7059100a3f" >
+		<db:my-sql-connection host="localhost" port="3306" user="root" password="root" database="mydb" />
+	</db:config>
+	<file:config name="File_Config" doc:name="File Config" doc:id="989f4a5c-491f-4875-ba58-40bc02b32f14" >
+		<file:connection workingDir="C:\Users\merke\Documents\orders" />
+	</file:config>
+	<flow name="getProductsPrice&gt;5000Flow" doc:id="ca816b86-93b1-485d-b3a5-05aca7158c9f" >
+		<http:listener doc:name="Listener" doc:id="a783a2ab-56b8-4c8c-8243-b7ef620e0774" config-ref="HTTP_Listener_config" path="/products"/>
+		<db:select doc:name="SourcebCraftSoft" doc:id="9e395377-ade5-4de7-a017-bcbb181a65cd" config-ref="Database_Config">
+			<db:sql ><![CDATA[select * from products]]></db:sql>
+		</db:select>
+		<ee:transform doc:name="Transform Message" doc:id="5b29e198-0697-487e-a53c-d228a7f04cd2" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload map
+ {
+	productid: $.productid,
+	categoryid: $.categoryid,
+	name: $.name,
+	description: $.description,
+	video_url: $.video_url,
+	price: $.price
+} filter $.price > 5000
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<db:bulk-insert doc:name="Bulk Insert To Local" doc:id="9b14aa06-5057-416d-87c8-78258c7c5a62" config-ref="Local_Database_Config">
+			<db:sql ><![CDATA[INSERT INTO products (productid, categoryid, name, description, video_url, price) value (:productid, :categoryid, :name, :description, :video_url, :price);
+]]></db:sql>
+		</db:bulk-insert>
+		<ee:transform doc:name="Transform Message" doc:id="0d189d74-0451-4e02-9775-3a25ff4eccc7" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="getUsersOrProductsFlow" doc:id="e76a51bd-e53c-4fa6-8496-16cc8c1711e2" >
+		<http:listener doc:name="Listener" doc:id="abd109e6-44ba-4db4-8037-8681e550b2fe" config-ref="HTTP_Listener_config" path="/userpro"/>
+		<choice doc:name="Choice" doc:id="900da4f4-5244-492c-beb5-ef97f3fa6c07" >
+			<when expression="#[attributes.queryParams.resource == 'users']">
+				<flow-ref doc:name="getUsersFlow" doc:id="2190b6d9-b6eb-4472-8989-d99380e8fa4f" name="getUsersFlow"/>
+			</when>
+			<when expression="#[attributes.queryParams.resource == 'products']">
+				<flow-ref doc:name="getProductsFlow" doc:id="7f6cea54-b188-4934-91ee-eda321dd7d4e" name="getProductsFlow"/>
+			</when>
+			<otherwise >
+				<ee:transform doc:name="Transform Message" doc:id="59560b9e-d477-4894-a5a5-315a238f4621" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"message": "Provide resource type"
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</otherwise>
+		</choice>
+	</flow>
+	<flow name="getUsersFlow" doc:id="d7f8051b-7644-44b1-acbd-9310c19d2dd0" >
+		<db:select doc:name="Select" doc:id="0dd7ea7b-17d4-485a-90cd-145990e754ef" config-ref="Database_Config">
+			<db:sql ><![CDATA[select * from users]]></db:sql>
+		</db:select>
+		<ee:transform doc:name="Transform Message" doc:id="7d6eda60-4d31-4036-92a6-b36bcb45c254" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="getProductsFlow" doc:id="15fbb1ad-fee1-4be0-8183-52127b3a0637" >
+		<db:select doc:name="Select" doc:id="72024dfa-96f0-4da0-a1bc-e85236b8d19a" config-ref="Database_Config">
+			<db:sql ><![CDATA[select * from products]]></db:sql>
+		</db:select>
+		<ee:transform doc:name="Transform Message" doc:id="5eeae15b-08bb-4053-bff7-68b45d7153ac" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="getOrdersFlow" doc:id="4d7d1c4c-8a88-4a35-a4cf-67d3c45d7db9" >
+		<http:listener doc:name="Listener" doc:id="72c1e76e-4046-4001-b38f-bd125b7b8da4" config-ref="HTTP_Listener_config" path="/orders"/>
+		<db:select doc:name="Select" doc:id="fac71894-7e17-4d41-9312-632a43183a45" config-ref="Database_Config">
+			<db:sql ><![CDATA[select * from orders]]></db:sql>
+		</db:select>
+		<ee:transform doc:name="Transform Message" doc:id="05436b55-97c2-4052-b010-159023df1434">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload map {
+ 	amount: $.amount,
+	orderid: $.orderid,
+	userid: $.userid,
+	addressid: $.addressid,
+	discountid: $.discountid,
+	created: $.created,
+	modified: $.modified,
+	status: $.status
+} 
+  filter $.amount < 5000
+  groupBy $.status 
+   ]]></ee:set-payload>
+			</ee:message>
+			<ee:variables>
+				<ee:set-variable variableName="varLs5000"><![CDATA[%dw 2.0
+output application/json
+---
+payload map {
+	orderid: $.orderid,
+	userid: $.userid,
+	addressid: $.addressid,
+	discountid: $.discountid,
+	created: $.created,
+	modified: $.modified,
+	status: $.status,
+	amount: $.amount
+} 
+  filter $.amount < 5000
+  groupBy $.status]]></ee:set-variable>
+				<ee:set-variable variableName="varGr5000"><![CDATA[%dw 2.0
+output application/json
+---
+payload map {
+	orderid: $.orderid,
+	userid: $.userid,
+	addressid: $.addressid,
+	discountid: $.discountid,
+	created: $.created,
+	modified: $.modified,
+	status: $.status,
+	amount: $.amount
+} 
+  filter $.amount > 5000
+  groupBy $.status]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<file:write doc:name="Write" doc:id="f1371fdf-460a-4694-9856-1e9b9aaac9a4" config-ref="File_Config" path="amountLess5000\order.json">
+			<file:content ><![CDATA[#[vars.varLs5000]]]></file:content>
+		</file:write>
+		<file:write doc:name="Write" doc:id="68ac9c61-f76b-4640-98a9-8dd9acfa1273" config-ref="File_Config" path="amountGreat5000\order.json">
+			<file:content ><![CDATA[#[vars.varGr5000]]]></file:content>
+		</file:write>
+	</flow>
+	<flow name="ifElseFlow" doc:id="48547249-dd33-4e3d-85cb-aa6b4ac9088d" >
+		<http:listener doc:name="Listener" doc:id="710ad527-cc1c-4787-9558-55bbf41c9527" config-ref="HTTP_Listener_config" path="/num"/>
+		<choice doc:name="Choice" doc:id="97201499-6e6a-4afd-943f-6109ddb16460" >
+			<when expression="#[attributes.queryParams.num &gt; 10]">
+				<set-payload value="num is greater than 10" doc:name="Set Payload" doc:id="573572f7-f985-4d97-99f1-bff05038d3ad" />
+			</when>
+			<when expression="#[attributes.queryParams.num &lt; 10]">
+				<choice doc:name="Choice" doc:id="7caf4395-1d45-48ab-b994-7f2cf2977cac" >
+					<when expression="#[attributes.queryParams.num == '1']">
+						<set-payload value="num is 1" doc:name="Set Payload" doc:id="0a6e2943-6471-4142-a98c-a912f042d3b9" />
+					</when>
+					<otherwise >
+						<set-payload value="num less than 10" doc:name="Set Payload" doc:id="7f709f31-51d7-4f9a-b5ed-4f540b80f74a" />
+					</otherwise>
+				</choice>
+			</when>
+			<otherwise>
+				<set-payload value="num is equal to 10" doc:name="Set Payload" doc:id="3db25946-3b8b-41fb-811e-0378b65b311d" />
+			</otherwise>
+		</choice>
+	</flow>
+</mule>
