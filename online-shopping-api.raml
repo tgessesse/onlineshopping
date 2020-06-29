@@ -1,0 +1,122 @@
+#%RAML 1.0
+title: OnlineShopping API
+description: Developing an API the explains details of users, orders and products.
+
+types:
+  userResponse: !include DataType/userPostResponse.raml
+  usersResponse: !include DataType/usersResponse.raml
+  userPostRequest: !include DataType/userPostRequest.raml
+  products: !include DataType/products.raml
+  orders: !include DataType/orders.raml
+  ordersPostRequest: !include /DataType/orderPostRequest.raml
+  createorder: !include DataType/orderPostRequest.raml
+  categories: !include DataType/categories.raml
+  
+
+/users:
+  get:
+    description: Get a list of users
+    responses:
+      200:
+        body:
+          application/json:
+            type: usersResponse []
+            example: !include Example/usersResponse.raml
+  post:
+    body: 
+      application/json:
+        type: userPostRequest
+        example: !include Example/userPostRequest.raml
+    responses:
+      200:
+        body:
+          application/json:
+            type: userResponse
+            example: !include Example/userPostResponse.raml
+                    
+  /{userId}:
+    get:
+      description: Get the user using userId.
+      responses:
+        200:
+          body:
+            application/json:
+              type: usersResponse
+              example: !include Example/usersIdResponse.raml
+                   
+/products:
+  get:
+    description: retirieve list of products.
+    responses:
+      200:
+        body:
+          application/json:
+            type: products []
+            example: !include Example/productsResponse.raml
+                    
+  /{productId}:
+    get:
+      description: Get the product using productId.
+      responses:
+        200:
+          body:
+            application/json:
+              type: products
+              example: !include Example/productsIdResponse.raml         
+/orders:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: orders []
+            example: !include Example/ordersResponse.raml
+             
+  /{orderId}:
+    get:
+      description:  Get the order using orderId.
+      responses:         
+          200:
+            body:
+              application/json:
+                type: orders
+                example: !include Example/orderIdResponse.raml
+
+  /{userId}:
+    post:
+        body:
+           application/json:
+             type: ordersPostRequest
+             example: !include Example/ordersPostRequest.raml
+        responses:
+         200:
+          body:
+            application/json: 
+             type: orders  
+             example: !include /Example/orderIdResponse.raml
+
+/categories:
+  get:
+    description: Get list of categories.
+    responses:
+      200:
+        body:
+          application/json:
+            type: categories []
+            example: !include Example/categoriesResponse.raml
+    
+  /{categoryId}:
+    get:
+      description: Get the category using categoryId.
+      responses:
+        200:
+          body:
+            application/json:
+              type: categories
+              example: !include Example/categoriesIdResponse.raml
+          
+        
+              
+        
+              
+      
