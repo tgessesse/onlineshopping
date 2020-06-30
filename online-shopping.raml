@@ -1,0 +1,122 @@
+#%RAML 1.0
+title: Online Shopping
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/fd967ff9-8b4a-4df1-a594-f7e906306c98/ # 
+version:
+types:
+  Catagory: !include /DataType/CatagorydataType.raml
+  Order: !include /DataType/OrderDataType.raml
+  Users: !include /DataType/UsersdataType.raml
+  Products: !include /DataType/productdataType.raml
+traits:
+  Respons401: !include /Treats/Respons401.raml
+  Response403: !include /Treats/Response403.raml
+  Response404: !include /Treats/Response404.raml
+
+/categories:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type:  Catagory []
+            example: !include Examples/CatagoryExample.raml
+    is:
+      - Respons401:
+        Response403:
+        Response404:
+              
+  /{id}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: Catagory
+              example: !include Examples/CatagoryIDExample.raml
+/order:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: Order []
+            example: !include Examples/OrdersExample.raml
+  post:
+    body:
+      application/json:
+        type: !include /DataType/PostproductdataType.raml
+        example: !include /Examples/PostProductExample.raml
+    responses:
+      201:
+        body:
+          application/json:
+            example:
+             {"message":"Order submited successfylly // creat order ID"}
+              
+  /{Orderid}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: Order
+              example: !include Examples/OrderIDExample.raml
+                
+  /{uid}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: Order []
+              example: !include Examples/OrdersExample.raml
+                
+/product:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: Products []
+            example: !include Examples/ProductsExample.raml
+  /{id}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: Products 
+              example: !include Examples/ProductIDexample.raml
+/user:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include /Examples/Usersexample.raml
+  post:
+    queryParameters:
+      username: 
+       type: string
+       required: true
+      email:
+        type: string
+        required: true
+        pattern: 
+       
+    body:
+      application/json:
+        type: Users
+        example: !include Examples/UserIDexample.raml
+    responses:
+      201:
+        body:
+          application/json:
+            example: { "uid": integer }
+  /{id}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include /Examples/UserIDexample.raml
