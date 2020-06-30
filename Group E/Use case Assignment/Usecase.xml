@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="8ea8ee23-88c3-4c22-b0d0-57a92f586647" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="ea904262-1cc2-4151-a815-d6cb46d550c7" >
+		<db:my-sql-connection host="dev.icraftsoft.net" port="3306" user="trainee" password="shoppingCl@55" database="craftshopping" />
+	</db:config>
+	<flow name="filterProducts" doc:id="95d02501-d899-439b-9b92-9c89deeb522c" >
+		<http:listener doc:name="Listener" doc:id="9abdfe47-6dc8-490d-9f1b-ee27e21ff158" path="/products" config-ref="HTTP_Listener_config"/>
+		<db:select doc:name="Select" doc:id="20d227c0-2fec-4fc8-9951-ac77619053c9" config-ref="Database_Config">
+			<db:sql ><![CDATA[select * from products]]></db:sql>
+		</db:select>
+		<ee:transform doc:name="Transform Message" doc:id="c77eb124-8ba6-40ab-8a88-98d6c8fcd4d4" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload filter $.price < 5000 map 
+{
+	productid: $.productid,
+	categoryid: $.categoryid,
+	name: $.name,
+	description: $.description,
+	price: $.price
+}
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="Users" doc:id="44fe3582-dd2e-4db2-9a83-f502cceb1485" >
+		<http:listener doc:name="Listener" doc:id="b1430201-b5ef-4aee-be31-904e93f39b20" path="/fechuser/{user}" config-ref="HTTP_Listener_config"/>
+		<set-variable value="#[attributes.uriParams.user]" doc:name="Set Variable" doc:id="2aea0659-9f84-44d5-b309-ee7bf6694b67" variableName="user"/>
+		<db:select doc:name="Select" doc:id="b8cc5797-a2cf-4d0f-b644-cf4b37fef060" config-ref="Database_Config">
+			<db:sql ><![CDATA[select * from users]]></db:sql>
+		</db:select>
+		<ee:transform doc:name="Transform Message" doc:id="32278bd1-2909-4f05-925c-609f0d1d1821" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="products" doc:id="cd01656b-6786-4f9b-ae2a-023aa84e3ba9" >
+		<http:listener doc:name="Listener" doc:id="33f6c533-e2f4-4868-919d-38ea8300bd72" path="/fech/{products}" config-ref="HTTP_Listener_config"/>
+		<set-variable value="#[attributes.uriParams.products]" doc:name="Set Variable" doc:id="bdaee8b0-746c-47e2-a945-a33f0ce5297e" variableName="products"/>
+		<db:select doc:name="Select-Products" doc:id="c092cce6-95e8-427e-b188-ebc6d9841b33" config-ref="Database_Config">
+			<db:sql ><![CDATA[select * from products 
+]]></db:sql>
+		</db:select>
+		<ee:transform doc:name="Transform Message" doc:id="ad8c53ae-8c93-472d-b504-e1efb8e9f518" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="OrderByAmount&gt;5000" doc:id="fc76286b-da6c-48bc-9e62-c33e3324b6a3" >
+		<http:listener doc:name="Listener" doc:id="10483965-25af-403a-8bd5-861cc2884f1b" path="/order" config-ref="HTTP_Listener_config"/>
+		<db:select doc:name="Select" doc:id="6ac3673a-6238-427a-9fb7-7bff6017f638" config-ref="Database_Config">
+			<db:sql ><![CDATA[select * from orders 	WHERE amount > 5000 
+	]]></db:sql>
+		</db:select>
+		<ee:transform doc:name="Transform Message" doc:id="ac86fd69-f421-4b68-a1b7-b42190c1b066" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+  payload groupBy (payload) -> payload.status]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="OrderByAmount&lt;5000" doc:id="5809bd51-5f18-43e7-bced-3160f8720b51" >
+		<http:listener doc:name="Listener" doc:id="7b6fd5b0-d8ab-418e-803f-dae71f16a43c" config-ref="HTTP_Listener_config" path="/order2"/>
+		<db:select doc:name="Select" doc:id="ef5c50ed-9615-4346-b7b0-f8b4cff47b99" config-ref="Database_Config">
+			<db:sql ><![CDATA[select * from orders WHERE amount < 5000]]></db:sql>
+		</db:select>
+		<ee:transform doc:name="Transform Message" doc:id="8ecc8ddd-190c-42ed-9a22-3655c33ff6e7" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload orderBy (payload) -> payload.status
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="Solution-4" doc:id="c333f4fb-515f-422c-8ae8-86b7717ce080" >
+		<http:listener doc:name="Listener" doc:id="4747579a-247e-4a93-9481-14a08fdff79b" path="/number/{num}" config-ref="HTTP_Listener_config"/>
+		<set-variable value="#[attributes.uriParams.num]" doc:name="Set Variable" doc:id="08c2cb76-8006-4b2a-991f-470dc00aa225" variableName="num"/>
+		<choice doc:name="Choice" doc:id="7a5a771c-9137-404e-9df3-417d37d48c11" >
+			<when expression="#[vars.num &gt; 1 and vars.num &lt; 10]">
+				<set-payload value="Nuber is &lt; 10" doc:name="Set Payload" doc:id="017482af-044e-4dea-a4fd-2c1e2421cb75" />
+			</when>
+			<when expression="#[vars.num &gt; 0 and vars.num &lt; 2]">
+				<set-payload value="Number = 1" doc:name="Set Payload" doc:id="c802739b-451f-4b37-af76-69d9be9ecf17" />
+			</when>
+			<when expression="#[vars.num &gt; 9 and vars.num &lt; 11]">
+				<set-payload value="Number = 10" doc:name="Set Payload" doc:id="7da834f8-527b-4a5d-8265-c945df84af34" />
+			</when>
+			<when expression="#[vars.num &gt; 10]">
+				<set-payload value="Number is &gt; 10" doc:name="Set Payload" doc:id="ade678f7-cfb0-43a8-8641-74c8cd429c9f" />
+			</when>
+			<otherwise>
+				<set-payload doc:name="Set Payload" doc:id="036f7795-446d-43e1-9b20-9b6cccd4b3f9" value="Number is NEGATIVE or ZERO"/>
+			</otherwise>
+		</choice>
+	</flow>
+</mule>
