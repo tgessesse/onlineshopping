@@ -1,0 +1,29 @@
+#%RAML 1.0 Trait
+traits: 
+    responseMessage:
+      responses: 
+        201:
+          body: 
+            application/json:
+              example: |
+                {"message":"Data Created"}
+       
+        401:
+          body: 
+            application/json:
+              example: |
+                {"message":"Unauthorized"}
+              responses: 
+        403:
+          body: 
+            application/json:
+              example: |
+                {"message":"Forbidden"}
+            responseMessage:
+        404:
+          body: 
+            application/json:
+              example: |
+                {"message":"Not Found"
+
+        

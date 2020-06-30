@@ -1,0 +1,122 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/38eb5dee-d9ff-46cd-a5aa-393e19f07280/ # 
+title: onlineshoping1
+traits:
+  responces: !include traits/Responses.raml
+types:
+   catagorydatatype: !include /DataType/Catagory.raml
+   Orderdatatype: !include  /DataType/Order.raml
+   ProductType: !include  /DataType/Product.raml
+   Userdatatype: !include /DataType/userID.raml
+
+  
+/category:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: catagoryall.raml []
+            example: !include /Example/catagry.json
+  is: [responces]
+  /{Category ID}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: catagorydatatype
+              example: !include /Example/Catagoryid.raml
+      is: [responces]        
+/order:
+  get:
+    description: Get all order
+    responses:
+      200:
+        body:
+          application/json:
+            type:  Orderdatatype 
+            example: !include Example/GetAllOrders.raml
+    is: [responces]
+  post:
+    responses:
+      200:
+        body:
+          application/json:
+            type: !include DataType/Order.raml
+            example: !include Example/orderpost.raml
+    is: [responces]
+              
+      
+  /{Order UID}:
+    get:
+      description: Get order by user ID
+      responses:
+        200:
+          body:
+            application/json:
+              type: 
+              example:
+    is: [responces]
+                
+              
+/{order ID}:
+  get:
+    description: Get order by ID
+    responses:
+      200:
+        body:
+          application/json:
+            type: 
+            example: 
+    is: [responces]
+
+/product:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: ProductType
+            example: !include Example/Product.raml
+    is: [responces]
+              
+  /{product ID}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: !include DataType/productByID.raml
+              example: !include Example/ProductByID.raml
+      is: [responces]
+                
+/User:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: userID.raml []
+            example: !include Example/User.json
+    is: [responces]
+  post:
+    responses:
+      200:
+        body:
+          application/json:
+            type: Userdatatype
+            example: !include Example/
+    is: [responces]
+              
+              
+  /{User ID}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type:  Userdatatype 
+              example: !include Example/userID.json
+      is: [responces]
+
