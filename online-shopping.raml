@@ -1,100 +1,150 @@
 #%RAML 1.0
 title: Online Shopping
-baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/fd967ff9-8b4a-4df1-a594-f7e906306c98/ # baseUri:
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/fd967ff9-8b4a-4df1-a594-f7e906306c98/ # 
 version:
 types:
   Catagory: !include /DataType/CatagorydataType.raml
   Order: !include /DataType/OrderDataType.raml
   Users: !include /DataType/UsersdataType.raml
   Products: !include /DataType/productdataType.raml
-   
+  PostproductdataType: !include /DataType/PostproductdataType.raml
+traits:
+  ErrorResponsMsg: !include /Treats/ErrorResponsMsg.raml
+
 /categories:
+  description: retrives all available catagories
   get:
     responses:
       200:
         body:
           application/json:
-            type:  Catagory[]
+            type:  Catagory []
             example: !include Examples/CatagoryExample.raml
-              
+    is:
+      ErrorResponsMsg
   /{id}:
+    description: retrives a specific catagory by its ID
     get:
       responses:
         200:
           body:
             application/json:
+              type: Catagory
               example: !include Examples/CatagoryIDExample.raml
+      is:
+        ErrorResponsMsg
 /order:
+  description: retrives all orders to the user
   get:
     responses:
       200:
         body:
           application/json:
-            type: []
-            example: !include Examples/OrderIDExample.raml
+            type: Order []
+            example: !include Examples/OrdersExample.raml
+    is:
+      - ErrorResponsMsg:
   post:
+    description: creates a new order on the database 
     body:
       application/json:
-        example: !include Examples/OrderIDExample.raml
+        type: PostproductdataType
+        example: !include /Examples/PostProductExample.raml
     responses:
       201:
         body:
           application/json:
             example:
-             {"message":"Order submited successfyly"}
+             {"message":"Order submited successfylly // creat order ID"}
+    is:
+      - ErrorResponsMsg:
               
-  /{id}:
+  /{Id}:
+    description: retrives a single order by its ID
     get:
       responses:
         200:
           body:
             application/json:
-              example: !include/Examples/OrderIDExample.raml
+              type: Order
+              example: !include Examples/OrderIDExample.raml
+      is:
+        - ErrorResponsMsg:        
                 
   /{uid}:
+    description: retrives all of the users's order
     get:
       responses:
         200:
           body:
             application/json:
-              example: {
-  "uid": integer
-}
+              type: Order []
+              example: !include Examples/OrdersExample.raml
+      is:
+        - ErrorResponsMsg:
                 
 /product:
+  description: retrives all available products products from the database
   get:
     responses:
       200:
         body:
           application/json:
-            example:
+            type: Products []
+            example: !include Examples/ProductsExample.raml
+    is:
+      - ErrorResponsMsg:
   /{id}:
+    description: retrives a specific product by its ID
     get:
       responses:
         200:
           body:
             application/json:
-              example:
+              type: Products 
+              example: !include Examples/ProductIDexample.raml
+    is:
+      ErrorResponsMsg:
 /user:
   get:
+    description: retrives all Users
     responses:
       200:
         body:
           application/json:
-            example:
+            example: !include /Examples/Usersexample.raml
+    is:
+      - ErrorResponsMsg:
   post:
+    description: creates new user in the database
+    queryParameters:
+      username: 
+       type: string
+       required: true
+      email:
+        type: string
+        required: true
+        pattern: "^$"
+       
     body:
       application/json:
-        example:
+        type: Users
+        example: !include Examples/UserIDexample.raml
     responses:
       201:
         body:
           application/json:
-            example:
+            example: { "uid": integer }
+    is:
+      - ErrorResponsMsg:
   /{id}:
+    description: retrives a single user by its ID
     get:
       responses:
         200:
           body:
             application/json:
-              example:
+              example: !include /Examples/UserIDexample.raml
+      is:
+        - ErrorResponsMsg:
+          
