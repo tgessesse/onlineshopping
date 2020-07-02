@@ -1,23 +1,23 @@
 #%RAML 1.0
-baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/38eb5dee-d9ff-46cd-a5aa-393e19f07280/ # 
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/20c81ee1-55eb-436b-98c9-6c5fade17009/ # 
 title: onlineshoping1
+securitySchemes: 
+  
 traits:
   responces: !include traits/Responses.raml
 types:
    catagorydatatype: !include /DataType/Catagory.raml
    Orderdatatype: !include  /DataType/Order.raml
    ProductType: !include  /DataType/Product.raml
-   Userdatatype: !include /DataType/userID.raml
-
-  
+   Userdatatype: !include /DataType/userID1.raml
 /category:
   get:
     responses:
       200:
         body:
           application/json:
-            type: catagoryall.raml []
-            example: !include /Example/catagry.json
+            type: catagorydatatype []
+            example: !include Example/catagry.json
   is: [responces]
   /{Category ID}:
     get:
@@ -35,7 +35,7 @@ types:
       200:
         body:
           application/json:
-            type:  Orderdatatype 
+            type:  Orderdatatype []
             example: !include Example/GetAllOrders.raml
     is: [responces]
   post:
@@ -55,8 +55,8 @@ types:
         200:
           body:
             application/json:
-              type: 
-              example:
+              type: Orderdatatype []
+              example: !include Example/GetOrderByUserID.raml
     is: [responces]
                 
               
@@ -67,8 +67,8 @@ types:
       200:
         body:
           application/json:
-            type: 
-            example: 
+            type: Orderdatatype
+            example: !include Example/OrderID.raml
     is: [responces]
 
 /product:
@@ -77,7 +77,7 @@ types:
       200:
         body:
           application/json:
-            type: ProductType
+            type: ProductType []
             example: !include Example/Product.raml
     is: [responces]
               
@@ -87,7 +87,7 @@ types:
         200:
           body:
             application/json:
-              type: !include DataType/productByID.raml
+              type: ProductType 
               example: !include Example/ProductByID.raml
       is: [responces]
                 
@@ -97,7 +97,7 @@ types:
       200:
         body:
           application/json:
-            type: userID.raml []
+            type: Userdatatype []
             example: !include Example/User.json
     is: [responces]
   post:
@@ -106,7 +106,7 @@ types:
         body:
           application/json:
             type: Userdatatype
-            example: !include Example/
+            example: !include Example/userpost.raml
     is: [responces]
               
               
@@ -117,6 +117,6 @@ types:
           body:
             application/json:
               type:  Userdatatype 
-              example: !include Example/userID.json
+              example: !include Example/userID1.raml
       is: [responces]
 
