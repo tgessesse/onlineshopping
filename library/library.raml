@@ -1,0 +1,11 @@
+#%RAML 1.0 Library
+usage: this library incorporates and describes all the libraries used in this rest api.
+types:
+  Catagory: !include ../DataType/CatagorydataType.raml
+  Order: !include ../DataType/OrderDataType.raml
+  Users: !include ../DataType/UsersdataType.raml
+  Products: !include ../DataType/productdataType.raml
+  PostproductdataType: !include ../DataType/PostproductdataType.raml
+traits:
+  ErrorResponsMsg: !include ../Treats/ErrorResponsMsg.raml
+

@@ -1,0 +1,157 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/70ed8eef-e7c5-4d1a-9fdc-526c337f4ee6/ # 
+title: Online Shopping
+version: 1.0
+uses:
+  libs: library/library.raml
+mediaType: [application/json]
+types:
+  Catagory: !include /DataType/CatagorydataType.raml
+  Order: !include /DataType/OrderDataType.raml
+  Users: !include /DataType/UsersdataType.raml
+  Products: !include /DataType/productdataType.raml
+  PostproductdataType: !include /DataType/PostproductdataType.raml
+traits:
+  ErrorResponsMsg: !include /Treats/ErrorResponsMsg.raml
+# securitySchemes:
+  # basic:
+  #   description: this api supportes basic authentication
+  #   type: Basic Authentication
+
+/categories:
+  description: retrives all available catagories
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type:  Catagory []
+            example: !include Examples/CatagoryExample.raml
+    is:
+      ErrorResponsMsg
+  /{id}:
+    description: retrives a specific catagory by its ID
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: Catagory
+              example: !include Examples/CatagoryIDExample.raml
+      is:
+        ErrorResponsMsg
+/order:
+  description: retrives all orders to the user
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: Order []
+            example: !include Examples/OrdersExample.raml
+    is:
+      - ErrorResponsMsg:
+  post:
+    description: creates a new order on the database 
+    body:
+      application/json:
+        type: PostproductdataType
+        example: !include /Examples/PostProductExample.raml
+    responses:
+      201:
+        body:
+          application/json:
+            example:
+             {"message":"Order submited successfylly // creat order ID"}
+    is:
+      - ErrorResponsMsg:
+              
+  /{Id}:
+    description: retrives a single order by its ID
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: Order
+              example: !include Examples/OrderIDExample.raml
+      is:
+        - ErrorResponsMsg:        
+                
+  /{uid}:
+    description: retrives all of the users's order
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: Order []
+              example: !include Examples/OrdersExample.raml
+      is:
+        - ErrorResponsMsg:
+                
+/product:
+  description: retrives all available products products from the database
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: Products []
+            example: !include Examples/ProductsExample.raml
+    is:
+      - ErrorResponsMsg:
+  /{id}:
+    description: retrives a specific product by its ID
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: Products 
+              example: !include Examples/ProductIDexample.raml
+    is:
+      ErrorResponsMsg:
+/users:
+  get:
+    description: retrives all Users
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include /Examples/Usersexample.raml
+    is:
+      - ErrorResponsMsg:
+  post:
+    description: creates new user in the database
+    queryParameters:
+      username: 
+       type: string
+       required: true
+      email:
+        type: string
+        required: true
+        pattern: ^\S+@\S+$
+       
+    body:
+      application/json:
+        type: Users
+        example: !include Examples/UserIDexample.raml
+    responses:
+      201:
+        body:
+          application/json:
+            example: { "uid": integer }
+    is:
+      - ErrorResponsMsg:
+  /{id}:
+    description: retrives a single user by its ID
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include /Examples/UserIDexample.raml
+      is:
+        - ErrorResponsMsg:
+          
